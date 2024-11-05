@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { GoogleCredentialResponse } from '../../types';
 
 const Home = () => {
-  const clientId = 'process.env.REACT_APP_GOOGLE_CLIENT_ID'; // Replace with your Google Client ID
+  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID; // Replace with your Google Client ID
 
   useEffect(() => {
     /* global google */
