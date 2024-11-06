@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useContext, useEffect } from "react";
+import { Recipe } from '../../types/types';
 
 const recipes = [
   { id: 1, name: 'Instant Ramen' },
