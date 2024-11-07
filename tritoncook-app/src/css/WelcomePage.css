@@ -1,0 +1,47 @@
+.welcome-container{
+    margin-top: 100px;
+    margin-left: 35%;
+    
+}
+
+.welcome-header{
+    font-size: 40px;
+    margin-left:-5%;
+}
+.logo{
+    width: 30%;
+    height: auto;
+    border-radius: 22.5%;
+    opacity: 0px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+.congrat-message{
+    font-size:50px;
+    border: 2px solid rgb(253, 245, 158);
+    border-radius: 50px;
+    width: 1000px;
+    text-align: center;
+    margin-left: -4%;
+    margin-top:50px;
+    padding-bottom: 40px;
+    background-color: #FFF1C2;
+
+
+}
+
+.login-button{
+    font-size: 50px;
+    background-color:#B0E0E2;
+    border: 1px solid #7385ac;
+    border-radius: 15px;
+    width: 250px;
+    color: rgb(22, 22, 161);
+}
+.login-button:hover{
+    color: aliceblue;
+    background-color: rgb(10, 10, 143);
+    font-weight: bold;
+}
