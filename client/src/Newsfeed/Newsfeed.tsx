@@ -10,11 +10,7 @@ const Newsfeed = () => {
     return(
         <div>
             <Navbar />
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/recipes" element={<RecipeList />} />
-                <Route path="/recipes/:id" element={<RecipeDetail />} />
-            </Routes>
+            <Home />
         </div>
     );
 }
