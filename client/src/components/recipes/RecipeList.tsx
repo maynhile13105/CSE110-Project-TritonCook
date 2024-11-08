@@ -2,21 +2,18 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useContext, useEffect } from "react";
 import { Recipe } from '../../types/types';
-
-const recipes = [
-  { id: 1, name: 'Instant Ramen' },
-  { id: 2, name: 'Frozen Pizza' },
-  { id: 3, name: 'Apple' },
-];
+import { RecipeContext } from '../../context/RecipeContext';
+import RecipeItem from './RecipeItem';
+import '../../App.css'
 
 const RecipeList = () => {
+  const {recipes, setRecipes} = useContext(RecipeContext); 
   return (
-    <div>
-      <h2>Recipes</h2>
+    <div className='recipes'>
       <ul>
         {recipes.map((recipe) => (
           <li key={recipe.id}>
-            <Link to={`/recipes/${recipe.id}`}>{recipe.name}</Link>
+            <RecipeItem id={recipe.id} name={recipe.name} estimate={recipe.estimate} ingredients={recipe.ingredients} image={recipe.image}></RecipeItem>
           </li>
         ))}
       </ul>
