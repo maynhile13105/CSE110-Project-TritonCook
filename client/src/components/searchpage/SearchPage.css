@@ -1,60 +1,133 @@
 .search-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    position: relative; 
+    width: 100%;
+    height: 100%;
+  }
+
+  .search-bar-container {
+    position: absolute;
+    left: 330px;
+    top: 80px;
   }
   
   .search-bar {
-    display: flex;
-    align-items: center;
+    box-sizing: border-box;
     width: 1000px;
     height: 100px;
-    flex-shrink: 0;
     border-radius: 100px;
-    border: var(--sds-size-stroke-border) solid #F7FFE2;
+    border: 1px solid #F7FFE2;
     background: #F7FFE2;
-    padding: 0 20px;
-  }
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  }  
   
   .search-bar input {
-    flex: 1;
+    position: absolute;
+    width: 300px;
+    height: 44px;
+    left: 120px;
+    top: 25px;
     border: none;
     background: transparent;
-    outline: none;
-    font-size: 1.5rem;
-    padding-left: 20px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 48px;
+    color: #000000;
+  }
+
+  .search-bar input::placeholder {
+    color: #C1C1BC; /* Placeholder color */
   }
   
   .search-icon {
+    position: absolute;
     width: 60px;
     height: 60px;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    left: 20px;
+    top: 20px;
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  }
+  }  
   
   .info-text {
+    position: absolute;
     width: 880px;
     height: 150px;
-    flex-shrink: 0;
-    font-family: 'Inter', sans-serif;
+    left: 356px;
+    top: 200px;
+    font-family: 'Inter';
+    font-style: normal;
     font-size: 40px;
-    font-weight: 800;
-    line-height: normal;
-    color: #000;
+    font-weight: 900;
+    line-height: 43px;
+    color: #000000;
     -webkit-text-stroke-width: 1px;
     -webkit-text-stroke-color: var(--Schemes-On-Primary, #FFF);
-    text-align: center;
+    text-align: left;
   }
   
   .info-text .no-worries {
     font-size: 36px;
-    font-weight: 400;
+    font-weight: 500;
   }
+
   
   .info-text .under-30 {
     font-size: 36px;
-    font-weight: 800;
+    font-weight: 900;
   }
+
+  .explore-button-container {
+    position: absolute;
+    left: 0px;
+    top: 200px;
+    width: 260px;
+    height: 60px;
+  }
+  
+  .explore-button {
+    width: 100%;
+    height: 100%;
+    background: #FFF1C2;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    cursor: pointer;
+  }
+  
+  .explore-text {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 36px;
+    line-height: 44px;
+    color: #2047A3;
+  }
+  
+  
+  
+  .line-8, .line-9 {
+    position: absolute;
+    width: 25px;
+    height: 0px;
+    border: 4px solid #2047A3;
+    border-radius: 50px;
+    left: 205px;
+  }
+  
+  .line-8 {
+    top: 19px;
+    transform: rotate(35deg);
+  }
+  
+  .line-9 {
+    top: 34px;
+    transform: rotate(-35deg);
+  }
+  
+  
+  
