@@ -74,6 +74,7 @@ const LoginForm = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+        
         <div>
           <button type="submit" className="sign-in-button">
             Sign In
@@ -83,7 +84,7 @@ const LoginForm = () => {
 
 
       <div className="ForgetPass">
-        <Link to="/login/reset" style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>
+        <Link to="/reset-pass" style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>
           Forgot Password?
         </Link>
       </div>
@@ -91,12 +92,13 @@ const LoginForm = () => {
       <div style={{ marginLeft: "10px", padding: "10px", width: "90%", borderBottom: "2px solid #439BBD" }} />
       <div style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>New to TritonCook?</div>
 
-      <div>
-        <button type="submit" className="create-button"
-          onClick={() => window.location.href = '#'}>
+
+      <div className="CreateAccount">
+        <Link to="/create-account" style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>
           Create New Account
-        </button>
+        </Link>
       </div>
+
       <div style={{ marginLeft: "45%", padding: "10px", fontSize: "35px" }}>Or</div>
 
       <div id="buttonDiv"></div>

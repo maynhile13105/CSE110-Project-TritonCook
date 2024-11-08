@@ -6,7 +6,7 @@ export const ResetPasswordPage = () => {
   return (
     <div className="reset-pass-page">
       <div>
-        <Link to="/login">
+        <Link to="/">
           <button className="back-button">
             <i className="bi bi-box-arrow-in-left" style={{ fontSize: "80px" }}></i>
             Back

@@ -7,9 +7,10 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<WelcomePage />} />
-        <Route path="/login" element={<LoginHomepage />} />
-        <Route path="/login/reset" element={<ResetPasswordPage />} />
+        <Route path="/welcome" element={<WelcomePage />} />
+        <Route path="/" element={<LoginHomepage />} />
+        <Route path="/reset-pass" element={<ResetPasswordPage />} />
+        <Route path="/create-account" />
       </Routes>
     </div>
     
