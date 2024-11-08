@@ -1,15 +1,28 @@
 import { useContext } from "react";
 import { Recipe } from "../../types/types";
 import { RecipeContext } from "../../context/RecipeContext";
+import './RecipeItem.css'
 
 const RecipeItem = (currentRecipe: Recipe) => {
   // Exercise: Consume the AppContext here
-  const {recipes, setRecipes} = useContext(RecipeContext);
+  const { recipes, setRecipes } = useContext(RecipeContext);
 
   return (
-    <li className="post-box d-flex justify-content-between align-items-center">
-      <div>{currentRecipe.name}</div>
-      <div>${currentRecipe.estimate}</div>
+    <li className="post-box">
+      <div className="user-inf">
+        <img src='/profile.svg' />
+        Username
+        <img src='/like-unliked.svg' />
+      </div>
+      <br />
+      <div className="post-name">{currentRecipe.name}</div>
+      <br />
+      <div className='post-est-ingr'>Estimate: {currentRecipe.estimate} minutes
+        <br />Ingredients: {currentRecipe.ingredients.join(', ')}
+      </div>
+      <br />
+      <div className='post-see-details'>...See Details</div>
+      <div className="post-img"></div>
     </li>
   );
 };

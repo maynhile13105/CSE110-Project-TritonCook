@@ -4,15 +4,15 @@ import { useContext, useEffect } from "react";
 import { Recipe } from '../../types/types';
 import { RecipeContext } from '../../context/RecipeContext';
 import RecipeItem from './RecipeItem';
-import '../../App.css'
+import './RecipeList.css'
 
 const RecipeList = () => {
   const {recipes, setRecipes} = useContext(RecipeContext); 
   return (
-    <div className='recipes'>
-      <ul>
+    <div className='main-div'>
+      <ul className='post-list'>
         {recipes.map((recipe) => (
-          <li key={recipe.id}>
+          <li key={recipe.id} >
             <RecipeItem id={recipe.id} name={recipe.name} estimate={recipe.estimate} ingredients={recipe.ingredients} image={recipe.image}></RecipeItem>
           </li>
         ))}
