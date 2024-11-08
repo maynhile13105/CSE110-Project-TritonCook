@@ -9,8 +9,10 @@ const RecipeItem = (currentRecipe: Recipe) => {
   return (
     <li className="post-box">
       <div className="user-inf">
+        <div className="close">
         <img src='/profile.svg' />
         Username
+        </div>
         <img src='/like-unliked.svg' />
       </div>
       <br />

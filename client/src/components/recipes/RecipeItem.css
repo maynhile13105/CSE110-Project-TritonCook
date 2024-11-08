@@ -54,6 +54,13 @@
     font-size: 16px;
 }
 
+.close {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
 .horizontal-line {
     border-top: 1px solid #030000;
     margin: 20px 0;     
