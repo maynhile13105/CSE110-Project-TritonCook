@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { GoogleCredentialResponse } from '../../types';
+import { GoogleCredentialResponse } from '../../types/types';
 
 const Home = () => {
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;

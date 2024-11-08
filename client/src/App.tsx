@@ -1,4 +1,4 @@
-import './App.css';
+import './css/App.css';
 import { Route, Routes } from "react-router-dom";
 import { LoginHomepage } from './views/LoginHomepage';
 import ResetPasswordPage from './views/ResetPasswordPage';
