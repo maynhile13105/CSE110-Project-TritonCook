@@ -11,7 +11,7 @@ const Newsfeed = () => {
             <Navbar />
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/recipes" element={<SearchPage />} />
+                <Route path="/searchpage" element={<SearchPage />} />
             </Routes>
         </div>
     );
