@@ -1,9 +1,8 @@
 .post-box {
-    width: 646px;
-    height: 483px;
+    width: auto;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
-
     border-radius: 20px;
     background: #F7FFE2;
     padding: 30px;
@@ -38,7 +37,14 @@
     text-align: right;
 }
 
-.post-img {}
+.post-img {
+    background-color: black;
+    width: 540px;
+    height: 300px;
+    align-items: center;
+    object-fit: fill;
+    border-radius: 20px;
+}
 
 .user-inf {
     display: flex;
@@ -47,3 +53,8 @@
     font-family: Inter;
     font-size: 16px;
 }
+
+.horizontal-line {
+    border-top: 1px solid #030000;
+    margin: 20px 0;     
+  }

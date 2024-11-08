@@ -20,9 +20,17 @@ const RecipeItem = (currentRecipe: Recipe) => {
       <div className='post-est-ingr'>Estimate: {currentRecipe.estimate} minutes
         <br />Ingredients: {currentRecipe.ingredients.join(', ')}
       </div>
-      <br />
+
       <div className='post-see-details'>...See Details</div>
-      <div className="post-img"></div>
+      <div>
+        <img src={currentRecipe.image} className="post-img" />
+      </div>
+      <div className="horizontal-line"></div>
+      <div className="user-inf">
+        <img src='/Like.svg' />
+        <img src='/Comment.svg' />
+        <img src='/Report.svg' />
+      </div>
     </li>
   );
 };
