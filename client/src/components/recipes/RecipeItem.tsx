@@ -4,7 +4,6 @@ import { RecipeContext } from "../../context/RecipeContext";
 import './RecipeItem.css'
 
 const RecipeItem = (currentRecipe: Recipe) => {
-  // Exercise: Consume the AppContext here
   const { recipes, setRecipes } = useContext(RecipeContext);
 
   return (
