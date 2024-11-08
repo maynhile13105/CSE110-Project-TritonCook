@@ -20,7 +20,7 @@ const Navbar = () => {
           <li className='home'><a href='/'>
           <img src='/home.svg'/>
           </a></li>
-          <li className='search'><a href='/recipes'>
+          <li className='search'><a href='/searchpage'>
           <img src='/search.svg'/>
           </a></li>
         </ul>
