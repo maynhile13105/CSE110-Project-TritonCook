@@ -14,8 +14,8 @@ const LoginForm = () => {
     });
 
     google.accounts.id.renderButton(
-      document.getElementById('buttonDiv'),
-      { theme: 'outline', size: 'large' } // Customize button options as needed
+      document.getElementById('googleButton'),
+      { theme: 'filled_blue', size: 'large'} // Customize button options as needed
     );
 
     google.accounts.id.prompt();
@@ -92,17 +92,16 @@ const LoginForm = () => {
       <div style={{ marginLeft: "10px", padding: "10px", width: "90%", borderBottom: "2px solid #439BBD" }} />
       <div style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>New to TritonCook?</div>
 
-
       <div className="CreateAccount">
-        <Link to="/create-account" style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>
+        <button type="submit" className="create-account-button" onClick={() => window.location.href='/create-account'}>
           Create New Account
-        </Link>
+        </button>
       </div>
 
       <div style={{ marginLeft: "45%", padding: "10px", fontSize: "35px" }}>Or</div>
 
-      <div id="buttonDiv"></div>
-
+      <div id="googleButton"></div>
+      
     </div>
   );
 };

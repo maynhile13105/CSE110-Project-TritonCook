@@ -40,18 +40,19 @@
 
 }
 .slogan-container{
-    margin-top:15%;
+    margin-top:20%;
 }
 .right-section {
     width: 50%;
     justify-content: center;
     align-items: center;
-}
 
+}
 
 .login-form-container{
     background-color: #F7FFE2;
-    width: 900px;
+    width: 700px;
     height:auto;
-    margin-top:20%;
+    margin-top:25%;
+    margin-left:10%;
 }

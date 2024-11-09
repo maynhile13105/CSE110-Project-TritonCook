@@ -8,7 +8,11 @@
     font-size: 40px;
     margin-left:-5%;
 }
-.logo{
+
+.logo-welcome-container{
+    margin-left: 5%;
+}
+.logo-welcome{
     width: 750px;
     height: auto;
     border-radius: 22.5%;
@@ -18,7 +22,7 @@
     text-align: center;
     align-items: center;
     margin:center;
-    
+
 }
 .congrat-message{
     font-size:50px;
@@ -30,8 +34,6 @@
     margin-top:50px;
     padding-bottom: 40px;
     background-color: #FFF1C2;
-
-
 }
 
 .login-button{

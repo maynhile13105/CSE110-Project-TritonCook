@@ -1,5 +1,5 @@
 
-.loginForm label, .loginForm{
+.CreateAccountForm label, .CreateAccountForm{
     gap: 5px;
     height: 100%;
     margin: 10px;
@@ -11,41 +11,35 @@
 }
 
 
-.loginForm input{
+.CreateAccountForm input{
     border: none;
     border-radius: 10px;
     font-size: 35px;
     width: 95%;
-    margin: 10px;
+    margin-left: 10px;
+    padding-top:10px;
+    padding-bottom: 10px;
     background-color: rgb(236, 236, 236);
+
 }
 
-.sign-in-button, .create-account-button, #buttonDiv {
+#register-button {
     padding: 15px;
-    width: 95%;
-    font-size: 30px;
+    align-items: center;
+    width: 80%;
+    font-size: 35px;
     border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.3s;
-    background-color: #1a73e8;
-    border: 2px solid #00aeff;
+    background-color: #FFF1C2;
+    border: 2px solid #ffc400;
     text-align: center;
-    margin: 15px;
+    margin: 10%;
     margin-top: 25px;
-    color: white;
 }
-.sign-in-button:hover,
-.create-account-button:hover{
+
+#register-button:hover {
     background-color: #B0E0E2;
-    border: 2px solid #1a73e8;
+    border: 2px solid #7AB5C6;
     font-weight: bold;
-    color: black;
-}
-
-
-#googleButton {
-    margin-left: 25px;
-    margin-right: 25px;
-    padding-bottom: 15px;
-    font-size: 35px;
 }
