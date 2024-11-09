@@ -21,7 +21,7 @@
   box-sizing: border-box;
   width: 90%; /* Adjusts with screen width */
   max-width: 1000px;
-  height: 13vh; /* Scales height based on viewport */
+  height: 10vh; /* Scales height based on viewport */
   max-height: 100px;
   border-radius: 100px;
   border: 1px solid #F7FFE2;
@@ -40,7 +40,7 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
-  font-size: 3vw; /* Scales font with viewport width */
+  font-size: 2vw; /* Scales font with viewport width */
   line-height: 1.2;
   color: #000000;
   border: none;
@@ -67,7 +67,7 @@
   max-width: 880px;
   /* text-align: center; */
   font-family: 'Inter';
-  font-size: 2.5vw;
+  font-size: 2.2vw;
   font-weight: 900;
   line-height: 1.1;
   color: #000000;
@@ -76,12 +76,12 @@
 }
 
 .info-text .no-worries {
-  font-size: 2.3vw;
+  font-size: 2vw;
   font-weight: 500;
 }
 
 .info-text .under-30 {
-  font-size: 2.3vw;
+  font-size: 2vw;
   font-weight: 900;
 }
 
@@ -97,7 +97,7 @@
   /* width: 100%; */
   width: 90vw;
   /* height: 60px; */
-  height: 7vh;
+  height: 6vh;
   background: #FFF1C2;
   border: none;
   border-radius: 30px;
@@ -113,7 +113,7 @@
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 900;
-  font-size: 2.5vw;
+  font-size: 2vw;
   line-height: 1.2;
   color: #2047A3;
 }
@@ -138,5 +138,56 @@
   top: 34px;
   transform: rotate(-35deg);
   margin-top: 6px;
+}
+
+.popup-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.popup {
+  width: 645px;
+  height: 302px;
+  background: #FFF1C2;
+  border-radius: 50px;
+  border: var(--sds-size-stroke-border) solid #000;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-icon {
+  width: 94px;
+  height: 97.673px;
+  margin-bottom: 20px;
+}
+
+.try-again-button button {
+  background-color: blue;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.try-again-button button:hover {
+  background-color: blue;
+}
+
+.error-message {
+  text-align: center;
+  font-family: 'Inter';
+  font-size: 2vw;
+  font-weight: 900;
+  line-height: 1;
+  color: #000000;
 }
   
