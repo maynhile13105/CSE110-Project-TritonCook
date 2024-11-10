@@ -1,13 +1,3 @@
-global.google = {
-  accounts: {
-      id: {
-          initialize: jest.fn(),
-          prompt: jest.fn(),
-          renderButton: jest.fn(),
-      },
-  },
-};
-
 import React, { useEffect, useState } from "react";
 import "../../css/LoginForm.css";
 import { Link } from "react-router-dom";

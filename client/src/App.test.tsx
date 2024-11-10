@@ -1,3 +1,13 @@
+global.google = {
+  accounts: {
+      id: {
+          initialize: jest.fn(),
+          prompt: jest.fn(),
+          renderButton: jest.fn(),
+      },
+  },
+};
+
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import LoginHomepage from './views/LoginHomepage';
