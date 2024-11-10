@@ -55,7 +55,7 @@ const CreateAccountForm = () => {
         </div>
         
         <div>
-          <label>Confirmed Password</label>
+          <label>Confirm Password</label>
         </div>
         <div className="confirmed-pass-input">
           <input
