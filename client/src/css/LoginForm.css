@@ -1,51 +1,53 @@
-
-.loginForm label, .loginForm{
-    gap: 5px;
-    height: 100%;
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    font-size: 35px;
-    margin-left: 10px
-
+.loginForm label,
+.loginForm {
+  gap: 5px;
+  height: 100%;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: 35px;
+  margin-left: 10px
 }
 
 
-.loginForm input{
-    border: none;
-    border-radius: 10px;
-    font-size: 35px;
-    width: 95%;
-    margin: 10px;
-    background-color: rgb(236, 236, 236);
+.loginForm input {
+  border: none;
+  border-radius: 10px;
+  font-size: 35px;
+  width: 95%;
+  margin: 10px;
+  background-color: rgb(236, 236, 236);
 }
 
-.sign-in-button, .create-account-button, #buttonDiv {
-    padding: 15px;
-    width: 95%;
-    font-size: 30px;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    background-color: #1a73e8;
-    border: 2px solid #00aeff;
-    text-align: center;
-    margin: 15px;
-    margin-top: 25px;
-    color: white;
+.sign-in-button,
+.create-account-button,
+#buttonDiv {
+  padding: 15px;
+  width: 95%;
+  font-size: 30px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: #1a73e8;
+  border: 2px solid #00aeff;
+  text-align: center;
+  margin: 15px;
+  margin-top: 25px;
+  color: white;
 }
+
 .sign-in-button:hover,
-.create-account-button:hover{
-    background-color: #B0E0E2;
-    border: 2px solid #1a73e8;
-    font-weight: bold;
-    color: black;
+.create-account-button:hover {
+  background-color: #B0E0E2;
+  border: 2px solid #1a73e8;
+  font-weight: bold;
+  color: black;
 }
 
 
 #googleButton {
-    margin-left: 25px;
-    margin-right: 25px;
-    padding-bottom: 15px;
-    font-size: 35px;
+  margin-left: 25px;
+  margin-right: 25px;
+  padding-bottom: 15px;
+  font-size: 35px;
 }

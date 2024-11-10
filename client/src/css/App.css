@@ -29,7 +29,8 @@
 }
 
 body {
-  background: linear-gradient(to top, #7baebf, #e6e1c5); /* Gradient color */
+  /* Gradient color */
+  background: linear-gradient(to top, #7baebf, #e6e1c5);
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
@@ -41,6 +42,7 @@ body {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

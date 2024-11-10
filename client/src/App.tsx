@@ -11,10 +11,10 @@ function App() {
         <Route path="/welcome" element={<WelcomePage />} />
         <Route path="/" element={<LoginHomepage />} />
         <Route path="/reset-pass" element={<ResetPasswordPage />} />
-        <Route path="/create-account" element={<CreateAccountPage />}/>
+        <Route path="/create-account" element={<CreateAccountPage />} />
       </Routes>
     </div>
-    
+
   );
 }
 

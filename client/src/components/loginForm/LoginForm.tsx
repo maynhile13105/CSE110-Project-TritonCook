@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { GoogleCredentialResponse } from "../../types/types";
 
 const LoginForm = () => {
-  
+
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const LoginForm = () => {
 
     google.accounts.id.renderButton(
       document.getElementById('googleButton'),
-      { theme: 'filled_blue', size: 'large'} // Customize button options as needed
+      { theme: 'filled_blue', size: 'large' } // Customize button options as needed
     );
 
     google.accounts.id.prompt();
@@ -75,7 +75,7 @@ const LoginForm = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        
+
         <div>
           <button type="submit" className="sign-in-button">
             Sign In
@@ -94,7 +94,7 @@ const LoginForm = () => {
       <div style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>New to TritonCook?</div>
 
       <div className="CreateAccount">
-        <button type="submit" className="create-account-button" onClick={() => window.location.href='/create-account'}>
+        <button type="submit" className="create-account-button" onClick={() => window.location.href = '/create-account'}>
           Create New Account
         </button>
       </div>
@@ -102,7 +102,7 @@ const LoginForm = () => {
       <div style={{ marginLeft: "45%", padding: "10px", fontSize: "35px" }}>Or</div>
 
       <div id="googleButton"></div>
-      
+
     </div>
   );
 };

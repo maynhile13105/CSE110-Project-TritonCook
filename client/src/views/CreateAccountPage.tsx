@@ -5,7 +5,7 @@ import "../css/CreateAccountPage.css"
 export const CreateAccountPage = () => {
   return (
     <div className="register-container">
-      
+
       <div>
         <Link to="/">
           <button className="back-button">
@@ -14,7 +14,7 @@ export const CreateAccountPage = () => {
           </button>
         </Link>
       </div>
-      
+
       <div className="page-header">
         <h1>Create Account</h1>
       </div>

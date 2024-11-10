@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "../../css/CreateAccountForm.css";
 const CreateAccountForm = () => {
-  
-    const [userName, setUserName] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmedPass, setConfirmedPass] = useState("");
-    const [email, setEmail] = useState("");
+
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmedPass, setConfirmedPass] = useState("");
+  const [email, setEmail] = useState("");
 
   return (
     <div className="create-account-box">
@@ -53,7 +53,7 @@ const CreateAccountForm = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        
+
         <div>
           <label>Confirm Password</label>
         </div>
