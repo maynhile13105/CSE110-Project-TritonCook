@@ -1,9 +1,20 @@
+global.google = {
+  accounts: {
+      id: {
+          initialize: jest.fn(),
+          prompt: jest.fn(),
+          renderButton: jest.fn(),
+      },
+  },
+};
+
 import React, { useEffect, useState } from "react";
 import "../../css/LoginForm.css";
 import { Link } from "react-router-dom";
 import { GoogleCredentialResponse } from "../../types/types";
 
 const LoginForm = () => {
+  
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
   useEffect(() => {
