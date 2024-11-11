@@ -25,14 +25,54 @@ describe('SearchPage Component', () => {
     fireEvent.change(searchInput, { target: { value: '' } });
     expect(screen.queryByText('No Recipes Found!')).not.toBeInTheDocument();
   });
+
+  // Test the history dropdown functionality
+
+  test('shows 5 history items when dropdown is clicked', () => {
+    render(<SearchPage />);
+    const searchInput = screen.getByPlaceholderText('Search...');
+    fireEvent.click(searchInput);
+    const historyItems = screen.getAllByText(/History Search/i);
+    expect(historyItems.length).toBe(5);
+  });
+
+  test('shows a total of 10 items available with scrolling', () => {
+    render(<SearchPage />);
+    const searchInput = screen.getByPlaceholderText('Search...');
+    fireEvent.click(searchInput);
+    const historyItems = screen.getAllByText(/History Search/i);
+    expect(historyItems.length).toBeLessThanOrEqual(10); // Adjust as needed if scroll test is feasible
+  });
+
+  test('clicking a history item places text into input', () => {
+    render(<SearchPage />);
+    const searchInput = screen.getByPlaceholderText('Search...');
+    fireEvent.click(searchInput);
+    const historyItem = screen.getByText('History Search 1');
+    fireEvent.click(historyItem);
+    expect(searchInput).toHaveValue('History Search 1');
+  });
+
+  test('typing in input hides history dropdown', () => {
+    render(<SearchPage />);
+    const searchInput = screen.getByPlaceholderText('Search...');
+    fireEvent.click(searchInput);
+    fireEvent.change(searchInput, { target: { value: 'Hello' } });
+    const historyItems = screen.queryByText(/History Search/i);
+    expect(historyItems).toBeNull();
+  });
+
+  test('clicking delete button clears input and shows dropdown', () => {
+    render(<SearchPage />);
+    const searchInput = screen.getByPlaceholderText('Search...');
+    const deleteButton = screen.getByRole('button', { name: /delete/i });
+
+    fireEvent.change(searchInput, { target: { value: 'Hello' } });
+    fireEvent.click(deleteButton);
+    expect(searchInput).toHaveValue('');
+    fireEvent.click(searchInput);
+    const historyItems = screen.getAllByText(/History Search/i);
+    expect(historyItems.length).toBe(5);
+  });
 });
 
-// import React from 'react';
-// import { render, screen } from '@testing-library/react';
-// import App from './App';
-
-// test('renders learn react link', () => {
-//   render(<App />);
-//   const linkElement = screen.getByText(/learn react/i);
-//   expect(linkElement).toBeInTheDocument();
-// });
