@@ -1,34 +1,57 @@
 import React, { useState } from 'react';
 import './SearchPage.css';
-import SearchDropdown from './SearchDropdown';
 
 const SearchPage: React.FC = () => {
-  const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const searchHistory = ["History Search...", "History Search...", "History Search...", "History Search...", "History Search..."];
   const [searchInput, setSearchInput] = useState('');
   const [isPopUpVisible, setPopUpVisible] = useState(false);
+  const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [historyItems, setHistoryItems] = useState([
+    'History Search 1',
+    'History Search 2',
+    'History Search 3',
+    'History Search 4',
+    'History Search 5',
+    'History Search 6',
+    'History Search 7',
+    'History Search 8',
+    'History Search 9',
+    'History Search 10'
+  ]);
 
+  // Handle changes in the search input field
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
-    if (event.target.value) {
-      setPopUpVisible(true);
-    } else {
-      setPopUpVisible(false);
-    }
+    setDropdownVisible(event.target.value === ''); // Only show dropdown if the input is empty
+  };
+
+  // Clear the input when delete icon is clicked
+  const handleClearInput = () => {
+    setSearchInput('');
+    setDropdownVisible(true); // Optionally show dropdown again when cleared
+  };
+
+  // Show dropdown when the search bar is clicked
+  const handleSearchClick = () => {
+    setDropdownVisible(true);
+  };
+
+  // Set clicked history item as the search input and hide dropdown
+  const handleDropdownItemClick = (item: string) => {
+    setSearchInput(item);
+    setDropdownVisible(false);
   };
 
   return (
     <div className="search-page">
-      <div className="search-bar-container">
-        <div className="search-bar">
+        <div className={`search-bar ${isDropdownVisible ? 'expanded' : ''}`}>
           <input 
             type="text" 
             placeholder="Search..." 
             value={searchInput}
             onChange={handleSearchChange}
-            onFocus={() => setDropdownVisible(true)} 
-            onBlur={() => setTimeout(() => setDropdownVisible(false), 200)}
+            onClick={handleSearchClick}
           />
+          <div className="search-separator"></div>
           <div className="search-icon">
             <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 72 72" fill="none">
             <g>
@@ -37,11 +60,50 @@ const SearchPage: React.FC = () => {
             </g>
             </svg>          
           </div>
+
+          {/* Delete Icon - appears only when input is not empty */}
+          {searchInput && (
+            <div className="delete-icon" onClick={handleClearInput}>
+              <svg width="20" height="20" viewBox="0 0 73 73" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g filter="url(#filter0_d_160_1524)">
+                  <path d="M69 32.5C69 50.4493 54.4493 65 36.5 65C18.5507 65 4 50.4493 4 32.5C4 14.5507 18.5507 0 36.5 0C54.4493 0 69 14.5507 69 32.5Z" fill="#B3B3B3"/>
+                  <path d="M20.3447 48.7256L52.7502 16.2496" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                  <path d="M52.6553 48.75L20.2498 16.274" stroke="white" stroke-width="8" stroke-linecap="round"/>
+                </g>
+                <defs>
+                  <filter id="filter0_d_160_1524" x="0" y="0" width="73" height="73" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                    <feOffset dy="4"/>
+                    <feGaussianBlur stdDeviation="2"/>
+                    <feComposite in2="hardAlpha" operator="out"/>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_160_1524"/>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_160_1524" result="shape"/>
+                  </filter>
+                </defs>
+              </svg>
+            </div>
+          )}
+
+          {/* Dropdown Menu for History Items */}
+          {isDropdownVisible && (
+            <div className="history-items">
+              {historyItems.map((item, index) => (
+                <div 
+                  key={index} 
+                  className="history-item" 
+                  onClick={() => handleDropdownItemClick(item)}
+                > 
+                  <svg width="50" height="44" viewBox="0 0 50 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M49.2129 22L0.303406 43.6506L0.303406 0.349365L49.2129 22Z" fill="#B5B5B3"/>
+                  </svg>
+                  {item}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-        {isDropdownVisible && (
-          <SearchDropdown searchHistory={searchHistory} onClose={() => setDropdownVisible(false)} />
-        )}
-      </div>
       <div className="info-text">
         <p>
           Busy today?<br />
@@ -86,3 +148,4 @@ const SearchPage: React.FC = () => {
 }
 
 export default SearchPage;
+
