@@ -1,21 +1,20 @@
-import React from 'react';
+import './css/App.css';
 import { Route, Routes } from "react-router-dom";
-import Header from "./components/header/Header";
-import Home from './components/home/Home';
-import RecipeList from "./components/recipes/RecipeList";
-import RecipeDetail from './components/recipes/RecipeDetail';
-import './App.css';
-
-const App = () => {
+import { LoginHomepage } from './views/LoginHomepage';
+import ResetPasswordPage from './views/ResetPasswordPage';
+import WelcomePage from './views/WelcomePage';
+import CreateAccountPage from './views/CreateAccountPage';
+function App() {
   return (
     <div>
-      <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/recipes" element={<RecipeList />} />
-        <Route path="/recipes/:id" element={<RecipeDetail />} />
+        <Route path="/welcome" element={<WelcomePage />} />
+        <Route path="/" element={<LoginHomepage />} />
+        <Route path="/reset-pass" element={<ResetPasswordPage />} />
+        <Route path="/create-account" element={<CreateAccountPage />} />
       </Routes>
     </div>
+
   );
 }
 
