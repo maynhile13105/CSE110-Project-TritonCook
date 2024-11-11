@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
-import RecipeList from '../recipes/RecipeList';
 
 const Navbar = () => {
   return (
@@ -9,31 +8,31 @@ const Navbar = () => {
       <main className='navbar'>
         <ul className='left'>
           <li className='logo'><Link to='/'>
-          <img src='/logo-round.svg'
+          <img src='images/logo-round.svg'
           alt='logo'/>
           </Link></li>
           <li className='notif'><Link to='/'>
-          <img src='/notif-bell.svg'
+          <img src='images/notif-bell.svg'
           alt='notif'/>
           </Link></li>
         </ul>
         <ul className='middle'>
           <li className='post'><Link to='/'>
-          <img className='postImage' src='/addPost.svg' alt ='post' />
+          <img className='postImage' src='images/addPost.svg' alt ='post' />
           </Link></li>
           <li className='home'><Link to='/'>
-          <img src='/home.svg' alt='home' />
+          <img src='images/home.svg' alt='home' />
           </Link></li>
           <li className='search'><Link to='/recipes'>
-          <img src='/search.svg' alt='search'/>
+          <img src='images/search.svg' alt='search'/>
           </Link></li>
         </ul>
         <ul className='right'>
           <li className='logout'><Link to='/'>
-          <img src='/logout.svg' alt='logout'/>
+          <img src='images/logout.svg' alt='logout'/>
           </Link></li>
           <li className='profile'><Link to='/'>
-          <img src='/profile.svg' alt='profile'/>
+          <img src='images/profile.svg' alt='profile'/>
           </Link></li>
         </ul>
       </main>
