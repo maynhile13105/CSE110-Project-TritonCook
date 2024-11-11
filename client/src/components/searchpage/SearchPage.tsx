@@ -41,6 +41,14 @@ const SearchPage: React.FC = () => {
     setDropdownVisible(false);
   };
 
+  // Handle Enter key to show pop-up
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && searchInput.trim() !== '') {
+      setPopUpVisible(true); // Show the pop-up
+      setDropdownVisible(false); // Hide dropdown if visible
+    }
+  };
+
   return (
     <div className="search-page">
         <div className={`search-bar ${isDropdownVisible ? 'expanded' : ''}`}>
@@ -50,6 +58,7 @@ const SearchPage: React.FC = () => {
             value={searchInput}
             onChange={handleSearchChange}
             onClick={handleSearchClick}
+            onKeyDown={handleKeyDown}
           />
           <div className="search-separator"></div>
           <div className="search-icon">
@@ -119,6 +128,7 @@ const SearchPage: React.FC = () => {
           </button>
         </div>
       </div>
+
       {/* Pop-up Window */}
       {isPopUpVisible && (
         <div className="popup-container">
