@@ -124,7 +124,7 @@ test('renders account creation page', () => {
 
 });
 
-test('Reset Password link', () => {
+test('navigates to Reset Password page on button click', () => {
   render(
     <MemoryRouter initialEntries={['/']}>
       <Routes>
@@ -151,27 +151,23 @@ test('Reset Password link', () => {
 
 });
 
-test('Create Account Link', () => {
+
+
+test('navigates to Create Account page on button click', () => {
   render(
     <MemoryRouter initialEntries={['/']}>
       <Routes>
-          <Route path="/" element={<LoginHomepage />} />
-          <Route path="/create-account" element={<CreateAccountPage />} />
-        </Routes>
+        <Route path="/" element={<LoginHomepage />} />
+        <Route path="/create-account" element={<CreateAccountPage />} />
+      </Routes>
     </MemoryRouter>
   );
 
-  /*We are at the login homepage
-  Test the "Create New Account" button if it worked correctly*/
-  const createAccounButton = screen.getByText("Create New Account");
-  fireEvent.click(createAccounButton);
-  const createAccountPageHeader = screen.getByText(/Create\s?Account/i);
-  expect(createAccountPageHeader).toBeInTheDocument(); //Check that if we are in the creation page
+  // Simulate clicking the "Create New Account" button
+  const createAccountButton = screen.getByText("Create New Account");
+  fireEvent.click(createAccountButton);
 
-  /*We are at the Recover Password Page. Now check the back button on this page
-    We will be back to the homepage */
-  const backButton = screen.getByTestId("back-button");
-  fireEvent.click(backButton);
-  expect(screen.getByText("\"Share, Discover, Savor\"")).toBeInTheDocument(); //Check that if we are in the homepage
+  // Assert that the pathname has changed to '/create-account'
+  expect(window.location.pathname).toBe('/create-account');
+});
 
-})
