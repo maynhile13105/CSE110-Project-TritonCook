@@ -21,7 +21,7 @@
   box-sizing: border-box;
   width: 90%; /* Adjusts with screen width */
   max-width: 1000px;
-  height: 10vh; /* Scales height based on viewport */
+  height: 15vh; /* Scales height based on viewport */
   max-height: 100px;
   border-radius: 100px;
   border: 1px solid #F7FFE2;
@@ -40,7 +40,7 @@
   font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
-  font-size: 2vw; /* Scales font with viewport width */
+  font-size: 3vw; /* Scales font with viewport width */
   line-height: 1.2;
   color: #000000;
   border: none;
@@ -67,7 +67,7 @@
   max-width: 880px;
   /* text-align: center; */
   font-family: 'Inter';
-  font-size: 2.2vw;
+  font-size: 2.5vw;
   font-weight: 900;
   line-height: 1.1;
   color: #000000;
@@ -76,12 +76,12 @@
 }
 
 .info-text .no-worries {
-  font-size: 2vw;
+  font-size: 2.3vw;
   font-weight: 500;
 }
 
 .info-text .under-30 {
-  font-size: 2vw;
+  font-size: 2.3vw;
   font-weight: 900;
 }
 
@@ -97,7 +97,7 @@
   /* width: 100%; */
   width: 90vw;
   /* height: 60px; */
-  height: 6vh;
+  height: 7vh;
   background: #FFF1C2;
   border: none;
   border-radius: 30px;
@@ -113,7 +113,7 @@
   font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 900;
-  font-size: 2vw;
+  font-size: 2.3vw;
   line-height: 1.2;
   color: #2047A3;
 }
