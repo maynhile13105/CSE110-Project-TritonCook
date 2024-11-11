@@ -1,0 +1,24 @@
+div.container{
+    display: flex;
+    flex-direction: flex-start;
+    justify-content: space-between;
+}
+
+
+div.sidebar {
+    width: 25%;
+    height: 100vw;
+    padding: 20px;
+    border-right: 2px solid #b0e0e2;
+}
+
+div.feed {
+    width: 70%;
+    padding: 20px;
+}
+
+ul.buttons{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
