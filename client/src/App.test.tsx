@@ -1,10 +1,10 @@
 global.google = {
   accounts: {
-      id: {
-          initialize: jest.fn(),
-          prompt: jest.fn(),
-          renderButton: jest.fn(),
-      },
+    id: {
+      initialize: jest.fn(),
+      prompt: jest.fn(),
+      renderButton: jest.fn(),
+    },
   },
 };
 
@@ -46,19 +46,19 @@ test('renders login page', () => {
   const passwordInputField = screen.getByPlaceholderText("Enter Password");
   expect(passwordInputField).toBeInTheDocument();
 
-  //Test signin button
-  const signin = screen.getByText("Sign In");
-  expect(signin).toBeInTheDocument();
+  //Test Sign In button
+  const signIn = screen.getByText("Sign In");
+  expect(signIn).toBeInTheDocument();
 
-  //Test Forgetpass link
-  const forgetpass = screen.getByText("Forgot Password?");
-  expect(forgetpass).toBeInTheDocument();
+  //Test Forgot Password link
+  const ForgotPassword = screen.getByText("Forgot Password?");
+  expect(ForgotPassword).toBeInTheDocument();
 
   //Test Create New Account
   const newAccount = screen.getByText("Create New Account");
   expect(newAccount).toBeInTheDocument();
 
-  //Test Sigin with google
+  //Test sign in with google
   const googleLink = screen.getByTestId("googleButton");
   expect(googleLink).toBeInTheDocument();
 });
@@ -97,7 +97,7 @@ test('renders account creation page', () => {
     <MemoryRouter >
       <CreateAccountPage />
     </MemoryRouter>);
-    
+
   const CreateAccount = screen.getByText("Create Account");
   expect(CreateAccount).toBeInTheDocument();
 
@@ -119,8 +119,8 @@ test('renders account creation page', () => {
 
   const confirmPassword = screen.getByText("Confirm Password");
   expect(confirmPassword).toBeInTheDocument();
-  const confirmpasswordInputField = screen.getByPlaceholderText("Enter Confirm Password");
-  expect(confirmpasswordInputField).toBeInTheDocument();
+  const confirmPasswordInputField = screen.getByPlaceholderText("Enter Confirm Password");
+  expect(confirmPasswordInputField).toBeInTheDocument();
 
 });
 
@@ -128,9 +128,9 @@ test('Reset Password link', () => {
   render(
     <MemoryRouter initialEntries={['/']}>
       <Routes>
-          <Route path="/" element={<LoginHomepage />} />
-          <Route path="/reset-pass" element={<ResetPasswordPage />} />
-        </Routes>
+        <Route path="/" element={<LoginHomepage />} />
+        <Route path="/reset-pass" element={<ResetPasswordPage />} />
+      </Routes>
     </MemoryRouter>
   );
 
@@ -155,17 +155,18 @@ test('Create Account Link', () => {
   render(
     <MemoryRouter initialEntries={['/']}>
       <Routes>
-          <Route path="/" element={<LoginHomepage />} />
-          <Route path="/create-account" element={<CreateAccountPage />} />
-        </Routes>
+        <Route path="/" element={<LoginHomepage />} />
+        <Route path="/create-account" element={<CreateAccountPage />} />
+      </Routes>
     </MemoryRouter>
   );
 
   /*We are at the login homepage
   Test the "Create New Account" button if it worked correctly*/
-  const createAccounButton = screen.getByText("Create New Account");
-  fireEvent.click(createAccounButton);
-  const createAccountPageHeader = screen.getByText(/Create\s?Account/i);
+  const createAccountButton = screen.getByText("Create New Account");
+  expect(createAccountButton).toBeInTheDocument();
+  fireEvent.click(createAccountButton);
+  const createAccountPageHeader = screen.getByText("Create Account");
   expect(createAccountPageHeader).toBeInTheDocument(); //Check that if we are in the creation page
 
   /*We are at the Recover Password Page. Now check the back button on this page
@@ -174,4 +175,4 @@ test('Create Account Link', () => {
   fireEvent.click(backButton);
   expect(screen.getByText("\"Share, Discover, Savor\"")).toBeInTheDocument(); //Check that if we are in the homepage
 
-})
+});

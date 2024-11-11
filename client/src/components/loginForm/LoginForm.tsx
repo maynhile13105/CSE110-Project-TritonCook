@@ -95,9 +95,9 @@ const LoginForm = () => {
       <div style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>New to TritonCook?</div>
 
       <div className="CreateAccount">
-        <button type="submit" className="create-account-button" onClick={() => window.location.href = '/create-account'}>
+        <Link to="/create-account" className="create-account-button">
           Create New Account
-        </button>
+        </Link>
       </div>
 
       <div style={{ marginLeft: "45%", padding: "10px", fontSize: "35px" }}>Or</div>

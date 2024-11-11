@@ -8,7 +8,7 @@ export const CreateAccountPage = () => {
 
       <div>
         <Link to="/">
-          <button className="back-button">
+          <button className="back-button" data-testid="back-button">
             <i className="bi bi-box-arrow-in-left" style={{ fontSize: "80px" }}></i>
             Back
           </button>
