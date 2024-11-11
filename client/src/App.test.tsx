@@ -124,7 +124,7 @@ test('renders account creation page', () => {
 
 });
 
-test('Reset Password link', () => {
+test('navigates to Reset Password page on button click', () => {
   render(
     <MemoryRouter initialEntries={['/']}>
       <Routes>
@@ -151,7 +151,9 @@ test('Reset Password link', () => {
 
 });
 
-test('Create Account Link', () => {
+
+
+test('navigates to Create Account page on button click', () => {
   render(
     <MemoryRouter initialEntries={['/']}>
       <Routes>
