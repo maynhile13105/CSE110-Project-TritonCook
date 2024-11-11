@@ -16,7 +16,7 @@ export const CreateAccountPage = () => {
       </div>
 
       <div className="page-header">
-        <h1>Create Account</h1>
+        <h1 data-testid="create-account-header">Create Account</h1>
       </div>
 
       <div className="register-form-container">

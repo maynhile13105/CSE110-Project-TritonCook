@@ -36,8 +36,9 @@ test('renders login page', () => {
   //Test username
   const username = screen.getByText("Username");
   expect(username).toBeInTheDocument();
-  const usernameInputField = screen.getByPlaceholderText("Enter Username");
+  const usernameInputField = screen.getByTestId("username-intput-field");
   expect(usernameInputField).toBeInTheDocument();
+
 
   //Test password
   const password = screen.getByText("Password");
@@ -53,6 +54,13 @@ test('renders login page', () => {
   const forgetpass = screen.getByText("Forgot Password?");
   expect(forgetpass).toBeInTheDocument();
 
+  //Test Create New Account
+  const newAccount = screen.getByText("Create New Account");
+  expect(newAccount).toBeInTheDocument();
+
+  //Test Sigin with google
+  const googleLink = screen.getByTestId("googleButton");
+  expect(googleLink).toBeInTheDocument();
 });
 
 test('renders recovery page', () => {
@@ -76,8 +84,8 @@ test('renders recovery page', () => {
   const email = screen.getByText("Email");
   expect(email).toBeInTheDocument();
 
-  const emailInput = screen.getByPlaceholderText("Enter Email");
-  expect(emailInput).toBeInTheDocument();
+  const emailInputField = screen.getByPlaceholderText("Enter Email");
+  expect(emailInputField).toBeInTheDocument();
 
   const submitButton = screen.getByText("RESET PASSWORD");
   expect(submitButton).toBeInTheDocument();
@@ -95,17 +103,26 @@ test('renders account creation page', () => {
 
   const username = screen.getByText("Username");
   expect(username).toBeInTheDocument();
+  const usernameInputField = screen.getByPlaceholderText("Enter Username");
+  expect(usernameInputField).toBeInTheDocument();
 
   const email = screen.getByText("Email");
   expect(email).toBeInTheDocument();
+  const emailInputField = screen.getByPlaceholderText("Enter UCSD Email");
+  expect(emailInputField).toBeInTheDocument();
+
 
   const password = screen.getByText("Password");
   expect(password).toBeInTheDocument();
+  const passwordInputField = screen.getByPlaceholderText("Enter Password");
+  expect(passwordInputField).toBeInTheDocument();
 
   const confirmPassword = screen.getByText("Confirm Password");
   expect(confirmPassword).toBeInTheDocument();
+  const confirmpasswordInputField = screen.getByPlaceholderText("Enter Confirm Password");
+  expect(confirmpasswordInputField).toBeInTheDocument();
+
 });
-<<<<<<< HEAD
 
 test('linked pages', () => {
   render(
@@ -136,7 +153,6 @@ test('linked pages', () => {
   /*We are at the login homepage
   Test the "Create New Account" button if it worked correctly*/
   const createAccounButton = screen.getByText("Create New Account");
-  expect(createAccounButton).toBeInTheDocument();
   fireEvent.click(createAccounButton);
   expect(screen.getByText("Create Account")).toBeInTheDocument(); //Check that if we are in the creation page
 

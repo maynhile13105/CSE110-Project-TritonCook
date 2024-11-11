@@ -18,7 +18,7 @@ const CreateAccountForm = () => {
             type="text"
             name="username"
             id="username"
-            placeholder="Enter username"
+            placeholder="Enter Username"
             required
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
@@ -32,7 +32,7 @@ const CreateAccountForm = () => {
             type="text"
             name="email"
             id="email"
-            placeholder="Enter UCSD email"
+            placeholder="Enter UCSD Email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -60,9 +60,9 @@ const CreateAccountForm = () => {
         <div className="confirmed-pass-input">
           <input
             type="password"
-            name="confirmed-password"
-            id="confirmed-password"
-            placeholder="Enter Password"
+            name="confirm-password"
+            id="confirm-password"
+            placeholder="Enter Confirm Password"
             required
             value={confirmedPass}
             onChange={(e) => setConfirmedPass(e.target.value)}

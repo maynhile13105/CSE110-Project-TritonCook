@@ -58,6 +58,7 @@ const LoginForm = () => {
             placeholder="Enter Username"
             required
             value={userName}
+            data-testid="username-intput-field"
             onChange={(e) => setUserName(e.target.value)}
           />
         </div>
@@ -72,6 +73,7 @@ const LoginForm = () => {
             placeholder="Enter Password"
             required
             value={password}
+            data-testid="pass-intput-field"
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
@@ -101,7 +103,7 @@ const LoginForm = () => {
 
       <div style={{ marginLeft: "45%", padding: "10px", fontSize: "35px" }}>Or</div>
 
-      <div id="googleButton"></div>
+      <div id="googleButton" data-testid="googleButton"></div>
 
     </div>
   );
