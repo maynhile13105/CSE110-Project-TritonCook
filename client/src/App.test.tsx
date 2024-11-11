@@ -124,13 +124,12 @@ test('renders account creation page', () => {
 
 });
 
-test('linked pages', () => {
+test('Reset Password link', () => {
   render(
     <MemoryRouter initialEntries={['/']}>
       <Routes>
           <Route path="/" element={<LoginHomepage />} />
           <Route path="/reset-pass" element={<ResetPasswordPage />} />
-          <Route path="/create-account" element={<CreateAccountPage />} />
         </Routes>
     </MemoryRouter>
   );
@@ -150,17 +149,29 @@ test('linked pages', () => {
   fireEvent.click(backButton);
   expect(screen.getByText("\"Share, Discover, Savor\"")).toBeInTheDocument(); //Check that if we are in the homepage
 
+});
+
+test('Create Account Link', () => {
+  render(
+    <MemoryRouter initialEntries={['/']}>
+      <Routes>
+          <Route path="/" element={<LoginHomepage />} />
+          <Route path="/create-account" element={<CreateAccountPage />} />
+        </Routes>
+    </MemoryRouter>
+  );
+
   /*We are at the login homepage
   Test the "Create New Account" button if it worked correctly*/
   const createAccounButton = screen.getByText("Create New Account");
   fireEvent.click(createAccounButton);
-  expect(screen.getByText("Create Account")).toBeInTheDocument(); //Check that if we are in the creation page
+  const createAccountPageHeader = screen.getByText(/Create\s?Account/i);
+  expect(createAccountPageHeader).toBeInTheDocument(); //Check that if we are in the creation page
 
   /*We are at the Recover Password Page. Now check the back button on this page
     We will be back to the homepage */
-  backButton = screen.getByTestId("back-button");
+  const backButton = screen.getByTestId("back-button");
   fireEvent.click(backButton);
   expect(screen.getByText("\"Share, Discover, Savor\"")).toBeInTheDocument(); //Check that if we are in the homepage
 
-
-});
+})

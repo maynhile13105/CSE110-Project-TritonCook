@@ -85,7 +85,6 @@ const LoginForm = () => {
         </div>
       </form>
 
-
       <div className="ForgetPass">
         <Link to="/reset-pass" style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>
           Forgot Password?
