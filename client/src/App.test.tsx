@@ -9,11 +9,11 @@ global.google = {
 };
 
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import LoginHomepage from './views/LoginHomepage';
 import ResetPasswordPage from './views/ResetPasswordPage';
 import CreateAccountPage from './views/CreateAccountPage';
-import { MemoryRouter, Routes } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 test('renders login page', () => {
   render(
@@ -21,14 +21,38 @@ test('renders login page', () => {
       <LoginHomepage />
     </MemoryRouter >);
 
+  //Test app name
   const TritonCook = screen.getByText("TritonCook");
   expect(TritonCook).toBeInTheDocument();
 
+  //Test slogan
+  const slogan = screen.getByText("\"Share, Discover, Savor\"");
+  expect(slogan).toBeInTheDocument();
+
+  //Test logo
+  const logo = screen.getByRole('img');
+  expect(logo).toBeInTheDocument();
+
+  //Test username
   const username = screen.getByText("Username");
   expect(username).toBeInTheDocument();
+  const usernameInputField = screen.getByPlaceholderText("Enter Username");
+  expect(usernameInputField).toBeInTheDocument();
 
+  //Test password
   const password = screen.getByText("Password");
   expect(password).toBeInTheDocument();
+  const passwordInputField = screen.getByPlaceholderText("Enter Password");
+  expect(passwordInputField).toBeInTheDocument();
+
+  //Test signin button
+  const signin = screen.getByText("Sign In");
+  expect(signin).toBeInTheDocument();
+
+  //Test Forgetpass link
+  const forgetpass = screen.getByText("Forgot Password?");
+  expect(forgetpass).toBeInTheDocument();
+
 });
 
 test('renders recovery page', () => {
@@ -37,11 +61,27 @@ test('renders recovery page', () => {
       <ResetPasswordPage />
     </MemoryRouter >);
 
+  //Test header
   const recover = screen.getByText("Recover Password");
   expect(recover).toBeInTheDocument();
 
+  //Test back button
+  const backButton = screen.getByTestId("back-button");
+  expect(backButton).toBeInTheDocument();
+
+  //Test form
+  const instruction = screen.getByTestId("instructions");
+  expect(instruction).toBeInTheDocument();
+
   const email = screen.getByText("Email");
   expect(email).toBeInTheDocument();
+
+  const emailInput = screen.getByPlaceholderText("Enter Email");
+  expect(emailInput).toBeInTheDocument();
+
+  const submitButton = screen.getByText("RESET PASSWORD");
+  expect(submitButton).toBeInTheDocument();
+
 });
 
 test('renders account creation page', () => {
@@ -65,3 +105,45 @@ test('renders account creation page', () => {
   const confirmPassword = screen.getByText("Confirm Password");
   expect(confirmPassword).toBeInTheDocument();
 });
+
+test('linked pages', () => {
+  render(
+    <MemoryRouter initialEntries={['/']}>
+      <Routes>
+          <Route path="/" element={<LoginHomepage />} />
+          <Route path="/reset-pass" element={<ResetPasswordPage />} />
+          <Route path="/create-account" element={<CreateAccountPage />} />
+        </Routes>
+    </MemoryRouter>
+  );
+
+  /*Check forget password link on the login homepage
+  It would direct us to the Recover Password page */
+  //Get the link
+  const forgetPasswordLink = screen.getByText("Forgot Password?");
+  //Click on it
+  fireEvent.click(forgetPasswordLink);
+  //Check that if we are in the recover password page
+  expect(screen.getByText("Recover Password")).toBeInTheDocument();
+
+  /*We are at the Recover Password Page. Now check the back button on this page
+    We will be back to the homepage */
+  let backButton = screen.getByTestId("back-button");
+  fireEvent.click(backButton);
+  expect(screen.getByText("\"Share, Discover, Savor\"")).toBeInTheDocument(); //Check that if we are in the homepage
+
+  /*We are at the login homepage
+  Test the "Create New Account" button if it worked correctly*/
+  const createAccounButton = screen.getByText("Create New Account");
+  expect(createAccounButton).toBeInTheDocument();
+  fireEvent.click(createAccounButton);
+  expect(screen.getByText("Create Account")).toBeInTheDocument(); //Check that if we are in the creation page
+
+  /*We are at the Recover Password Page. Now check the back button on this page
+    We will be back to the homepage */
+  backButton = screen.getByTestId("back-button");
+  fireEvent.click(backButton);
+  expect(screen.getByText("\"Share, Discover, Savor\"")).toBeInTheDocument(); //Check that if we are in the homepage
+
+
+})

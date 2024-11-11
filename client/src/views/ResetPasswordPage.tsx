@@ -7,7 +7,7 @@ export const ResetPasswordPage = () => {
     <div className="reset-pass-page">
       <div>
         <Link to="/">
-          <button className="back-button">
+          <button className="back-button" data-testid="back-button">
             <i className="bi bi-box-arrow-in-left" style={{ fontSize: "80px" }}></i>
             Back
           </button>
@@ -21,7 +21,7 @@ export const ResetPasswordPage = () => {
           </div>
           <div className="form-container">
             <form className="reset-form form-group">
-              <p className="instruction">
+              <p className="instruction" data-testid="instructions">
                 Enter your email address! <br />
                 We will send you an email with instructions to reset your password
               </p>

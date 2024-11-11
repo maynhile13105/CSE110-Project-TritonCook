@@ -55,7 +55,7 @@ const LoginForm = () => {
             type="text"
             name="username"
             id="username"
-            placeholder="Enter username"
+            placeholder="Enter Username"
             required
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
