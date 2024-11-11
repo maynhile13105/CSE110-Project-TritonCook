@@ -98,7 +98,25 @@
   font-weight: 500;
   color: #C1C1BC;
   cursor: pointer;
-  gap: 20px;
+  justify-content: space-between;
+}
+
+.history-item-content {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between icon and text */
+}
+
+.delete-history-item {
+  background: none;
+  border: none;
+  color: #C1C1BC;
+  font-size: 30px;
+  cursor: pointer;
+  
+}
+.delete-history-item:hover {
+  color: #000000; /* Change color on hover */
 }
 
 .history-item:hover {
@@ -234,6 +252,4 @@
   line-height: 1;
   color: #000000;
 }
-
-
   
