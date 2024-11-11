@@ -105,6 +105,7 @@ test('renders account creation page', () => {
   const confirmPassword = screen.getByText("Confirm Password");
   expect(confirmPassword).toBeInTheDocument();
 });
+<<<<<<< HEAD
 
 test('linked pages', () => {
   render(
@@ -146,4 +147,4 @@ test('linked pages', () => {
   expect(screen.getByText("\"Share, Discover, Savor\"")).toBeInTheDocument(); //Check that if we are in the homepage
 
 
-})
+});
