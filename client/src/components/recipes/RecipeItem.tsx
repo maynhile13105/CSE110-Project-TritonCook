@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { Recipe } from "../../types/types";
 import { RecipeContext } from "../../context/RecipeContext";
 import './RecipeItem.css'
+import { Link } from "react-router-dom";
 
 const RecipeItem = (currentRecipe: Recipe) => {
   const { recipes, setRecipes } = useContext(RecipeContext);
@@ -22,7 +23,7 @@ const RecipeItem = (currentRecipe: Recipe) => {
         <br />Ingredients: {currentRecipe.ingredients.join(', ')}
       </div>
 
-      <div className='post-see-details'>...See Details</div>
+      <div className='post-see-details'><Link to={"#"}>...See Details</Link></div>
       <div>
         <img src={currentRecipe.image} className="post-img" />
       </div>

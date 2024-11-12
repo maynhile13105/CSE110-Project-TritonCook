@@ -9,3 +9,8 @@
     list-style-type: none;
     justify-content: center;
 }
+
+.post-list ul{
+    display: grid;
+    grid-template-columns: 2;
+}

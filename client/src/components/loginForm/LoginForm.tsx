@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "../../css/LoginForm.css";
+import "../../css/login/LoginForm.css";
 import { Link } from "react-router-dom";
 import { GoogleCredentialResponse } from "../../types/types";
 import { useNavigate } from "react-router-dom";
 
 
 const LoginForm = () => {
-
-  const navigate = useNavigate();
 
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
@@ -99,9 +97,12 @@ const LoginForm = () => {
       <div style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>New to TritonCook?</div>
 
       <div className="CreateAccount">
-        <Link to="/create-account" className="create-account-button">
-          Create New Account
-        </Link>
+        <div className="create-account-button">
+          <Link to="/create-account" className="create-account-link">
+            <span>Create New Account</span>
+          </Link>
+        </div>
+        
       </div>
 
       <div style={{ marginLeft: "45%", padding: "10px", fontSize: "35px" }}>Or</div>

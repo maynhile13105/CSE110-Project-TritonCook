@@ -1,13 +1,12 @@
 main{
-    /*position: sticky; 
+    position: sticky; 
     top: 0;
-    z-index: 1000; for sticky later*/
-    width: 100vw;
-    height: 94px;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 2px solid #b0e0e2;
+    background-color: #00bfff;
 }
 
 ul{

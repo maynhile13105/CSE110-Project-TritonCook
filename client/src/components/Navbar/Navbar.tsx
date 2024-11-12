@@ -31,7 +31,7 @@ const Navbar = () => {
           <li className='logout'><Link to='/home'>
           <img src='images/logout.svg' alt='logout'/>
           </Link></li>
-          <li className='profile'><Link to='/home'>
+          <li className='profile'><Link to='/account'>
           <img src='images/profile.svg' alt='profile'/>
           </Link></li>
         </ul>

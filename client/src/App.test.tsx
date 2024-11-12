@@ -10,9 +10,9 @@ global.google = {
 
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import LoginHomepage from './views/LoginHomepage';
-import ResetPasswordPage from './views/ResetPasswordPage';
-import CreateAccountPage from './views/CreateAccountPage';
+import LoginHomepage from './views/Login/LoginHomepage';
+import ResetPasswordPage from './views/Login/ResetPasswordPage';
+import CreateAccountPage from './views/Login/CreateAccountPage';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 test('renders login page', () => {

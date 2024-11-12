@@ -1,13 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useContext, useEffect } from "react";
-import { Recipe } from '../../types/types';
+import { useContext } from "react";
 import { RecipeContext } from '../../context/RecipeContext';
 import RecipeItem from './RecipeItem';
-import './RecipeList.css'
-
 const RecipeList = () => {
-  const {recipes, setRecipes} = useContext(RecipeContext); 
+  const {recipes} = useContext(RecipeContext); 
   return (
     <div className='main-div'>
       <ul className='post-list'>
