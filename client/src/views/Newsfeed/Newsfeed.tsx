@@ -3,6 +3,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import '../../css/Newsfeed.css'
 import Sidebar from '../../components/Navbar/Sidebar';
 import RecipeList from '../../components/recipes/RecipeList';
+import { Outlet } from 'react-router-dom';
 
 const Newsfeed = () => {
   return (
@@ -15,7 +16,7 @@ const Newsfeed = () => {
           <Sidebar />
         </div>
         <div className='page-content'>
-          <RecipeList />
+          <Outlet />
         </div>
       </div>  
     </div>

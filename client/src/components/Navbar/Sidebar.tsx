@@ -10,7 +10,6 @@ const Sidebar = () => {
             <div><Link to="#"><img id="friends-icon" src='images/friends-icon.svg'/>Friends</Link></div>
             <div><Link to="#"><img id="filter-icon" src='images/filter-icon.svg'/>Filter</Link></div>
         </div>
-      <Outlet />
     </div>
   );
 };

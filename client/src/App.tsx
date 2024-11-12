@@ -4,6 +4,7 @@ import ResetPasswordPage from "./views/Login/ResetPasswordPage";
 import WelcomePage from "./views/Login/WelcomePage";
 import CreateAccountPage from "./views/Login/CreateAccountPage";
 import Newsfeed from "./views/Newsfeed/Newsfeed";
+import RecipeList from "./components/recipes/RecipeList";
 
 function App() {
   return (
@@ -13,7 +14,9 @@ function App() {
         <Route path="/welcome" element={<WelcomePage />} />
         <Route path="/reset-pass" element={<ResetPasswordPage />} />
         <Route path="/create-account" element={<CreateAccountPage />} />
-        <Route path="/home" element={<Newsfeed />} />
+        <Route path="/home" element={<Newsfeed />} >
+          <Route index element={<RecipeList />} />
+        </Route >
       </Routes>
     </div>
 
