@@ -5,20 +5,29 @@ body {
   margin: 0;
 }
 
-.under-navbar{
+.under-navbar {
   display: flex;
   flex-direction: row;
 }
 
-.navbar, .sidebar{
+
+.topbar {
   position: sticky;
+  top: 0;
   z-index: 1000;
 }
-.sidebar{
-  border-right: 1px solid white ;
+
+.sidebar {
+  position: sticky;
+  top: 120px;
+  align-self: flex-start;
+  height: calc(100vh - 120px);
+  z-index: 500;
+  border-right: 1px solid white;
   width: 15%;
   min-width: 500px;
 }
-.page-content{
+
+.page-content {
   width: 100%;
 }

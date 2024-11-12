@@ -1,8 +1,7 @@
 import React from 'react';
-import Navbar from '../../components/Navbar/Navbar';
 import '../../css/Newsfeed.css'
+import Navbar from '../../components/Navbar/Navbar';
 import Sidebar from '../../components/Navbar/Sidebar';
-import RecipeList from '../../components/recipes/RecipeList';
 import { Outlet } from 'react-router-dom';
 
 const Newsfeed = () => {
@@ -18,9 +17,9 @@ const Newsfeed = () => {
         <div className='page-content'>
           <Outlet />
         </div>
-      </div>  
+      </div>
     </div>
-    
+
   );
 }
 
