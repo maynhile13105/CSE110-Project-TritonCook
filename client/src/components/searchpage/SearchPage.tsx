@@ -61,7 +61,13 @@ const SearchPage: React.FC = () => {
 
   return (
     <div className="search-page">
-        <div className={`search-bar ${isDropdownVisible ? 'expanded' : ''}`}>
+        <div className={`search-bar ${isDropdownVisible && historyItems.length > 0 ? 'expanded' : ''}`}
+          style={{
+            height: isDropdownVisible && historyItems.length > 0
+              ? `${Math.min(20 + historyItems.length * 8, 80)}vh` // Increment height by 6vh per item up to max 60vh
+              : '13vh', // Initial height
+          }}
+        >
           <input 
             type="text" 
             placeholder="Search..." 
@@ -173,3 +179,4 @@ const SearchPage: React.FC = () => {
 }
 
 export default SearchPage;
+
