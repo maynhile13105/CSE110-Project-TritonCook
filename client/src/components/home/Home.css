@@ -6,10 +6,11 @@ div.container{
 
 
 div.sidebar {
-    width: 25%;
-    height: 100vw;
+    width: 15%;
+    height: 100vh;
     padding: 20px;
     border-right: 2px solid #b0e0e2;
+    align-items: center;
 }
 
 div.feed {
@@ -21,4 +22,45 @@ ul.buttons{
     display: flex;
     flex-direction: column;
     gap: 50px;
+    list-style-type: none;
+    align-items: center;
+}
+
+ul.buttons li {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+li a {
+    text-decoration: none;
+    color: #000000; 
+    font-size: 16px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+img[alt="profileside"] {
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+}
+
+img[alt="favorite"] {
+    width: 80px;
+    height: 80px;
+    margin-right: 14px;
+}
+
+img[alt="friends"] {
+    width: 60px;
+    height: 60px;
+    margin-right: 22px;
+}
+
+img[alt="filter"] {
+    width: 60px;
+    height: 60px;
+    margin-right: 18px;
 }

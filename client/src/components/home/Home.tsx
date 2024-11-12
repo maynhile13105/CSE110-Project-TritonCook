@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Home.css'
 
 const Home = () => {
@@ -6,10 +7,10 @@ const Home = () => {
     <div className='container'>
       <div className='sidebar'>
         <ul className='buttons'>
-          <li><a href=''></a>Profile</li>
-          <li><a href=''></a>Favorite</li>
-          <li><a href=''></a>Friends</li>
-          <li><a href=''></a>Filters</li>
+          <li><Link to='/home/recipes'><img src='images/profile.svg' alt='profileside'/>Profile</Link></li>
+          <li><Link to=''><img src='images/favorite.svg' alt='favorite'/>Favorite</Link></li>
+          <li><Link to=''><img src='images/friends.svg' alt='friends'/>Friends</Link></li>
+          <li><Link to=''><img src='images/filter.svg' alt='filter'/>Filters</Link></li>
         </ul>
       </div>
       <div className='feed'>
