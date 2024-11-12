@@ -8,7 +8,7 @@ const RecipeItem = (currentRecipe: Recipe) => {
   const { recipes, setRecipes } = useContext(RecipeContext);
 
   return (
-    <li className="post-box">
+    <div className="post-box">
       <div className="user-inf">
         <div className="close">
           <img src='/profile.svg' />
@@ -33,7 +33,7 @@ const RecipeItem = (currentRecipe: Recipe) => {
         <img src='/Comment.svg' />
         <img src='/Report.svg' />
       </div>
-    </li>
+    </div>
   );
 };
 

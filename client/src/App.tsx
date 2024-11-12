@@ -4,6 +4,7 @@ import ResetPasswordPage from "./views/Login/ResetPasswordPage";
 import WelcomePage from "./views/Login/WelcomePage";
 import CreateAccountPage from "./views/Login/CreateAccountPage";
 import Newsfeed from "./views/Newsfeed/Newsfeed";
+
 function App() {
   return (
     <div>
