@@ -1,4 +1,4 @@
-import "../../css/login/WelcomePage.css"
+import "./WelcomePage.css"
 import { Link } from 'react-router-dom';
 
 export const WelcomePage = () => {

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useContext } from "react";
 import { RecipeContext } from '../../context/RecipeContext';
 import RecipeItem from './RecipeItem';
-import '../../css/RecipeList.css';
+import './RecipeList.css';
 
 const RecipeList = () => {
   const {recipes} = useContext(RecipeContext); 

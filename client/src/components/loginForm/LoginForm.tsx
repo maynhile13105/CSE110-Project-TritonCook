@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "../../css/login/LoginForm.css";
+import "./LoginForm.css";
 import { Link } from "react-router-dom";
 import { GoogleCredentialResponse } from "../../types/types";
-import { useNavigate } from "react-router-dom";
 
 
 const LoginForm = () => {
