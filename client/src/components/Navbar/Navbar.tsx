@@ -36,7 +36,6 @@ const Navbar = () => {
           </Link></li>
         </ul>
       </main>
-      <Outlet />
     </div>
   );
 };

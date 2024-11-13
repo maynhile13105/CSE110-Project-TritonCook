@@ -7,6 +7,7 @@ const Newsfeed = () => {
   return (
     <div>
       <Navbar />
+      <Home />
     </div>
   );
 }
