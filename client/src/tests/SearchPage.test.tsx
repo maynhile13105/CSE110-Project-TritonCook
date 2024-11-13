@@ -1,20 +1,29 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import SearchPage from './components/searchpage/SearchPage';
+import SearchPage from '../components/searchpage/SearchPage';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('SearchPage Component', () => {
-  
+
   // Test that the component renders without crashing
   test('renders SearchPage component', () => {
-    render(<SearchPage />);
+    render(
+      <MemoryRouter>
+        <SearchPage />
+      </MemoryRouter>
+    );
     const searchInput = screen.getByPlaceholderText('Search...');
     expect(searchInput).toBeInTheDocument();
   });
 
   // Test the popup visibility based on input value
   test('shows popup when search input has value and hides when empty', () => {
-    render(<SearchPage />);
+    render(
+      <MemoryRouter>
+        <SearchPage />
+      </MemoryRouter>
+    );
     const searchInput = screen.getByPlaceholderText('Search...');
 
     // Type in the search input to trigger the popup
@@ -29,7 +38,11 @@ describe('SearchPage Component', () => {
   // Test the history dropdown functionality
 
   test('shows 5 history items when dropdown is clicked', () => {
-    render(<SearchPage />);
+    render(
+      <MemoryRouter>
+        <SearchPage />
+      </MemoryRouter>
+    );
     const searchInput = screen.getByPlaceholderText('Search...');
     fireEvent.click(searchInput);
     const historyItems = screen.getAllByText(/History Search/i);
@@ -37,7 +50,11 @@ describe('SearchPage Component', () => {
   });
 
   test('shows a total of 10 items available with scrolling', () => {
-    render(<SearchPage />);
+    render(
+      <MemoryRouter>
+        <SearchPage />
+      </MemoryRouter>
+    );
     const searchInput = screen.getByPlaceholderText('Search...');
     fireEvent.click(searchInput);
     const historyItems = screen.getAllByText(/History Search/i);
@@ -45,7 +62,11 @@ describe('SearchPage Component', () => {
   });
 
   test('clicking a history item places text into input', () => {
-    render(<SearchPage />);
+    render(
+      <MemoryRouter>
+        <SearchPage />
+      </MemoryRouter>
+    );
     const searchInput = screen.getByPlaceholderText('Search...');
     fireEvent.click(searchInput);
     const historyItem = screen.getByText('History Search 1');
@@ -54,7 +75,11 @@ describe('SearchPage Component', () => {
   });
 
   test('typing in input hides history dropdown', () => {
-    render(<SearchPage />);
+    render(
+      <MemoryRouter>
+        <SearchPage />
+      </MemoryRouter>
+    );
     const searchInput = screen.getByPlaceholderText('Search...');
     fireEvent.click(searchInput);
     fireEvent.change(searchInput, { target: { value: 'Hello' } });
@@ -63,7 +88,11 @@ describe('SearchPage Component', () => {
   });
 
   test('clicking delete button clears input and shows dropdown', () => {
-    render(<SearchPage />);
+    render(
+      <MemoryRouter>
+        <SearchPage />
+      </MemoryRouter>
+    );
     const searchInput = screen.getByPlaceholderText('Search...');
     const deleteButton = screen.getByRole('button', { name: /delete/i });
 

@@ -11,9 +11,11 @@
 
 .search-bar {
   box-sizing: border-box;
-  width: 90%; /* Adjusts with screen width */
+  width: 90%;
+  /* Adjusts with screen width */
   max-width: 1000px;
-  height: 15vh; /* Scales height based on viewport */
+  height: 15vh;
+  /* Scales height based on viewport */
   max-height: 100px;
   border-radius: 100px;
   border: 1px solid #F7FFE2;
@@ -29,7 +31,8 @@
 }
 
 .search-bar.expanded {
-  height: 60vh; /* Scales height based on viewport */
+  height: 60vh;
+  /* Scales height based on viewport */
   max-height: 1000px;
   border-radius: 50px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -45,7 +48,7 @@
 .delete-icon {
   position: absolute;
   top: 18px;
-  right: 20px; 
+  right: 20px;
   cursor: pointer;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
@@ -74,7 +77,7 @@
   color: #D9D9D9;
 }
 
-.search-separator{
+.search-separator {
   width: 100%;
   height: 2px;
   background-color: black;
@@ -85,7 +88,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-height: calc(5 * 5rem); 
+  max-height: calc(5 * 5rem);
   overflow-y: auto;
 }
 
@@ -104,7 +107,8 @@
 .history-item-content {
   display: flex;
   align-items: center;
-  gap: 20px; /* Space between icon and text */
+  gap: 20px;
+  /* Space between icon and text */
 }
 
 .delete-history-item {
@@ -113,10 +117,12 @@
   color: #C1C1BC;
   font-size: 30px;
   cursor: pointer;
-  
+
 }
+
 .delete-history-item:hover {
-  color: #000000; /* Change color on hover */
+  color: #000000;
+  /* Change color on hover */
 }
 
 .history-item:hover {
@@ -180,7 +186,8 @@
   color: #2047A3;
 }
 
-.line-8, .line-9 {
+.line-8,
+.line-9 {
   width: 25px;
   height: 0px;
   border: 4px solid #2047A3;
