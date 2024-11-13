@@ -5,6 +5,7 @@ import WelcomePage from "./views/Login/WelcomePage";
 import CreateAccountPage from "./views/Login/CreateAccountPage";
 import Newsfeed from "./views/Newsfeed/Newsfeed";
 import RecipeList from "./components/recipes/RecipeList";
+import SavedList from "./components/saved/SavedList";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/create-account" element={<CreateAccountPage />} />
         <Route path="/home" element={<Newsfeed />} >
           <Route index element={<RecipeList />} />
+        <Route path='/home/saved-recipes' element={<SavedList />} />
         </Route >
       </Routes>
     </div>
