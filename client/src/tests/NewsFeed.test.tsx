@@ -1,11 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import RecipeList from './components/recipes/RecipeList';
+import RecipeList from '../components/recipes/RecipeList';
+import { MemoryRouter } from 'react-router-dom';
 
 // Currently testing dummy data for frontend
 test('renders news feed', () => {
-  render(<RecipeList />);
-  
+  render(
+    <MemoryRouter>
+      <RecipeList />
+    </MemoryRouter>
+  );
+
   const username = screen.getAllByText("Username");
   expect(username[0]).toBeInTheDocument();
 

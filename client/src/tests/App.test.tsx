@@ -10,9 +10,9 @@ global.google = {
 
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import LoginHomepage from './views/Login/LoginHomepage';
-import ResetPasswordPage from './views/Login/ResetPasswordPage';
-import CreateAccountPage from './views/Login/CreateAccountPage';
+import LoginHomepage from '../views/Login/LoginHomepage';
+import ResetPasswordPage from '../views/Login/ResetPasswordPage';
+import CreateAccountPage from '../views/Login/CreateAccountPage';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 test('renders login page', () => {
@@ -150,8 +150,6 @@ test('navigates to Reset Password page on button click', () => {
   expect(screen.getByText("\"Share, Discover, Savor\"")).toBeInTheDocument(); //Check that if we are in the homepage
 
 });
-
-
 
 test('navigates to Create Account page on button click', () => {
   render(
