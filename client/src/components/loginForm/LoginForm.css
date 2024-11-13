@@ -20,8 +20,7 @@
 }
 
 .sign-in-button,
-.create-account-button,
-#buttonDiv {
+#buttonDiv, .create-account-button {
   padding: 15px;
   width: 95%;
   font-size: 30px;
@@ -50,4 +49,9 @@
   margin-right: 25px;
   padding-bottom: 15px;
   font-size: 35px;
+}
+
+.create-account-link{
+  text-decoration: none;
+  color: white;
 }

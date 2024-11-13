@@ -1,0 +1,33 @@
+body {
+  background-image: linear-gradient(to top, #efe68c, #00bfff);
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 0;
+}
+
+.under-navbar {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.sidebar {
+  position: sticky;
+  top: 120px;
+  align-self: flex-start;
+  height: calc(100vh - 120px);
+  z-index: 500;
+  border-right: 1px solid white;
+  width: 15%;
+  min-width: 500px;
+}
+
+.page-content {
+  width: 100%;
+}

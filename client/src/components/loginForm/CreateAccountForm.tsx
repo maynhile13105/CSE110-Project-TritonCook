@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../css/CreateAccountForm.css";
+import "./CreateAccountForm.css";
 const CreateAccountForm = () => {
 
   const [userName, setUserName] = useState("");

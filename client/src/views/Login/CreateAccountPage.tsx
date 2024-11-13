@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import CreateAccountForm from "../components/loginForm/CreateAccountForm";
-import "../css/CreateAccountPage.css"
+import CreateAccountForm from "../../components/loginForm/CreateAccountForm";
+import "./CreateAccountPage.css"
 
 export const CreateAccountPage = () => {
   return (

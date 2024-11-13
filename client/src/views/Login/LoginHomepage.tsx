@@ -1,5 +1,5 @@
-import LoginForm from "../components/loginForm/LoginForm";
-import "../css/LoginHomepage.css";
+import LoginForm from "../../components/loginForm/LoginForm";
+import "./LoginHomepage.css";
 
 export const LoginHomepage = () => {
   return (
