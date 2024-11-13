@@ -12,7 +12,7 @@ const Navbar = () => {
           alt='logo'/>
           </Link></li>
           <li className='notif'><Link to='/home'>
-          <img src='images/notif-bell.svg'
+          <img className='notifImage' src='images/notif-bell.svg'
           alt='notif'/>
           </Link></li>
         </ul>

@@ -64,3 +64,8 @@ img[alt="filter"] {
     height: 60px;
     margin-right: 18px;
 }
+
+ul.filterdropdown{
+    display: flex;
+    flex-direction: column;
+}

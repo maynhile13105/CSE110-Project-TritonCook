@@ -41,10 +41,27 @@ ul.right{
     align-items: center;
 }
 
-li.notif{
+img.notifImage{
     margin-top: 10px;
+    margin-left: -10px;
 }
 
 img.postImage{
     width: 50px;
+}
+
+.notif{
+    padding: 10px 10px 5px 10px;
+}
+
+.logout{
+    padding: 30px;
+}
+
+.post, .home, .search{
+    padding: 20px;
+}
+
+.notif:hover, .post:hover, .home:hover, .search:hover, .logout:hover{
+    background-color: #FFF1C2;
 }

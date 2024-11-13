@@ -12,6 +12,11 @@ const Home = () => {
           <li><Link to=''><img src='images/friends.svg' alt='friends'/>Friends</Link></li>
           <li><Link to=''><img src='images/filter.svg' alt='filter'/>Filters</Link></li>
         </ul>
+        <ul className='filterdropdown'>
+          <li><Link to=''>Ingredients</Link></li>
+          <li><Link to=''>Estimated Time</Link></li>
+          <li><Link to=''>Cuisine</Link></li>
+        </ul>
       </div>
       <div className='feed'>
         <h1>TritonCook</h1>
