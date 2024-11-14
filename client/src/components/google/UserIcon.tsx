@@ -37,9 +37,9 @@ function UserIcon() {
   return (
     <div>
       {userProfile.id !== "" ? (
-          <img src={userProfile.picture} alt="User Avatar" />
+          <img src={userProfile.picture} alt="profile" />
       ) : (
-        <img src='images/profile.svg' alt='User Avatar' />
+        <img src='images/profile.svg' alt='profile' />
       )}
     </div>
   );
