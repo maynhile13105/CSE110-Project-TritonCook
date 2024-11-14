@@ -25,8 +25,8 @@ const Navbar = () => {
           <li className='home'><Link to='/home'>
             <img src='images/home.svg' alt='home' />
           </Link></li>
-          <li className='search'><Link to='/home/recipes'>
-            <img src='images/search.svg' alt='search' />
+          <li className='search'><Link to='/home/search'>
+            <img src='images/search.svg' alt='search'/>
           </Link></li>
         </ul>
         <ul className='right'>
