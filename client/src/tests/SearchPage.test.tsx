@@ -38,9 +38,15 @@ describe('SearchPage Component', () => {
       </MemoryRouter>
     );
     const searchInput = screen.getByPlaceholderText('Search...');
+
+    // Type into the search input to populate it
     fireEvent.change(searchInput, { target: { value: 'Test search' } });
-    const deleteIcon = screen.getByRole('button', { name: /delete-icon/i });
+
+    // Select the delete icon using a CSS selector
+    const deleteIcon = screen.getByTestId('delete-icon'); // Ensure that the delete icon in SearchPage.tsx has data-testid="delete-icon"
     fireEvent.click(deleteIcon);
+
+    // Check if the dropdown is now visible
     const dropdown = screen.getByText('Example History Search 1');
     expect(dropdown).toBeVisible();
   });
@@ -53,11 +59,21 @@ describe('SearchPage Component', () => {
       </MemoryRouter>
     );
     const searchInput = screen.getByPlaceholderText('Search...');
+    
+    // Type a new search term
     fireEvent.change(searchInput, { target: { value: 'New Search Term' } });
     fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter' });
-    const newHistoryItem = screen.getByText('New Search Term');
+    
+    // Open the dropdown to display updated history items
+    fireEvent.click(searchInput);
+    
+    // Check that the new history item is now in the dropdown list
+    const newHistoryItem = screen.getByText((content, element) => 
+      element?.textContent === 'New Search Term'
+    );
     expect(newHistoryItem).toBeInTheDocument();
   });
+
 
   // Test that clicking a dropdown item populates the search input
   test('populates input when dropdown item is clicked', () => {
@@ -95,14 +111,18 @@ describe('SearchPage Component', () => {
       </MemoryRouter>
     );
     const searchInput = screen.getByPlaceholderText('Search...');
-    fireEvent.change(searchInput, { target: { value: 'Delete Test' } });
-    fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter' });
-    const historyItem = screen.getByText('Delete Test');
+    fireEvent.click(searchInput); // Open the dropdown to display history items
+
+    // Check that 'Example History Search 1' is initially present
+    const historyItem = screen.getByText('Example History Search 1');
     expect(historyItem).toBeInTheDocument();
 
-    const deleteButton = screen.getByRole('button', { name: /delete-history-item/i });
+    // Find the delete button next to the history item and click it
+    const deleteButton = screen.getAllByRole('button', { name: /x/i })[0];
     fireEvent.click(deleteButton);
-    expect(historyItem).not.toBeInTheDocument();
+
+    // Verify that 'Example History Search 1' is no longer present
+    expect(screen.queryByText('Example History Search 1')).not.toBeInTheDocument();
   });
 
   // Test that the try-again button in the pop-up closes the pop-up
@@ -121,6 +141,10 @@ describe('SearchPage Component', () => {
     expect(popup).not.toBeInTheDocument();
   });
 });
+
+
+
+
 
 
 
