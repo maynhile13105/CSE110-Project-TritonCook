@@ -5,7 +5,9 @@ const SearchPage: React.FC = () => {
   const [searchInput, setSearchInput] = useState('');
   const [isPopUpVisible, setPopUpVisible] = useState(false);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const [historyItems, setHistoryItems] = useState<string[]>([]); // Start with an empty history list
+  const [historyItems, setHistoryItems] = useState<string[]>([
+    'Example History Search 1'
+  ]); // Start with an empty history list
 
   // Handle changes in the search input field
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
