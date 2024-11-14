@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { GoogleCredentialResponse } from "../../types/types";
 import "./LoginButton.css"
+import { useNavigate } from "react-router-dom";
 
 const LoginButton = () => {
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  const navigate = useNavigate();
 
   useEffect(() => {
     /* global google */
@@ -34,6 +36,7 @@ const LoginButton = () => {
       const data = await res.json();
       console.log('JWT from server:', data);
       localStorage.setItem('token', data.sessionToken);
+      navigate("/home");
     } catch (error) {
       console.error('Failed to authenticate:', error);
     }
