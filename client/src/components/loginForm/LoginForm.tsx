@@ -1,49 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./LoginForm.css";
 import { Link } from "react-router-dom";
-import { GoogleCredentialResponse } from "../../types/types";
+import LoginButton from "../google/LoginButton";
 
 
 const LoginForm = () => {
-
-  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-
-  useEffect(() => {
-    /* global google */
-    google.accounts.id.initialize({
-      client_id: clientId,
-      callback: handleCredentialResponse,
-    });
-
-    google.accounts.id.renderButton(
-      document.getElementById('googleButton'),
-      { theme: 'filled_blue', size: 'large' } // Customize button options as needed
-    );
-
-    google.accounts.id.prompt();
-  }, []);
-
-  const handleCredentialResponse = async (response: GoogleCredentialResponse) => {
-    const token = response.credential;
-    console.log('Encoded JWT ID token:', token);
-
-    try {
-      const res = await fetch('http://localhost:8080/api/google-signin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token }),
-      });
-
-      const data = await res.json();
-      console.log('JWT from server:', data)
-    } catch (error) {
-      console.error('Failed to authenticate:', error);
-    }
-  };
-
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-
 
   return (
     <div className="login-box">
@@ -101,12 +64,12 @@ const LoginForm = () => {
             <span>Create New Account</span>
           </Link>
         </div>
-        
+
       </div>
 
       <div style={{ marginLeft: "45%", padding: "10px", fontSize: "35px" }}>Or</div>
 
-      <div id="googleButton" data-testid="googleButton"></div>
+      <LoginButton />
 
     </div>
   );
