@@ -17,27 +17,8 @@ describe('SearchPage Component', () => {
     expect(searchInput).toBeInTheDocument();
   });
 
-  // Test the popup visibility based on input value
-  test('shows popup when search input has value and hides when empty', () => {
-    render(
-      <MemoryRouter>
-        <SearchPage />
-      </MemoryRouter>
-    );
-    const searchInput = screen.getByPlaceholderText('Search...');
-
-    // Type in the search input to trigger the popup
-    fireEvent.change(searchInput, { target: { value: 'Recipe' } });
-    expect(screen.getByText('No Recipes Found!')).toBeInTheDocument();
-
-    // Clear the search input to hide the popup
-    fireEvent.change(searchInput, { target: { value: '' } });
-    expect(screen.queryByText('No Recipes Found!')).not.toBeInTheDocument();
-  });
-
-  // Test the history dropdown functionality
-
-  test('shows 5 history items when dropdown is clicked', () => {
+  // Test that the dropdown shows up when the input is clicked
+  test('shows dropdown when input is clicked', () => {
     render(
       <MemoryRouter>
         <SearchPage />
@@ -45,11 +26,41 @@ describe('SearchPage Component', () => {
     );
     const searchInput = screen.getByPlaceholderText('Search...');
     fireEvent.click(searchInput);
-    const historyItems = screen.getAllByText(/History Search/i);
-    expect(historyItems.length).toBe(5);
+    const dropdown = screen.getByText('Example History Search 1');
+    expect(dropdown).toBeVisible();
   });
 
-  test('shows a total of 10 items available with scrolling', () => {
+  // Test that clearing the input shows the dropdown again
+  test('shows dropdown when input is cleared', () => {
+    render(
+      <MemoryRouter>
+        <SearchPage />
+      </MemoryRouter>
+    );
+    const searchInput = screen.getByPlaceholderText('Search...');
+    fireEvent.change(searchInput, { target: { value: 'Test search' } });
+    const deleteIcon = screen.getByRole('button', { name: /delete-icon/i });
+    fireEvent.click(deleteIcon);
+    const dropdown = screen.getByText('Example History Search 1');
+    expect(dropdown).toBeVisible();
+  });
+
+  // Test adding a new history item on Enter key press
+  test('adds new history item on Enter key press', () => {
+    render(
+      <MemoryRouter>
+        <SearchPage />
+      </MemoryRouter>
+    );
+    const searchInput = screen.getByPlaceholderText('Search...');
+    fireEvent.change(searchInput, { target: { value: 'New Search Term' } });
+    fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter' });
+    const newHistoryItem = screen.getByText('New Search Term');
+    expect(newHistoryItem).toBeInTheDocument();
+  });
+
+  // Test that clicking a dropdown item populates the search input
+  test('populates input when dropdown item is clicked', () => {
     render(
       <MemoryRouter>
         <SearchPage />
@@ -57,51 +68,59 @@ describe('SearchPage Component', () => {
     );
     const searchInput = screen.getByPlaceholderText('Search...');
     fireEvent.click(searchInput);
-    const historyItems = screen.getAllByText(/History Search/i);
-    expect(historyItems.length).toBeLessThanOrEqual(10); // Adjust as needed if scroll test is feasible
+    const dropdownItem = screen.getByText('Example History Search 1');
+    fireEvent.click(dropdownItem);
+    expect(searchInput).toHaveValue('Example History Search 1');
   });
 
-  test('clicking a history item places text into input', () => {
+  // Test that the "No Recipes Found" pop-up appears when Enter is pressed with input
+  test('shows pop-up on Enter key with input', () => {
     render(
       <MemoryRouter>
         <SearchPage />
       </MemoryRouter>
     );
     const searchInput = screen.getByPlaceholderText('Search...');
-    fireEvent.click(searchInput);
-    const historyItem = screen.getByText('History Search 1');
-    fireEvent.click(historyItem);
-    expect(searchInput).toHaveValue('History Search 1');
+    fireEvent.change(searchInput, { target: { value: 'Recipe Search' } });
+    fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter' });
+    const popup = screen.getByText('No Recipes Found!');
+    expect(popup).toBeVisible();
   });
 
-  test('typing in input hides history dropdown', () => {
+  // Test that deleting a history item removes it from the list
+  test('deletes history item when delete button is clicked', () => {
     render(
       <MemoryRouter>
         <SearchPage />
       </MemoryRouter>
     );
     const searchInput = screen.getByPlaceholderText('Search...');
-    fireEvent.click(searchInput);
-    fireEvent.change(searchInput, { target: { value: 'Hello' } });
-    const historyItems = screen.queryByText(/History Search/i);
-    expect(historyItems).toBeNull();
-  });
+    fireEvent.change(searchInput, { target: { value: 'Delete Test' } });
+    fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter' });
+    const historyItem = screen.getByText('Delete Test');
+    expect(historyItem).toBeInTheDocument();
 
-  test('clicking delete button clears input and shows dropdown', () => {
-    render(
-      <MemoryRouter>
-        <SearchPage />
-      </MemoryRouter>
-    );
-    const searchInput = screen.getByPlaceholderText('Search...');
-    const deleteButton = screen.getByRole('button', { name: /delete/i });
-
-    fireEvent.change(searchInput, { target: { value: 'Hello' } });
+    const deleteButton = screen.getByRole('button', { name: /delete-history-item/i });
     fireEvent.click(deleteButton);
-    expect(searchInput).toHaveValue('');
-    fireEvent.click(searchInput);
-    const historyItems = screen.getAllByText(/History Search/i);
-    expect(historyItems.length).toBe(5);
+    expect(historyItem).not.toBeInTheDocument();
+  });
+
+  // Test that the try-again button in the pop-up closes the pop-up
+  test('closes pop-up when try-again button is clicked', () => {
+    render(
+      <MemoryRouter>
+        <SearchPage />
+      </MemoryRouter>
+    );
+    const searchInput = screen.getByPlaceholderText('Search...');
+    fireEvent.change(searchInput, { target: { value: 'Recipe Search' } });
+    fireEvent.keyDown(searchInput, { key: 'Enter', code: 'Enter' });
+    const tryAgainButton = screen.getByText('Try again');
+    fireEvent.click(tryAgainButton);
+    const popup = screen.queryByText('No Recipes Found!');
+    expect(popup).not.toBeInTheDocument();
   });
 });
+
+
 
