@@ -90,7 +90,7 @@ const SearchPage: React.FC = () => {
 
           {/* Delete Icon - appears only when input is not empty */}
           {searchInput && (
-            <div className="delete-icon" onClick={handleClearInput}>
+            <div className="delete-icon" onClick={handleClearInput} data-testid="delete-icon">
               <svg width="20" height="20" viewBox="0 0 73 73" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g filter="url(#filter0_d_160_1524)">
                   <path d="M69 32.5C69 50.4493 54.4493 65 36.5 65C18.5507 65 4 50.4493 4 32.5C4 14.5507 18.5507 0 36.5 0C54.4493 0 69 14.5507 69 32.5Z" fill="#B3B3B3"/>
@@ -181,4 +181,6 @@ const SearchPage: React.FC = () => {
 }
 
 export default SearchPage;
+
+
 
