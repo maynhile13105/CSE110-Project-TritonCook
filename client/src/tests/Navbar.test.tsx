@@ -2,7 +2,6 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import Navbar from '../components/navbar/Navbar';
-
 describe('Navbar Component', () => {
   it('renders all buttons with icons', () => {
     render(
