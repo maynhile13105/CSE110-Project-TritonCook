@@ -1,7 +1,7 @@
 import React from 'react';
-import './Newsfeed.css';
-import Sidebar from '../../components/navbar/Sidebar';
-import Navbar from '../../components/navbar/Navbar';
+import './Newsfeed.css'
+import Navbar from '../../components/Navbar/Navbar';
+import Sidebar from '../../components/Navbar/Sidebar';
 import { Outlet } from 'react-router-dom';
 
 const Newsfeed = () => {

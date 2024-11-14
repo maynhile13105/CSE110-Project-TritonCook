@@ -34,7 +34,10 @@
   margin-top: 25px;
   color: white;
 }
-
+.create-account-button {
+  margin-left: 25px;
+  width: 87%;
+}
 .sign-in-button:hover,
 .create-account-button:hover {
   background-color: #B0E0E2;
