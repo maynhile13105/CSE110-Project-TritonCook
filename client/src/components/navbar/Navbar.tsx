@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import './Navbar.css';
 import UserIcon from '../google/UserIcon';
+import Logout from '../google/Logout';
 
 const Navbar = () => {
   return (
@@ -29,9 +30,7 @@ const Navbar = () => {
           </Link></li>
         </ul>
         <ul className='right'>
-          <li className='logout'><Link to='/home'>
-            <img src='images/logout.svg' alt='logout' />
-          </Link></li>
+          <Logout />
           <li className='profile'><Link to='/home'>
             <UserIcon />
           </Link></li>
