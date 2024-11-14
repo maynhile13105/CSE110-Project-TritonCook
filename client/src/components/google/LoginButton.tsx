@@ -32,7 +32,8 @@ const LoginButton = () => {
       });
 
       const data = await res.json();
-      console.log('JWT from server:', data)
+      console.log('JWT from server:', data);
+      localStorage.setItem('token', data.sessionToken);
     } catch (error) {
       console.error('Failed to authenticate:', error);
     }
