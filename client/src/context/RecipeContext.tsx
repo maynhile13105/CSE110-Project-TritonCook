@@ -4,6 +4,8 @@ import { Recipe } from "../types/types";
 interface RecipeContextType {
     recipes: Recipe[];
     setRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>;
+    favorites: Recipe[];
+    setFavorites: React.Dispatch<React.SetStateAction<Recipe[]>>;
 }
 
 const initialState: RecipeContextType = {
@@ -15,18 +17,25 @@ const initialState: RecipeContextType = {
         { id: 5, name: 'Healthy Salad', estimate: 15, ingredients: ['lettuce', 'eggs', 'avocado', 'salad dressing'], image: 'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2019/04/Cobb-Salad-4-1.jpg'},
       ],
     setRecipes: () => { },
+    favorites: [        
+      { id: 1, name: 'Instant Ramen', estimate: 10 , ingredients: ['water', 'noodles', 'egg'], image: 'https://static01.nyt.com/images/2018/05/01/dining/01COOKING-PERFECTINSTANTRAMEN1/01COOKING-PERFECTINSTANTRAMEN1-googleFourByThree-v2.jpg'},
+    ],
+    setFavorites: () => {},
 };
 
 export const RecipeContext = createContext<RecipeContextType>(initialState);
 
 export const RecipeProvider = (props: any) => {
     const [recipes, setRecipes] = useState<Recipe[]>(initialState.recipes);
+    const [favorites, setFavorites] = useState<Recipe[]>(initialState.favorites);
   
     return (
       <RecipeContext.Provider
         value={{
           recipes: recipes,
           setRecipes: setRecipes,
+          favorites: favorites,
+          setFavorites: setFavorites,
         }}
       >
         {props.children}
