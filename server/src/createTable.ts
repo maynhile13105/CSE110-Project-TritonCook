@@ -16,6 +16,15 @@ const initDB = async () => {
     picture TEXT
    );
  `);
+
+  // Create a "login" table if it doesn't exist
+  await db.exec(`
+   CREATE TABLE IF NOT EXISTS login (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    passwordHash TEXT NOT NULL
+   );
+`);
   return db;
 };
 

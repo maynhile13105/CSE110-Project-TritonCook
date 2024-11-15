@@ -1,6 +1,7 @@
 import { Response } from "express";
 import initDB from "./createTable";
-import { createGoogleEndpoints } from "./google/google-endpoints";
+import { createGoogleEndpoints } from "./api/google-endpoints";
+import { createLoginEndpoints } from "./api/login-endpoints";
 
 const express = require("express");
 const cors = require("cors");
@@ -26,6 +27,7 @@ app.listen(port, () => {
     res.status(200);
   });
 
+  createLoginEndpoints(app, db);
   createGoogleEndpoints(app, db);
 })();
 
