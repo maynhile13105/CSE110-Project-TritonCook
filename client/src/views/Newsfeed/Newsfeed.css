@@ -24,8 +24,7 @@ body {
   height: calc(100vh - 120px);
   z-index: 500;
   border-right: 1px solid white;
-  width: 15%;
-  min-width: 500px;
+  min-width: 18%
 }
 
 .page-content {
