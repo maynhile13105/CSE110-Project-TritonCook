@@ -40,4 +40,9 @@ export function createLoginEndpoints(app: any, db: Database) {
       res.status(500).json({ error: 'Internal server error.' });
     }
   });
+
+  app.post('/api/login', async (req: Request, res: Response) => {
+    // TODO: finish account creation api
+    res.status(500).json({ error: 'Internal server error.' });
+  });
 }

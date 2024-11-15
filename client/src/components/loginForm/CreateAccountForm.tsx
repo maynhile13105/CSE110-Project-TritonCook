@@ -1,15 +1,29 @@
 import React, { useEffect, useState } from "react";
 import "./CreateAccountForm.css";
+import { useNavigate } from "react-router-dom";
 const CreateAccountForm = () => {
-
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPass, setConfirmedPass] = useState("");
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+
+  const handleCreateAccount = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    // TODO: finish account creation implementation
+    try {
+      if (confirmedPass !== password) {
+        throw new Error("Passwords don't match");
+      }
+      navigate("/");
+    } catch (err) {
+      console.error("Creating account failed.", err);
+    }
+  };
 
   return (
     <div className="create-account-box">
-      <form action="" method="post" className="CreateAccountForm">
+      <form onSubmit={handleCreateAccount} className="CreateAccountForm">
         <div>
           <label>Username</label>
         </div>
