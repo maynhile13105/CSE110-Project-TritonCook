@@ -11,7 +11,7 @@ const RecipeList = () => {
       {recipes.map((recipe) => (
         <div className='post-item'>
           <RecipeItem key={recipe.id} id={recipe.id} name={recipe.name} estimate={recipe.estimate}
-            ingredients={recipe.ingredients} image={recipe.image} favorite={recipe.favorite}></RecipeItem>
+            ingredients={recipe.ingredients} result={recipe.result} favorite={recipe.favorite}></RecipeItem>
         </div>
       ))}
     </div>

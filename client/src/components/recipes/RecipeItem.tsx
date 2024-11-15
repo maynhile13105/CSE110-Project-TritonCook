@@ -39,9 +39,9 @@ const RecipeItem = (currentRecipe: Recipe) => {
         <br />Ingredients: {currentRecipe.ingredients.join(', ')}
       </div>
 
-      <div className='post-see-details'><Link to={"#"}>...See Details</Link></div>
+      <div className='post-see-details'><Link to={`/home/recipe/${currentRecipe.id}`}>...See Details</Link></div>
       <div>
-        <img src={currentRecipe.image} className="post-img" />
+        <img src={currentRecipe.result} className="post-img" />
       </div>
       <div className="horizontal-line"></div>
       <div className="user-inf">
