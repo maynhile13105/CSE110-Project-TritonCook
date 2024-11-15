@@ -3,6 +3,7 @@ import './Newsfeed.css'
 import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/navbar/Sidebar';
 import { Outlet } from 'react-router-dom';
+import { RecipeProvider } from '../../context/RecipeContext';
 
 const Newsfeed = () => {
   return (
@@ -15,7 +16,9 @@ const Newsfeed = () => {
           <Sidebar />
         </div>
         <div className='page-content'>
+          <RecipeProvider>
           <Outlet />
+          </RecipeProvider>
         </div>
       </div>
     </div>
