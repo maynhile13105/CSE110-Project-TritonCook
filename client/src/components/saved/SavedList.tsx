@@ -9,7 +9,8 @@ const SavedList = () => {
     <div className='recipes-container'>
       {favorites.map((favorite) => (
         <div className='post-item'>
-          <RecipeItem key={favorite.id} id={favorite.id} name={favorite.name} estimate={favorite.estimate} ingredients={favorite.ingredients} image={favorite.image}></RecipeItem>
+          <RecipeItem key={favorite.id} id={favorite.id} name={favorite.name} estimate={favorite.estimate} 
+          ingredients={favorite.ingredients} image={favorite.image} favorite={favorite.favorite}></RecipeItem>
         </div>
       ))}
     </div>

@@ -13,15 +13,13 @@ const RecipeItem = (currentRecipe: Recipe) => {
       recipe.id === id ? { ...recipe, favorite: !recipe.favorite } : recipe
     );
 
-    console.log("Updated Recipes:", updatedRecipes);
-
     setRecipes([...updatedRecipes]);
-    setFavorites([...favorites, currentRecipe]);
   }
 
   useEffect(() => {
-    console.log("Rendering RecipeItem with recipe:", currentRecipe);
-  }, [currentRecipe.favorite]); 
+    const updatedFavorites = recipes.filter(recipe => recipe.favorite);
+    setFavorites(updatedFavorites);
+  }, [recipes]);
 
   return (
     <div className="post-box">
@@ -33,7 +31,6 @@ const RecipeItem = (currentRecipe: Recipe) => {
         <button className='like-button' onClick={() => handleFavoriteClick(currentRecipe.id)}>
           <img src={!currentRecipe.favorite ? "/like-unliked.svg" : "/Heart.svg"} alt="Button Image" />
         </button>
-        {/* <img src='' /> */}
       </div>
       <br />
       <div className="post-name">{currentRecipe.name}</div>
