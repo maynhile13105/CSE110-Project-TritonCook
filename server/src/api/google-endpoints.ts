@@ -28,9 +28,11 @@ export function createGoogleEndpoints(app: any, db: Database) {
         [sub, name, email, picture, name, email, picture]
       );
 
-      const sessionToken = jwt.sign({ userId: sub, name, email }, JWT_SECRET, {
-        expiresIn: '1h',
-      });
+      const sessionToken = jwt.sign(
+        { userId: sub, name, email },
+        JWT_SECRET,
+        { expiresIn: '1h' }
+      );        
       // console.log(sessionToken)
       res.json({ sessionToken });
     } catch (error) {

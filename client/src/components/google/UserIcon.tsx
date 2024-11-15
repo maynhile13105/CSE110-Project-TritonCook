@@ -11,14 +11,14 @@ function UserIcon() {
 
   useEffect(() => {
     // Check if user is already logged in by checking for a token
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('google-token');
     if (token) {
       fetchUserProfile();
     }
   }, []);
 
   const fetchUserProfile = async () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('google-token');
     try {
       console.log(token)
       const res = await fetch('http://localhost:8080/api/profile', {

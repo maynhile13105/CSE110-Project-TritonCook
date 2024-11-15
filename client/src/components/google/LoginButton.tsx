@@ -35,7 +35,7 @@ const LoginButton = () => {
 
       const data = await res.json();
       console.log('JWT from server:', data);
-      localStorage.setItem('token', data.sessionToken);
+      localStorage.setItem('google-token', data.sessionToken);
       navigate("/home");
     } catch (error) {
       console.error('Failed to authenticate:', error);
