@@ -85,10 +85,30 @@
     background-color: #fff1c2;
 }
 
+.dropdownsearch{
+    border: none;
+    height: 30px;
+}
+
+.ingredientsmenu{
+    position: absolute;
+    right: -174px;
+    top: 360px;
+}
+
+.ingredientspopup{
+    background-color: #F7FFE2;
+    padding: 10px;
+}
+
+.ingredientspopup:hover{
+    background-color: #fff1c2;
+}
+
 .timemenu{
     position: absolute;
     right: -130px;
-    top: 414px;
+    top: 391px;
 }
 
 .timepopup{
@@ -98,4 +118,40 @@
 
 .timepopup:hover{
     background-color: #fff1c2;
+}
+
+.cuisinesmenu{
+    position: absolute;
+    right: -174px;
+    top: 422px;
+}
+
+.cuisinepopup{
+    background-color: #F7FFE2;
+    padding: 10px;
+}
+
+.cuisinepopup:hover{
+    background-color: #fff1c2;
+}
+
+.selectedtime{
+    background-color: #fff1c2;
+    width: 122px;
+    height: 21px;
+    border-radius: 15px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    left: 60px;
+}
+
+.remove-time{
+    background: none;
+    border: none;
+    font-size: 25px;
+    color: #667085;
+    position: relative;
+    top: -3px;
 }
