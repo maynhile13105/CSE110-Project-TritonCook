@@ -96,7 +96,7 @@ const SearchPage: React.FC = () => {
               {historyItems.map((item, index) => (
                 <div key={index} className="history-item">
                   <div onClick={() => handleDropdownItemClick(item)} className="history-item-content">
-                    <img src='/images/historyarrow.svg'></img>
+                    <img src='images/historyArrow.svg'></img>
                     {item}
                 </div>
                 {/* Delete Button for each history item */}
