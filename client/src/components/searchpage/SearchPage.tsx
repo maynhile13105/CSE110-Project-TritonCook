@@ -80,13 +80,13 @@ const SearchPage: React.FC = () => {
           />
           <div className="search-separator"></div>
           <div className="search-icon">
-            <img src='images/searchIcon.svg'></img>
+            <img src='/images/searchIcon.svg'></img>
           </div>
 
           {/* Delete Icon - appears only when input is not empty */}
           {searchInput && (
             <div className="delete-icon" onClick={handleClearInput} data-testid="delete-icon">
-              <img src='images/closeIcon.svg'></img>
+              <img src='/images/closeIcon.svg'></img>
             </div>
           )}
 
@@ -96,7 +96,7 @@ const SearchPage: React.FC = () => {
               {historyItems.map((item, index) => (
                 <div key={index} className="history-item">
                   <div onClick={() => handleDropdownItemClick(item)} className="history-item-content">
-                    <img src='images/historyArrow.svg'></img>
+                    <img src='/images/historyarrow.svg'></img>
                     {item}
                 </div>
                 {/* Delete Button for each history item */}
@@ -132,9 +132,7 @@ const SearchPage: React.FC = () => {
         <div className="popup-container">
           <div className="popup">
             <div className="popup-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="94" height="99" viewBox="0 0 94 99" fill="none">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M38.1081 16.9478C42.385 10.4458 51.6158 10.4458 55.8927 16.9478L57.5844 19.5197C68.183 35.6325 77.2891 52.7522 84.7806 70.6494L85.134 71.4935C87.774 77.8006 83.7854 84.9621 77.2072 85.726C57.1318 88.0574 36.8689 88.0574 16.7935 85.726C10.2153 84.9621 6.22674 77.8006 8.86679 71.4935L9.22013 70.6494C16.7117 52.7522 25.8178 35.6325 36.4164 19.5196L38.1081 16.9478ZM50.9171 37.3263C50.9171 39.5739 49.1636 41.396 47.0005 41.396C44.8373 41.396 43.0838 39.5739 43.0838 37.3263C43.0838 35.0787 44.8373 33.2566 47.0005 33.2566C49.1636 33.2566 50.9171 35.0787 50.9171 37.3263ZM47.0005 48.518C48.6228 48.518 49.938 49.8845 49.938 51.5703V71.9188C49.938 73.6045 48.6228 74.9711 47.0005 74.9711C45.3781 74.9711 44.063 73.6045 44.063 71.9188V51.5703C44.063 49.8845 45.3781 48.518 47.0005 48.518Z" fill="#FF0000"/>
-            </svg>
+            <img src='/images/warning.svg'></img>
             </div>
             <div className="error-message">
               <p>

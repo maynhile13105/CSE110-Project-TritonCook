@@ -47,14 +47,14 @@ const Sidebar = () => {
     <div>
       <div className='sidebar-container' role='button'>
         <div className='mainbuttons-container'>
-        <div className='profilebutton'><Link to="#"><img id="profile-icon" src='images/profile.svg' />Profile</Link></div>
-        <div className='favoritebutton'><Link to="#"><img id="saved-icon" src='images/favorite.svg' />Favorites</Link></div>
-        <div className='friendsbutton'><Link to="#"><img id="friends-icon" src='images/friends.svg' />Friends</Link></div>
-        <div className='filterbutton' onClick={toggleDropdown}><Link to="#"><img id="filter-icon" src='images/filter.svg' />Filter</Link></div>
+        <div className='profilebutton'><Link to="#"><img id="profile-icon" src='/images/profile.svg' />Profile</Link></div>
+        <div className='favoritebutton'><Link to="#"><img id="saved-icon" src='/images/favorite.svg' />Favorites</Link></div>
+        <div className='friendsbutton'><Link to="#"><img id="friends-icon" src='/images/friends.svg' />Friends</Link></div>
+        <div className='filterbutton' onClick={toggleDropdown}><Link to="#"><img id="filter-icon" src='/images/filter.svg' />Filter</Link></div>
         
         {dropdown && (
         <div className='dropdown-container'>
-          <div className='dropdown' onClick={toggleIngredientsPopup}><Link to="#"><img id="filterarrow" src='images/filterarrow.svg' />Ingredients</Link></div>
+          <div className='dropdown' onClick={toggleIngredientsPopup}><Link to="#"><img id="filterarrow" src='/images/filterarrow.svg' />Ingredients</Link></div>
             {ingredientsPopup && (
             <div className='ingredientsmenu'>
               <input className='dropdownsearch' placeholder='Search'></input>
@@ -67,7 +67,7 @@ const Sidebar = () => {
             </div>
           )}  
           
-          <div className='dropdown' onClick={toggleTimePopup}><Link to="#"><img id="filterarrow" src='images/filterarrow.svg' />Estimated Time</Link></div>
+          <div className='dropdown' onClick={toggleTimePopup}><Link to="#"><img id="filterarrow" src='/images/filterarrow.svg' />Estimated Time</Link></div>
           
           {selectedTime && (
             <div className='selectedtime'>
@@ -86,7 +86,7 @@ const Sidebar = () => {
             )}
 
 
-          <div className='dropdown' onClick={toggleCuisinesPopup}><Link to="#"><img id="filterarrow" src='images/filterarrow.svg' />Cuisine</Link></div>
+          <div className='dropdown' onClick={toggleCuisinesPopup}><Link to="#"><img id="filterarrow" src='/images/filterarrow.svg' />Cuisine</Link></div>
           {cuisinesPopup && (
             <div className='cuisinesmenu'>
             <input className='dropdownsearch' placeholder='Search'></input>
