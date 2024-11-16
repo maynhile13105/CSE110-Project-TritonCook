@@ -80,13 +80,13 @@ const SearchPage: React.FC = () => {
           />
           <div className="search-separator"></div>
           <div className="search-icon">
-            <img src='images/searchIcon.svg'></img>
+            <img src='/images/searchIcon.svg'></img>
           </div>
 
           {/* Delete Icon - appears only when input is not empty */}
           {searchInput && (
             <div className="delete-icon" onClick={handleClearInput} data-testid="delete-icon">
-              <img src='images/closeIcon.svg'></img>
+              <img src='/images/closeIcon.svg'></img>
             </div>
           )}
 
@@ -96,7 +96,7 @@ const SearchPage: React.FC = () => {
               {historyItems.map((item, index) => (
                 <div key={index} className="history-item">
                   <div onClick={() => handleDropdownItemClick(item)} className="history-item-content">
-                    <img src='images/historyArrow.svg'></img>
+                    <img src='/images/historyArrow.svg' alt="Dropdown Icon" />
                     {item}
                 </div>
                 {/* Delete Button for each history item */}
