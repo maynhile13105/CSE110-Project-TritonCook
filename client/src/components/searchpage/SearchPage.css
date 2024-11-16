@@ -28,6 +28,7 @@
   overflow: hidden;
   flex-direction: column;
   padding: 10px 20px;
+  margin-left: -250px;
 }
 
 .search-bar.expanded {
@@ -139,8 +140,9 @@
   font-weight: 900;
   line-height: 1.1;
   color: #000000;
-  -webkit-text-stroke-width: .1px;
+  -webkit-text-stroke-width: .8px;
   -webkit-text-stroke-color: var(--Schemes-On-Primary, #FFF);
+  margin-left: -250px;
 }
 
 .info-text .no-worries {
