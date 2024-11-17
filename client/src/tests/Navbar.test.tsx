@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import Navbar from '../components/navbar/Navbar';
+import Navbar from '../components/Navbar/Navbar';
+
 describe('Navbar Component', () => {
   it('renders all buttons with icons', () => {
     render(
