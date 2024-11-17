@@ -7,7 +7,8 @@ const initDB = async () => {
     filename: "database.sqlite",
     driver: sqlite3.Database,
   });
-  // Create a "user" table if it doesn't exist
+
+  // Create a table "user" if it doesn't exist
   await db.exec(`
    CREATE TABLE IF NOT EXISTS users (
     id TEXT PRIMARY KEY,
@@ -16,6 +17,92 @@ const initDB = async () => {
     picture TEXT
    );
  `);
+
+  // Create a table "recipes" if it doesn't exist
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS recipes (
+      id TEXT,
+      title TEXT,
+      ingredients TEXT,
+      cuisine TEXT,
+      result_img BLOB,
+      userID TEXT,
+      time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (id),
+      FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE    
+    );
+  `);
+
+  // Create a table "recipe_instruction" if it doesn't exist
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS recipe_instructions (
+      recipeID TEXT,
+      step INTEGER,
+      img BLOB,
+      description TEXT,
+      FOREIGN KEY (recipeID) REFERENCES recipes(id) ON DELETE CASCADE ON UPDATE CASCADE    
+    );
+  `);
+
+    // Create a table "favorite_recipes" if it doesn't exist
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS favorite_recipes (
+      userID TEXT,
+      recipeID TEXT,
+      time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (recipeID) REFERENCES recipes(id) ON DELETE CASCADE ON UPDATE CASCADE,
+      FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE    
+    );
+  `);
+
+  // Create a table "likes" if it doesn't exist
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS likes (
+      likeID TEXT,
+      recipeID TEXT,
+      userID TEXT,
+      time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (likeID),
+      FOREIGN KEY (recipeID) REFERENCES recipes(id) ON DELETE CASCADE ON UPDATE CASCADE,
+      FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+    );
+  `);
+
+  // Create a table "comments" if it doesn't exist
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS comments (
+      userID TEXT,
+      recipeID TEXT,
+      comment TEXT,
+      time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+      FOREIGN KEY (recipeID) REFERENCES recipes(id) ON DELETE CASCADE ON UPDATE CASCADE
+    );
+  `);
+
+  // Create a table "follows" if it doesn't exist
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS follows (
+      following_user_id TEXT,
+      followed_user_id TEXT,
+      FOREIGN KEY (following_user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+      FOREIGN KEY (followed_user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+      UNIQUE (following_user_id, followed_user_id)
+    );
+  `);
+
+  // Create a table "friendship" if it doesn't exist
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS friendship (
+      userID1 TEXT,
+      userID2 TEXT,
+      FOREIGN KEY (userID1) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+      FOREIGN KEY (userID2) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+      UNIQUE (userID1, userID2)
+    
+    );
+  `)
+
   return db;
 };
 
