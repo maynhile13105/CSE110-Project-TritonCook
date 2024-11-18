@@ -6,7 +6,7 @@ const SearchPage: React.FC = () => {
   const [isPopUpVisible, setPopUpVisible] = useState(false);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [historyItems, setHistoryItems] = useState<string[]>([
-    'Example History Search 1'
+    'Example History Search 1',
   ]); // Start with an empty history list
 
   // Handle changes in the search input field
@@ -17,7 +17,7 @@ const SearchPage: React.FC = () => {
 
   // Clear the input when delete icon is clicked
   const handleClearInput = () => {
-    setSearchInput('');
+    setSearchInput('')
     setDropdownVisible(true); // Optionally show dropdown again when cleared
   };
 
@@ -38,15 +38,12 @@ const SearchPage: React.FC = () => {
       setHistoryItems(prevItems => {
         // Check if the input already exists in the history
         const existingIndex = prevItems.indexOf(searchInput);
-        
         // If it exists, remove it first to prevent duplication
         let updatedItems = existingIndex !== -1
           ? prevItems.filter(item => item !== searchInput)
           : prevItems;
-  
         // Add the new search term to the top of the list
         updatedItems = [searchInput, ...updatedItems];
-  
         // Limit the list to the latest 10 items
         return updatedItems.slice(0, 10);
       });
@@ -63,16 +60,22 @@ const SearchPage: React.FC = () => {
 
   return (
     <div className="search-page">
-        <div className={`search-bar ${isDropdownVisible && historyItems.length > 0 ? 'expanded' : ''}`}
+      {/* Wrapper for content that should be blurred */}
+      <div className={isPopUpVisible ? 'blurred' : ''}>
+        <div
+          className={`search-bar ${
+            isDropdownVisible && historyItems.length > 0 ? 'expanded' : ''
+          }`}
           style={{
-            height: isDropdownVisible && historyItems.length > 0
-              ? `${Math.min(20 + historyItems.length * 8, 80)}vh` // Increment height by 6vh per item up to max 60vh
-              : '13vh', // Initial height
+            height:
+              isDropdownVisible && historyItems.length > 0
+                ? `${Math.min(20 + historyItems.length * 8, 80)}vh`
+                : '13vh', // Initial height
           }}
         >
-          <input 
-            type="text" 
-            placeholder="Search..." 
+          <input
+            type="text"
+            placeholder="Search..."
             value={searchInput}
             onChange={handleSearchChange}
             onClick={handleSearchClick}
@@ -80,80 +83,74 @@ const SearchPage: React.FC = () => {
           />
           <div className="search-separator"></div>
           <div className="search-icon">
-            <img src='/images/searchIcon.svg'></img>
+            <img src="/images/searchIcon.svg" alt="Search Icon" />
           </div>
-
+  
           {/* Delete Icon - appears only when input is not empty */}
           {searchInput && (
-            <div className="delete-icon" onClick={handleClearInput} data-testid="delete-icon">
-              <img src='/images/closeIcon.svg'></img>
+            <div className="delete-icon" onClick={handleClearInput}>
+              <img src="/images/closeIcon.svg" alt="Clear Input" />
             </div>
           )}
-
+  
           {/* Dropdown Menu for History Items */}
           {isDropdownVisible && (
             <div className="history-items">
               {historyItems.map((item, index) => (
                 <div key={index} className="history-item">
                   <div onClick={() => handleDropdownItemClick(item)} className="history-item-content">
-                    <img src='images/historyArrow.svg'></img>
+                    <img src="images/historyArrow.svg" alt="Arrow" />
                     {item}
-                </div>
-                {/* Delete Button for each history item */}
-                <button 
-                  className="delete-history-item" 
-                  onClick={() => handleDeleteHistoryItem(index)}
-                >
-                  x
-                </button>
+                  </div>
+                  {/* Delete Button for each history item */}
+                  <button className="delete-history-item" onClick={() => handleDeleteHistoryItem(index)}>
+                    x
+                  </button>
                 </div>
               ))}
             </div>
           )}
         </div>
-      <div className="info-text">
-        <p>
-          Busy today?<br />
-          <span className="no-worries">No worries! Check out our quick recipes that'll have you cooking up a storm in </span> <span className="under-30">under 30 minutes.</span>
-        </p>
-        <div className="explore-button-container">
-          <button className="explore-button">
-            <span className="explore-text">EXPLORE</span>
-            <div className="arrow">
-              <div className="line-8"></div>
-              <div className="line-9"></div>
-            </div>
-          </button>
+  
+        <div className="info-text">
+          <p>
+            Busy today?<br />
+            <span className="no-worries">
+              No worries! Check out our quick recipes that'll have you cooking up a storm in{' '}
+            </span>
+            <span className="under-30">under 30 minutes.</span>
+          </p>
+          <div className="explore-button-container">
+            <button className="explore-button">
+              <span className="explore-text">EXPLORE</span>
+              <div className="arrow">
+                <div className="line-8"></div>
+                <div className="line-9"></div>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
-
+  
       {/* Pop-up Window */}
       {isPopUpVisible && (
         <div className="popup-container">
           <div className="popup">
             <div className="popup-icon">
-            <img src='/images/warning.svg'></img>
+              <img src="/images/warning.svg" alt="Warning" />
             </div>
             <div className="error-message">
-              <p>
-                No Recipes Found!
-              </p>
+              <p>No Recipes Found!</p>
             </div>
             <div className="try-again-button">
-              <button
-                onClick={() => setPopUpVisible(false)} // Close pop-up
-              >
-                Try again
-              </button>
+              <button onClick={() => setPopUpVisible(false)}>Try again</button>
             </div>
           </div>
         </div>
       )}
     </div>
   );
-}
+  
+};
 
 export default SearchPage;
-
-
-

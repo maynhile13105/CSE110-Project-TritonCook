@@ -7,6 +7,7 @@
   height: 100vh;
   padding: 20px;
   box-sizing: border-box;
+  margin-left: 10%;
 }
 
 .search-bar {
@@ -230,6 +231,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-left: 10%;
 }
 
 .popup-icon {
@@ -261,3 +263,18 @@
   line-height: 1;
   color: #000000;
 }
+
+/* Apply blur only to content outside the pop-up */
+.search-page .blurred {
+  filter: blur(5px);
+  pointer-events: none; /* Prevent interaction with blurred elements */
+}
+
+/* .search-bar.blur {
+  filter: blur(5px);
+}
+
+.history-items.blur {
+  filter: blur(5px);
+} */
+
