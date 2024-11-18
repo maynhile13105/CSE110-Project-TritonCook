@@ -30,26 +30,26 @@ describe('SearchPage Component', () => {
     expect(dropdown).toBeVisible();
   });
 
-  // Test that clearing the input shows the dropdown again
-  test('shows dropdown when input is cleared', () => {
-    render(
-      <MemoryRouter>
-        <SearchPage />
-      </MemoryRouter>
-    );
-    const searchInput = screen.getByPlaceholderText('Search...');
+  // // Test that clearing the input shows the dropdown again
+  // test('shows dropdown when input is cleared', () => {
+  //   render(
+  //     <MemoryRouter>
+  //       <SearchPage />
+  //     </MemoryRouter>
+  //   );
+  //   const searchInput = screen.getByPlaceholderText('Search...');
 
-    // Type into the search input to populate it
-    fireEvent.change(searchInput, { target: { value: 'Test search' } });
+  //   // Type into the search input to populate it
+  //   fireEvent.change(searchInput, { target: { value: 'Test search' } });
 
-    // Select the delete icon using a CSS selector
-    const deleteIcon = screen.getByTestId('delete-icon'); // Ensure that the delete icon in SearchPage.tsx has data-testid="delete-icon"
-    fireEvent.click(deleteIcon);
+  //   // Select the delete icon using a CSS selector
+  //   const deleteIcon = screen.getByTestId('delete-icon'); // Ensure that the delete icon in SearchPage.tsx has data-testid="delete-icon"
+  //   fireEvent.click(deleteIcon);
 
-    // Check if the dropdown is now visible
-    const dropdown = screen.getByText('Example History Search 1');
-    expect(dropdown).toBeVisible();
-  });
+  //   // Check if the dropdown is now visible
+  //   const dropdown = screen.getByText('Example History Search 1');
+  //   expect(dropdown).toBeVisible();
+  // });
 
   // Test adding a new history item on Enter key press
   test('adds new history item on Enter key press', () => {
@@ -157,6 +157,27 @@ describe('SearchPage Component', () => {
     // Check if the blur effect is applied correctly (you can verify this by checking a CSS class or style)
     expect(searchInput).toBeVisible();
   });
+
+  test('shows dropdown when input is cleared', () => {
+    // Render the SearchPage component
+    render(<SearchPage />);
+  
+    // Find the input field and type text into it
+    const input = screen.getByPlaceholderText('Search...');
+    fireEvent.change(input, { target: { value: 'Test search' } });
+  
+    // Simulate clearing the input by clicking the delete icon
+    const deleteIcon = screen.getByTestId('delete-icon');
+    fireEvent.click(deleteIcon);
+  
+    // Assert that the input is cleared
+    expect(input).toHaveValue('');
+  
+    // Assert that the dropdown becomes visible
+    const dropdown = screen.getByRole('list'); // Adjust if a different role is used
+    expect(dropdown).toBeVisible();
+  });
+  
 
 });
 
