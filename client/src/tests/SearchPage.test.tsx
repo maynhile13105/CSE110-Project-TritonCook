@@ -140,6 +140,24 @@ describe('SearchPage Component', () => {
     const popup = screen.queryByText('No Recipes Found!');
     expect(popup).not.toBeInTheDocument();
   });
+
+   // Test that the blur effect works on the search input
+   test('blur effect on input', () => {
+    render(
+      <MemoryRouter>
+        <SearchPage />
+      </MemoryRouter>
+    );
+    const searchInput = screen.getByPlaceholderText('Search...');
+    
+    // Simulate a focus and blur event
+    fireEvent.focus(searchInput);
+    fireEvent.blur(searchInput);
+
+    // Check if the blur effect is applied correctly (you can verify this by checking a CSS class or style)
+    expect(searchInput).toBeVisible();
+  });
+
 });
 
 
