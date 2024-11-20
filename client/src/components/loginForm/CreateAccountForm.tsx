@@ -35,7 +35,7 @@ const CreateAccountForm = () => {
         throw new Error(data.error || 'Failed to create account');
       }
 
-      navigate("/");
+      navigate("/welcome");
     } catch (err) {
       console.error("Creating account failed.", err);
     }
