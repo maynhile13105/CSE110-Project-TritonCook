@@ -22,6 +22,7 @@ const initDB = async () => {
    CREATE TABLE IF NOT EXISTS login (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
+    email TEXT UNIQUE NOT NULL,
     passwordHash TEXT NOT NULL
    );
 `);

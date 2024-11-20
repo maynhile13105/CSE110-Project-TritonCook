@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./CreateAccountForm.css";
 import { useNavigate } from "react-router-dom";
 const CreateAccountForm = () => {
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPass, setConfirmedPass] = useState("");
   const [email, setEmail] = useState("");
@@ -10,11 +10,31 @@ const CreateAccountForm = () => {
 
   const handleCreateAccount = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    // TODO: finish account creation implementation
     try {
       if (confirmedPass !== password) {
         throw new Error("Passwords don't match");
       }
+
+      const isValidUCSDEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.endsWith('@ucsd.edu');
+      if (!isValidUCSDEmail) {
+        throw new Error("Not valid UCSD email")
+      }
+
+      const response = await fetch('http://localhost:8080/api/createAccount', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to create account');
+      }
+
       navigate("/");
     } catch (err) {
       console.error("Creating account failed.", err);
@@ -34,8 +54,8 @@ const CreateAccountForm = () => {
             id="username"
             placeholder="Enter Username"
             required
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
         <div>

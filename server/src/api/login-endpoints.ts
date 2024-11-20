@@ -41,8 +41,43 @@ export function createLoginEndpoints(app: any, db: Database) {
     }
   });
 
-  app.post('/api/login', async (req: Request, res: Response) => {
-    // TODO: finish account creation api
-    res.status(500).json({ error: 'Internal server error.' });
+  app.post('/api/createAccount', async (req: Request, res: Response) => {
+    const { username, email, password } = req.body;
+    
+    if (!username || !email || !password) {
+      return res.status(400).json({ error: 'Username, email, and password are required.' });
+    }
+
+    const isValidUCSDEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.endsWith('@ucsd.edu');
+    if (!isValidUCSDEmail) {
+      return res.status(400).json({ error: 'Invalid UCSD email address.' });
+    }
+
+    if (password.length < 8) {
+      return res.status(400).json({ error: 'Password must be at least 8 characters long.' });
+    }
+
+    try {
+      const existingUser = await db.get(
+        `SELECT * FROM login WHERE username = ? OR email = ?`,
+        [username, email]
+      );
+
+      if (existingUser) {
+        return res.status(400).json({ error: 'Username or email is already in use.' });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      await db.run(
+        `INSERT INTO login (username, email, passwordHash) VALUES (?, ?, ?)`,
+        [username, email, hashedPassword]
+      );
+
+      res.status(201).json({ message: 'Account created successfully.' });
+    } catch (error) {
+      console.error('Error creating account:', error);
+      res.status(500).json({ error: 'Internal server error.' });
+    }
   });
 }
