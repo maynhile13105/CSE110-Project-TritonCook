@@ -7,6 +7,7 @@ import Newsfeed from "./views/Newsfeed/Newsfeed";
 import RecipeList from "./components/recipes/RecipeList";
 import SearchPage from "./components/searchpage/SearchPage";
 import SuccessfulRegister from "./components/loginForm/SuccessfulRegister";
+import GuestAccount from "./components/accountpage/GuestAccount";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/reset-pass" element={<ResetPasswordPage />} />
         <Route path="/create-account" element={<CreateAccountPage />} />
         <Route path="/successful-register" element={<SuccessfulRegister />} />
+        <Route path="/guest-account" element={<GuestAccount />} />
         <Route path="/home" element={<Newsfeed />} >
           <Route index element={<RecipeList />} />
           <Route path="search" element={<SearchPage />} />
