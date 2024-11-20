@@ -1,0 +1,103 @@
+/* .successful-register-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .successful-register-box h1 {
+    font-size: 2rem;
+    color: #4caf50;
+    margin-bottom: 20px;
+  }
+  
+  .successful-register-box p {
+    font-size: 1.2rem;
+  } */
+
+  /* SuccessfulRegister.css */
+
+/* Page background */
+.successful-register-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Or your desired background color */
+    min-height: 100vh; /* Ensures the page takes full height */
+    text-align: center;
+  }
+  
+  /* Title - Center top */
+  .title {
+    color: #03038E;
+    /* font-family: var(--sds-typography-title-page-font-family);
+    font-size: var(--sds-typography-title-page-size-base); */
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%; /* 57.6px */
+    letter-spacing: -0.96px;
+    margin-bottom: 20px;
+  }
+  
+  /* Logo - Center */
+  .logo {
+    width: 237px;
+    height: 229px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    
+    margin-bottom: 40px;
+  }
+  
+  /* Sign - Center bottom */
+  .sign {
+    width: 491px;
+    height: 135px;
+    flex-shrink: 0;
+    background: #FFF1C2;
+    border-radius: 50px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  /* Congratulations text */
+  .congratulations-text {
+    color: #000;
+    font-family: var(--Title-Large-Font, Roboto);
+    font-size: var(--Title-Large-Size, 22px);
+    font-style: normal;
+    font-weight: 400;
+    line-height: var(--Title-Large-Line-Height, 28px); /* 127.273% */
+    letter-spacing: var(--Title-Large-Tracking, 0px);
+    margin-bottom: 20px;
+  }
+  
+  /* Custom Button */
+  .login-button {
+    padding: 10px 20px;
+    font-size: var(--sds-typography-heading-size-base);
+    background-color: var(--sds-color-button-primary);
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-family: var(--sds-typography-heading-font-family);
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  
+    /* Additional button hover effect */
+    &:hover {
+      background-color: var(--sds-color-button-primary-hover);
+    }
+  }
+  
+  .login-button:focus {
+    outline: none;
+  }
+  
+  
