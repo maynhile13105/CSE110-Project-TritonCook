@@ -8,11 +8,13 @@ export type GoogleCredentialResponse = {
 };
 
 export type Recipe = {
-  id: number;
-  name: string;
-  estimate: number;
-  ingredients: string[];
-  image: string;
+  id: string;
+  userID: string;
+  title: string;
+  ingredients: string;
+  estimate: string;
+  cuisine: string;
+  result_image: string;
 };
 
 export type Profile = {

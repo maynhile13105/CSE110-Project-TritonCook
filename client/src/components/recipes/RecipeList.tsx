@@ -10,7 +10,7 @@ const RecipeList = () => {
     <div className='recipes-container'>
       {recipes.map((recipe) => (
         <div className='post-item'>
-          <RecipeItem key={recipe.id} id={recipe.id} name={recipe.name} estimate={recipe.estimate} ingredients={recipe.ingredients} image={recipe.image}></RecipeItem>
+          <RecipeItem key={recipe.id} id={recipe.id} title={recipe.title} estimate={recipe.estimate} ingredients={recipe.ingredients} result_image={recipe.result_image} userID={recipe.userID} cuisine={recipe.cuisine}></RecipeItem>
         </div>
       ))}
     </div>

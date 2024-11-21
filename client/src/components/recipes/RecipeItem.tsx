@@ -17,15 +17,15 @@ const RecipeItem = (currentRecipe: Recipe) => {
         <img src='/like-unliked.svg' />
       </div>
       <br />
-      <div className="post-name">{currentRecipe.name}</div>
+      <div className="post-name">{currentRecipe.title}</div>
       <br />
       <div className='post-est-ingr'>Estimate: {currentRecipe.estimate} minutes
-        <br />Ingredients: {currentRecipe.ingredients.join(', ')}
+        <br />Ingredients: {currentRecipe.ingredients}
       </div>
 
       <div className='post-see-details'><Link to={"#"}>...See Details</Link></div>
       <div>
-        <img src={currentRecipe.image} className="post-img" />
+        <img src={currentRecipe.result_image} className="post-img" />
       </div>
       <div className="horizontal-line"></div>
       <div className="user-inf">

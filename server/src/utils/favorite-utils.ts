@@ -32,5 +32,5 @@ export async function deleteFavoriteRecipe(req: Request, res: Response, db: Data
 
 export async function getFavoriteRecipes(req: Request, res: Response, db: Database) {
     const { userID } = req.params;
-    res.status(200).send({"data": await db.all('SELECT * FROM favorite_recipes WHERE userID = ?;', [userID])});
+    res.status(200).send({"data": await db.all('SELECT r.* FROM recipes r, favorite_recipes fr WHERE  fr.userID = ? AND r.id = fr.recipeID;', [userID])});
 }

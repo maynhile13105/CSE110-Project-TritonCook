@@ -22,11 +22,12 @@ const initDB = async () => {
   await db.exec(`
     CREATE TABLE IF NOT EXISTS recipes (
       id TEXT,
+      userID TEXT,
       title TEXT,
       ingredients TEXT,
+      estimate TEXT,
       cuisine TEXT,
-      result_img BLOB,
-      userID TEXT,
+      result_img TEXT,
       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY (id),
       FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE    
@@ -38,11 +39,12 @@ const initDB = async () => {
     CREATE TABLE IF NOT EXISTS recipe_instructions (
       recipeID TEXT,
       step INTEGER,
-      img BLOB,
+      img TEXT,
       description TEXT,
       FOREIGN KEY (recipeID) REFERENCES recipes(id) ON DELETE CASCADE ON UPDATE CASCADE    
     );
   `);
+
 
     // Create a table "favorite_recipes" if it doesn't exist
   await db.exec(`
