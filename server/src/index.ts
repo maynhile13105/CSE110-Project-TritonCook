@@ -2,6 +2,8 @@ import { Response } from "express";
 import initDB from "./createTable";
 import { createGoogleEndpoints } from "./api/google-endpoints";
 import { createLoginEndpoints } from "./api/login-endpoints";
+import { createDisplayedRecipesEndpoints } from "./endpoints/displayedRecipes-endpoints";
+import { createFavoriteRecipesEndpoints } from "./endpoints/favorite-endpoints";
 
 const express = require("express");
 const cors = require("cors");
@@ -29,5 +31,7 @@ app.listen(port, () => {
 
   createLoginEndpoints(app, db);
   createGoogleEndpoints(app, db);
+  createDisplayedRecipesEndpoints(app, db);
+  createFavoriteRecipesEndpoints(app, db);
 })();
 

@@ -1,63 +1,57 @@
-import { createContext, SetStateAction, useEffect, useState } from "react";
-import { Profile, Recipe } from "../types/types";
-import { fetchFavoriteRecipes } from "../utils/favorite-utils";
+import { createContext, SetStateAction, useState } from "react";
+import { Account, Recipe } from "../types/types";
 
 interface AppContextType {
-    profile: Profile;
-    setProfile: React.Dispatch<React.SetStateAction<Profile>>;
+    token: string;
+    setToken: React.Dispatch<React.SetStateAction<string>>;
 
-    recipes: Recipe[];
-    setRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>;
+    account: Account;
+    setAccount: React.Dispatch<React.SetStateAction<Account>>;
+
+    displayedRecipes: Recipe[];
+    setDisplayedRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>;
 
     favoriteRecipes: Recipe[];
     setFavoriteRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>;
 }
 
 const initialState: AppContextType = {
-    recipes: [],
-    setRecipes: () => {},
+    token: "",
+    setToken:() => {},
 
+    displayedRecipes: [],
+    setDisplayedRecipes: () => {},  
     favoriteRecipes: [],
     setFavoriteRecipes: () => { },
     
-    profile: {
+    account: {
         id: "",
         name: "",
         email: "",
         picture: ""
     },
-    setProfile: () => {},
+    setAccount: () => {},
 };
 
 export const AppContext = createContext<AppContextType>(initialState);
 
 export const AppProvider = (props: any) => {
-    const [profile, setProfile] = useState<Profile>(initialState.profile);
-    const [recipes, setRecipes] = useState<Recipe[]>(initialState.recipes);
+    const [account, setAccount] = useState<Account>(initialState.account);
+    const [displayedRecipes, setDisplayedRecipes] = useState<Recipe[]>(initialState.displayedRecipes);
     const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>(initialState.favoriteRecipes);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const userID = "user1";  // You can replace this with a dynamic user ID
-                const fetchedFavoriteRecipes = await fetchFavoriteRecipes(userID);
-                setFavoriteRecipes(fetchedFavoriteRecipes);
-            } catch (error) {
-                console.error("Error fetching favorite recipes:", error);
-            }
-        };
-        fetchData();
-
-    }, []);
-
+    const [token, setToken] = useState<string>(initialState.token);
     return (
         <AppContext.Provider
             value = {{
-                profile: profile,
-                setProfile: setProfile,
 
-                recipes: recipes,
-                setRecipes: setRecipes,
+                token: token,
+                setToken: setToken,
+
+                account: account,
+                setAccount: setAccount,
+
+                displayedRecipes: displayedRecipes,
+                setDisplayedRecipes: setDisplayedRecipes,
 
                 favoriteRecipes: favoriteRecipes,
                 setFavoriteRecipes: setFavoriteRecipes,

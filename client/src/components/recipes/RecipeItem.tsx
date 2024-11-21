@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Recipe } from "../../types/types";
+import { Account, Recipe } from "../../types/types";
 import './RecipeItem.css'
 import { Link } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
@@ -7,7 +7,6 @@ import { AppContext } from "../../context/AppContext";
 
 const RecipeItem = (currentRecipe: Recipe) => {
   const { favoriteRecipes, setFavoriteRecipes } = useContext(AppContext)
-  
   //Save Favorite Button
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -43,7 +42,7 @@ const RecipeItem = (currentRecipe: Recipe) => {
 
       <div className='post-see-details'><Link to={`/home/recipe/${currentRecipe.id}`}>...See Details</Link></div>
       <div>
-        <img src={currentRecipe.result_image} className="post-img" />
+        <img src={currentRecipe.result_img} className="post-img" />
       </div>
       <div className="horizontal-line"></div>
       <div className="user-inf">

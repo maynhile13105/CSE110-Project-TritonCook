@@ -9,10 +9,19 @@ export type Recipe = {
   ingredients: string;
   estimate: string;
   cuisine: string;
-  result_image: string;
+  result_img: string;
+  time: string //The time the recipe was posted
 };
 
 export type Profile = {
+  id: string;
+  name: string;
+  email: string;
+  picture: string
+}
+
+
+export type Account = {
   id: string;
   name: string;
   email: string;
