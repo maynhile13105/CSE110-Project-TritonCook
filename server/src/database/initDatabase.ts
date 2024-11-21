@@ -1,12 +1,9 @@
-import { open } from "sqlite";
-import sqlite3 from "sqlite3";
+import openDatabase from "./openDatabase";
 
-const initDB = async () => {
+const initDatabase = async () => {
   // Open the database connection
-  const db = await open({
-    filename: "database.sqlite",
-    driver: sqlite3.Database,
-  });
+  const db = await openDatabase();
+  
   // Create a "users" table if it doesn't exist
   await db.exec(`
    CREATE TABLE IF NOT EXISTS users (
@@ -25,8 +22,6 @@ const initDB = async () => {
     passwordHash TEXT NOT NULL
    );
  `);
-    
-  return db;
 };
 
-export default initDB;
+export default initDatabase;
