@@ -6,7 +6,6 @@ import { AppContext } from "../../context/AppContext";
 
 
 const RecipeItem = (currentRecipe: Recipe) => {
-  const { recipes, setRecipes } = useContext(AppContext);  
   const { favoriteRecipes, setFavoriteRecipes } = useContext(AppContext)
   
   //Save Favorite Button

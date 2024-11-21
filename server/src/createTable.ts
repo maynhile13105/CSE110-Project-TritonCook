@@ -7,7 +7,7 @@ const initDB = async () => {
     filename: "database.sqlite",
     driver: sqlite3.Database,
   });
-  // Create a "users" table if it doesn't exist
+  // Create a table "users" if it doesn't exist
   await db.exec(`
    CREATE TABLE IF NOT EXISTS users (
     id TEXT PRIMARY KEY,
@@ -16,6 +16,15 @@ const initDB = async () => {
     picture TEXT
    );
  `);
+
+  // Create a "login" table if it doesn't exist
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS login (
+     id TEXT PRIMARY KEY,
+     username TEXT UNIQUE NOT NULL,
+     passwordHash TEXT NOT NULL
+    );
+  `);  
 
   // Create a table "recipes" if it doesn't exist
   await db.exec(`
@@ -44,6 +53,7 @@ const initDB = async () => {
     );
   `);
 
+ 
 
     // Create a table "favorite_recipes" if it doesn't exist
   await db.exec(`
