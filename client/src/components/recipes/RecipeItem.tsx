@@ -1,11 +1,28 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Recipe } from "../../types/types";
-import { RecipeContext } from "../../context/RecipeContext";
 import './RecipeItem.css'
 import { Link } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
+
 
 const RecipeItem = (currentRecipe: Recipe) => {
-  const { recipes, setRecipes } = useContext(RecipeContext);
+  const { recipes, setRecipes } = useContext(AppContext);  
+  const { favoriteRecipes, setFavoriteRecipes } = useContext(AppContext)
+  
+  //Save Favorite Button
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const handleFavoriteClick = (id: string) => {
+    setIsFavorite(!isFavorite);
+  };
+
+  useEffect(() => {
+    if(isFavorite && !favoriteRecipes.includes(currentRecipe)){
+      setFavoriteRecipes((prev) => [...prev, currentRecipe]);
+    } else if(!isFavorite && favoriteRecipes.includes(currentRecipe)) {
+      setFavoriteRecipes((prev) => prev.filter((recipe) => recipe != currentRecipe));
+    }
+  }, [isFavorite]);
 
   return (
     <div className="post-box">
@@ -14,7 +31,9 @@ const RecipeItem = (currentRecipe: Recipe) => {
           <img src='/profile.svg' />
           Username
         </div>
-        <img src='/like-unliked.svg' />
+        <button className='like-button' onClick={() => handleFavoriteClick(currentRecipe.id)}>
+          <img src={!isFavorite ? "images/like-unliked.svg" : "images/Heart.svg"} alt="Button Image" />
+        </button>
       </div>
       <br />
       <div className="post-name">{currentRecipe.title}</div>
@@ -23,7 +42,7 @@ const RecipeItem = (currentRecipe: Recipe) => {
         <br />Ingredients: {currentRecipe.ingredients}
       </div>
 
-      <div className='post-see-details'><Link to={"#"}>...See Details</Link></div>
+      <div className='post-see-details'><Link to={`/home/recipe/${currentRecipe.id}`}>...See Details</Link></div>
       <div>
         <img src={currentRecipe.result_image} className="post-img" />
       </div>

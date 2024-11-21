@@ -1,11 +1,11 @@
 import React from 'react';
 import { useContext } from "react";
-import { RecipeContext } from '../../context/RecipeContext';
 import RecipeItem from './RecipeItem';
 import './RecipeList.css';
+import { AppContext } from '../../context/AppContext';
 
 const RecipeList = () => {
-  const {recipes} = useContext(RecipeContext); 
+  const {recipes} = useContext(AppContext); 
   return (
     <div className='recipes-container'>
       {recipes.map((recipe) => (

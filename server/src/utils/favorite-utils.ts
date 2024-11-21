@@ -30,7 +30,41 @@ export async function deleteFavoriteRecipe(req: Request, res: Response, db: Data
     res.status(202).send();
 }
 
+export async function checkFavoriteRecipe(req: Request, res: Response, db: Database) {
+    const { userID, recipeID } = req.params;
+    if(!userID || !recipeID ){
+        return res.status(400).send({error: "Missing required fields"});
+    } 
+
+    try{
+        const isFavorite = await db.get('SELECT COUNT(*) > 0 AS is_favorite FROM favorite_recipes WHERE userID = ? AND recipeID = ?;',[userID, recipeID]);
+         res.status(200).json({ isFavorite: isFavorite.is_favorite });
+    } catch {
+        res.status(500).json({ error: "An error occurred while checking the favorite recipe."})
+    }
+
+}
+
 export async function getFavoriteRecipes(req: Request, res: Response, db: Database) {
     const { userID } = req.params;
-    res.status(200).send({"data": await db.all('SELECT r.* FROM recipes r, favorite_recipes fr WHERE  fr.userID = ? AND r.id = fr.recipeID;', [userID])});
+    if (!userID) {
+        return res.status(400).json({ error: "Missing userID parameter" });
+    }
+    
+    try {
+        // Query to fetch favorite recipes for the user, ordered by the time they were added to favorites
+        const favoriteRecipesList = await db.all(
+          `SELECT r.* 
+           FROM recipes r
+           JOIN favorite_recipes fr ON r.id = fr.recipeID
+           WHERE fr.userID = ?
+           ORDER BY fr.time DESC;`,
+          [userID]
+        );
+        res.status(200).json({data: favoriteRecipesList});
+    } catch(error) {
+        res.status(500).json({ error: "An error occurred while fetching favorite recipes." });
+    }
+  
 }
+

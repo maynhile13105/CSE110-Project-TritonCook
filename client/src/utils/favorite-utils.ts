@@ -27,7 +27,7 @@ export const deleteFavoriteRecipe = async (userID: string, recipeID: string): Pr
 };
 
 //Function to get all favorite recipes of the user from the backend. Method: GET
-export const fetchFavoriteRecipe = async (userID: string): Promise<Recipe[]> => {
+export const fetchFavoriteRecipes = async (userID: string): Promise<Recipe[]> => {
     const response = await fetch(`${API_BASE_URL}/favorite/${userID}`, {
         method: "GET",
     })
@@ -41,3 +41,5 @@ export const fetchFavoriteRecipe = async (userID: string): Promise<Recipe[]> => 
 
     return favoriteRecipeList;
 }
+
+//Function to check if the recipe is in the user's favorite list from backend. Method: GET
