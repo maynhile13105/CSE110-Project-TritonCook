@@ -4,30 +4,34 @@ import './Sidebar.css'
 
 const Sidebar = () => {
   const[dropdown, setDropdown] = useState(false);
-  const[timePopup, setTimePopup] = useState(false);
-  const[ingredientsPopup, setIngredientsPopup] = useState(false);
-  const[cuisinesPopup, setCuisinesPopup] = useState(false);
   const[selectedTime, setSelectedTime] = useState<string | null>(null);
   const[selectedCuisine, setSelectedCuisine] = useState<string | null>(null);
+  const[selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
+  const[activePopup, setActivePopup] = useState<string | null>(null);
+  
   const toggleDropdown = () => {
     setDropdown(!dropdown);
+    setActivePopup(null);
   };
 
-  const toggleTimePopup = () => {
-    setTimePopup(!timePopup);
-  };
-
-  const toggleIngredientsPopup = () => {
-    setIngredientsPopup(!ingredientsPopup);
+  const togglePopup = (popupName: string) => {
+    setActivePopup(activePopup === popupName ? null : popupName);
   }
 
-  const toggleCuisinesPopup =() => {
-    setCuisinesPopup(!cuisinesPopup)
+  const handleSelectedIngredients = (ingredient:string) => {
+    if (!selectedIngredients.includes(ingredient)) {
+      setSelectedIngredients([...selectedIngredients, ingredient]);
+    }
+  }
+  
+  const removeSelectedIngredients = (ingredient:string) => {
+    setSelectedIngredients(selectedIngredients.filter((ing) => ing !== ingredient));
+
   }
 
   const handleSelectedTime =(time : string) => {
     setSelectedTime(time);
-    setTimePopup(!timePopup);
+    setActivePopup(null);
   };
 
   const removeSelectedTime = () => {
@@ -36,13 +40,14 @@ const Sidebar = () => {
 
   const handleSelectedCuisine =(cuisine :string) => {
     setSelectedCuisine(cuisine);
-    setCuisinesPopup(!cuisinesPopup);
+    setActivePopup(null);
   }
 
   const removeSelectedCuisine = () => {
     setSelectedCuisine(null);
   }
 
+  
   return (
     <div>
       <div className='sidebar-container' role='button'>
@@ -54,54 +59,86 @@ const Sidebar = () => {
         
         {dropdown && (
         <div className='dropdown-container'>
-          <div className='dropdown' onClick={toggleIngredientsPopup}><Link to="#"><img id="filterarrow" src='/images/filterarrow.svg' />Ingredients</Link></div>
-            {ingredientsPopup && (
+          <div className='dropdown' onClick={() => togglePopup('ingredients')}><Link to="#"><img id="filterarrow" src='/images/filterarrow.svg' />Ingredients</Link></div>
+            
+          {selectedIngredients.length > 0 && (
+            <div className='selectedIngredients'>
+              {selectedIngredients.map((ingredient) => (
+                <div key={ingredient} className='selectedingredient'>
+                  <span className='selectedingredienttext'>{ingredient}</span>
+                  <button
+                    className='removeingredient'
+                    onClick={() => removeSelectedIngredients(ingredient)}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+            {activePopup ==='ingredients' && (
             <div className='ingredientsmenu'>
               <input className='dropdownsearch' placeholder='Search'></input>
-              <div className='ingredientspopup'>Tomato</div>
-              <div className='ingredientspopup'>Chicken</div>
-              <div className='ingredientspopup'>Lettuce</div>
-              <div className='ingredientspopup'>Beef</div>
-              <div className='ingredientspopup'>Fish</div>
-              <div className='ingredientspopup'>Onion</div>
+              {['Tomato', 'Chicken', 'Lettuce', 'Beef', 'Fish', 'Onion'].map((ingredient) => (
+                    <div
+                      key={ingredient}
+                      className={`ingredientspopup ${selectedIngredients.includes(ingredient) ? 'selected' : ''}`}
+                      onClick={() => handleSelectedIngredients(ingredient)}
+                    >
+                      {ingredient}
+                    </div>
+                  ))}
             </div>
           )}  
           
-          <div className='dropdown' onClick={toggleTimePopup}><Link to="#"><img id="filterarrow" src='/images/filterarrow.svg' />Estimated Time</Link></div>
+          <div className='dropdown' onClick={() => togglePopup('time')}><Link to="#"><img id="filterarrow" src='/images/filterarrow.svg' />Estimated Time</Link></div>
           
           {selectedTime && (
             <div className='selectedtime'>
               <span className='selectedtimetext'>{selectedTime}</span>
-              <button className='remove-time' onClick={removeSelectedTime}>×</button>
+              <button className='removetime' onClick={removeSelectedTime}>×</button>
             </div>
           )}
           
-          {timePopup && (
+          {activePopup ==='time' && (
             <div className='timemenu'>
-            <div className='timepopup' onClick={() => handleSelectedTime('<10 minutes')}><Link to="#">&lt;10 minutes</Link></div>
-            <div className='timepopup' onClick={() => handleSelectedTime('<20 minutes')}><Link to="#">&lt;20 minutes</Link></div>
-            <div className='timepopup' onClick={() => handleSelectedTime('<30 minutes')}><Link to="#">&lt;30 minutes</Link></div>
-            <div className='timepopup' onClick={() => handleSelectedTime('<60 minutes')}><Link to="#">&lt;60 minutes</Link></div>
+                  {['<10 minutes', '<20 minutes', '<30 minutes', '<60 minutes', '>60minutes'].map((time) => (
+                    <div key={time} className='timepopup' onClick={() => handleSelectedTime(time)}>
+                      <Link to="#">{time}</Link>
+                    </div>
+                  ))}
             </div>
             )}
 
 
-          <div className='dropdown' onClick={toggleCuisinesPopup}><Link to="#"><img id="filterarrow" src='/images/filterarrow.svg' />Cuisine</Link></div>
-          {cuisinesPopup && (
-            <div className='cuisinesmenu'>
-            <input className='dropdownsearch' placeholder='Search'></input>
-            <div className='cuisinepopup'>American</div>
-            <div className='cuisinepopup'>Chinese</div>
-            <div className='cuisinepopup'>Indian</div>
-            <div className='cuisinepopup'>Japanese</div>
-            <div className='cuisinepopup'>Korean</div>
-            <div className='cuisinepopup'>Mexican</div>
+          <div className='dropdown' onClick={() => togglePopup('cuisine')}><Link to="#"><img id="filterarrow" src='/images/filterarrow.svg' />Cuisine</Link></div>
+            {selectedCuisine && (
+            <div className='selectedcuisine'>
+            <span className='selectedcuisinetext'>{selectedCuisine}</span>
+            <button className='removecuisine' onClick={removeSelectedCuisine}>×</button>
             </div>
           )}
+          {activePopup ==='cuisine' && (
+            <div className='cuisinesmenu'>
+            <input className='dropdownsearch' placeholder='Search'></input>
+                  {['American', 'Chinese', 'Indian', 'Japanese', 'Korean', 'Mexican'].map((cuisine) => (
+                    <div
+                      key={cuisine}
+                      className='cuisinepopup'
+                      onClick={() => handleSelectedCuisine(cuisine)}
+                    >
+                      {cuisine}
+                    </div>
+                  ))}
+            </div>
+          )}
+          <button className='insidefilterbutton'>Filter</button>
         </div>
     )}
         </div>
       </div>
+      
     </div>
   )
 };
