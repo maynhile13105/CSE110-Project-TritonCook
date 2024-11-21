@@ -29,9 +29,9 @@ export function createGoogleEndpoints(app: any, db: Database) {
         `
         INSERT INTO users (id, name, email, picture)
         VALUES (?, ?, ?, ?)
-        ON CONFLICT(id) DO UPDATE SET name = ?, email = ?, picture = ?
+        ON CONFLICT(id) DO UPDATE SET picture = ?
         `,
-        [userId, name, email, picture, name, email, picture]
+        [userId, name, email, picture, picture]
       );
 
       const sessionToken = jwt.sign(
@@ -55,7 +55,7 @@ export function createGoogleEndpoints(app: any, db: Database) {
     try {
       // Verify the JWT token
       const decoded = jwt.verify(token, JWT_SECRET);
-      console.log(decoded)
+      // console.log(decoded)
       const userId = decoded.userId;
       console.log(userId)
 
