@@ -33,10 +33,10 @@ function UserIcon() {
       console.error('Failed to fetch profile:', error);
     }
   };
-
+  
   return (
     <div>
-      {userProfile.id !== "" ? (
+      {userProfile.id !== "" && userProfile.picture? (
           <img src={userProfile.picture} alt="profile" />
       ) : (
         <img src='images/profile.svg' alt='profile' />

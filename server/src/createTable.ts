@@ -1,5 +1,5 @@
-import sqlite3 from "sqlite3";
 import { open } from "sqlite";
+import sqlite3 from "sqlite3";
 
 const initDB = async () => {
   // Open the database connection
@@ -7,8 +7,7 @@ const initDB = async () => {
     filename: "database.sqlite",
     driver: sqlite3.Database,
   });
-
-  // Create a table "user" if it doesn't exist
+  // Create a "users" table if it doesn't exist
   await db.exec(`
    CREATE TABLE IF NOT EXISTS users (
     id TEXT PRIMARY KEY,
@@ -109,4 +108,3 @@ const initDB = async () => {
 };
 
 export default initDB;
-
