@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Logout = () => {
   const handleLogout = () => {
-    localStorage.removeItem('google-token');
+    localStorage.removeItem('token');
   };
 
   return (

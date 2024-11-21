@@ -11,14 +11,14 @@ function UserIcon() {
 
   useEffect(() => {
     // Check if user is already logged in by checking for a token
-    const token = localStorage.getItem('google-token');
+    const token = localStorage.getItem('token');
     if (token) {
       fetchUserProfile();
     }
   }, []);
 
   const fetchUserProfile = async () => {
-    const token = localStorage.getItem('google-token');
+    const token = localStorage.getItem('token');
     try {
       console.log(token)
       const res = await fetch('http://localhost:8080/api/profile', {
@@ -33,10 +33,10 @@ function UserIcon() {
       console.error('Failed to fetch profile:', error);
     }
   };
-
+  
   return (
     <div>
-      {userProfile.id !== "" ? (
+      {userProfile.id !== "" && userProfile.picture? (
           <img src={userProfile.picture} alt="profile" />
       ) : (
         <img src='images/profile.svg' alt='profile' />

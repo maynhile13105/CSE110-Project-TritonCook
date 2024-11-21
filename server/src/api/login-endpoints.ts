@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt';
+import { createHash } from 'crypto';
 const jwt = require('jsonwebtoken');
 import { Request, Response } from 'express';
 import { Database } from "sqlite";
+import { v4 as uuid } from 'uuid';
 require('dotenv').config();
 
 const JWT_SECRET = process.env.JWT_SECRET
@@ -30,7 +32,7 @@ export function createLoginEndpoints(app: any, db: Database) {
       }
 
       const token = jwt.sign(
-        { id: user.id, username: user.username },
+        { userId: user.id },
         JWT_SECRET,
         { expiresIn: '1h' }
       );
@@ -58,22 +60,37 @@ export function createLoginEndpoints(app: any, db: Database) {
     }
 
     try {
-      const existingUser = await db.get(
-        `SELECT * FROM login WHERE username = ? OR email = ?`,
-        [username, email]
+      const existingUserLogin = await db.get(
+        `SELECT * FROM login WHERE username = ?`,
+        [username]
       );
 
-      if (existingUser) {
-        return res.status(400).json({ error: 'Username or email is already in use.' });
+      if (existingUserLogin) {
+        return res.status(400).json({ error: 'Username is already in use.' });
       }
 
+      const hash = createHash('sha256').update(email).digest();
+      const userId = uuid({ random: hash.slice(0, 16) });
+      
       const hashedPassword = await bcrypt.hash(password, 10);
 
       await db.run(
-        `INSERT INTO login (username, email, passwordHash) VALUES (?, ?, ?)`,
-        [username, email, hashedPassword]
+        `INSERT INTO login (id, username, passwordHash) VALUES (?, ?, ?)`,
+        [userId, username, hashedPassword]
       );
 
+      const existingUser = await db.get(
+        `SELECT * FROM users WHERE id = ?`,
+        [userId]
+      );
+      
+      if (!existingUser) {
+        await db.run(
+          `INSERT INTO users (id, name, email) VALUES (?, ?, ?)`,
+          [userId, username, email]
+        );
+      }
+      
       res.status(201).json({ message: 'Account created successfully.' });
     } catch (error) {
       console.error('Error creating account:', error);

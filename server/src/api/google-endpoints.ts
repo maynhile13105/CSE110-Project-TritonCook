@@ -2,6 +2,8 @@ import { Database } from "sqlite";
 import { Request, Response } from 'express';
 const { OAuth2Client } = require('google-auth-library');
 const jwt = require('jsonwebtoken');
+import { v4 as uuid } from 'uuid';
+import { createHash } from "crypto";
 require('dotenv').config();
 
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
@@ -19,17 +21,21 @@ export function createGoogleEndpoints(app: any, db: Database) {
       const payload = ticket.getPayload();
 
       const { sub, name, email, picture } = payload;
+
+      const hash = createHash('sha256').update(email).digest();
+      const userId = uuid({ random: hash.slice(0, 16) });
+
       db.run(
         `
         INSERT INTO users (id, name, email, picture)
         VALUES (?, ?, ?, ?)
         ON CONFLICT(id) DO UPDATE SET name = ?, email = ?, picture = ?
         `,
-        [sub, name, email, picture, name, email, picture]
+        [userId, name, email, picture, name, email, picture]
       );
 
       const sessionToken = jwt.sign(
-        { userId: sub, name, email },
+        { userId: userId },
         JWT_SECRET,
         { expiresIn: '1h' }
       );        
@@ -49,6 +55,7 @@ export function createGoogleEndpoints(app: any, db: Database) {
     try {
       // Verify the JWT token
       const decoded = jwt.verify(token, JWT_SECRET);
+      console.log(decoded)
       const userId = decoded.userId;
       console.log(userId)
 
