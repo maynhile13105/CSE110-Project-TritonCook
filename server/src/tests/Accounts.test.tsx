@@ -12,6 +12,12 @@ let db: Database;
 const port = 8080;
 
 beforeAll(async () => {
+  // Check for JWT_SECRET
+  const JWT_SECRET = process.env.JWT_SECRET;
+  if (!JWT_SECRET) {
+    throw new Error("JWT_SECRET is not defined. Please set it in the environment.");
+  }
+  
   db = await openDatabase();
   await initDatabase();
   server = await app.listen(port);
@@ -25,13 +31,29 @@ afterAll(async () => {
     DELETE FROM login WHERE username IN ('testUser1', 'testUser2');
   `);
 
-  await db.close();
-  await new Promise<void>((resolve, reject) => {
-    server.close((err) => {
-      if (err) return reject(err);
-      resolve();
+  console.log("Starting cleanup...");
+
+  if (server) {
+    console.log("Closing server...");
+    await new Promise<void>((resolve, reject) => {
+      server.close((err) => {
+        if (err) {
+          console.error("Error closing server:", err);
+          return reject(err);
+        }
+        console.log("Server closed.");
+        resolve();
+      });
     });
-  });
+  }
+
+  if (db) {
+    console.log("Closing database...");
+    await db.close();
+    console.log("Database closed.");
+  }
+
+  console.log("Cleanup complete.");
 });
 
 beforeEach(async () => {
