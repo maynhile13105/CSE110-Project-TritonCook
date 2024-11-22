@@ -1,39 +1,58 @@
-import React, { useEffect, useState } from 'react';
-import { useContext } from "react";
-import { AppContext } from '../../context/AppContext';
-import RecipeItem from '../recipes/RecipeItem';
-import { fetchFavoriteRecipes } from '../../utils/favorite-utils';
-import { Recipe } from '../../types/types';
+import React, {useEffect, useState } from "react";
+import RecipeItem from "../recipes/RecipeItem";
+import "./SavedFavoriteRecipeList.css";
+import { Recipe } from "../../types/types";
+import { fetchFavoriteRecipes } from "../../utils/favorite-utils";
 
 const SavedFavoriteRecipeList = () => {
-  const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>([]); 
-  const {userProfile} = useContext(AppContext);
+    const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>([]);
 
-  useEffect(() => {
-    loadFavoriteRecipes();
-  }, []); 
+    useEffect(() => {
+      loadFavoriteRecipes()
+    }, []); 
 
-  const loadFavoriteRecipes = async () => {
-      try {
-          const favRecipesList = await fetchFavoriteRecipes(userProfile.id); // Fetch displayed recipes
-          
-          setFavoriteRecipes(favRecipesList); //Set to favRecipesList
+    console.log("Initial favoriteRecipes:", favoriteRecipes); // Check the initial value of displayedRecipes
+    const loadFavoriteRecipes = async () => {
+        try {
+            const favoriteRecipesList = await fetchFavoriteRecipes(); // Fetch displayed recipes
+            console.log("Fetched recipes in frontend:", favoriteRecipesList);  // Log the recipes
+             
+            
+            // Check for existing recipes and update the state correctly
+            setFavoriteRecipes(favoriteRecipesList);
 
-      } catch (error) {
-          console.error("Error fetching recipes:", error);
-      }
-  };
-  console.log("Fav List: ", favoriteRecipes);
+        } catch (error) {
+            console.error("Error fetching recipes:", error);
+        }
+    };
+
+
   return (
-    <div className='recipes-container'>
-      {favoriteRecipes.map((recipe) => (
-        <div className='post-item'>
-          <RecipeItem key={recipe.id} id={recipe.id} title={recipe.title} estimate={recipe.estimate}
-          ingredients={recipe.ingredients} result_img={recipe.result_img} userID={recipe.userID} cuisine={recipe.cuisine} time={recipe.time}></RecipeItem>
+    <>
+      {favoriteRecipes.length > 0 ? (
+        <div className="recipes-container">
+          {favoriteRecipes.map((recipe) => (
+            <div className="post-item" key={recipe.id}>
+              <RecipeItem
+                id={recipe.id}
+                title={recipe.title}
+                estimate={recipe.estimate}
+                ingredients={recipe.ingredients}
+                result_img={recipe.result_img}
+                userID={recipe.userID}
+                cuisine={recipe.cuisine}
+                time={recipe.time}
+              />
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-  );
+      ) : (
+        <h1 style={{ textAlign: "center", fontSize: "40px", fontWeight: "bold" }}>
+          No favorite recipes to display.
+        </h1>
+      )}
+    </>
+  );  
 };
 
 export default SavedFavoriteRecipeList;

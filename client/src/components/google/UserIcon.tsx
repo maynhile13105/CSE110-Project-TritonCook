@@ -4,18 +4,15 @@ import { AppContext } from '../../context/AppContext';
 function UserIcon() {
   const {userProfile, setUserProfile} = useContext(AppContext);
   const token = localStorage.getItem('token');
-  // const {token} = useContext(AppContext);
-  console.log(userProfile)
   useEffect(() => {
     // Check if user is already logged in by checking for a token
-    if (token != "") {
+    if (token) {
       console.log("fetching pf")
       fetchUserProfile();
     }
   }, []);
 
   const fetchUserProfile = async () => {
-    //const token = localStorage.getItem('token');
     try {
       console.log("token: ", token);
       const res = await fetch('http://localhost:8080/api/profile', {

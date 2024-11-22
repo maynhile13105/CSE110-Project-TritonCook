@@ -1,52 +1,50 @@
 import { useContext, useEffect, useState } from "react";
-import { Account, Recipe } from "../../types/types";
+import { Profile, Recipe } from "../../types/types";
 import './RecipeItem.css'
 import { Link } from "react-router-dom";
+import { addFavoriteRecipe, checkIsFavoriteRecipe, deleteFavoriteRecipe, fetchFavoriteRecipes } from "../../utils/favorite-utils";
 import { AppContext } from "../../context/AppContext";
-import { addFavoriteRecipe, checkIsFavoriteRecipe, deleteFavoriteRecipe } from "../../utils/favorite-utils";
 
 
 const RecipeItem = (currentRecipe: Recipe) => {
-  const { userProfile } = useContext(AppContext);
-
-  console.log("userID: ", userProfile.id);
-  console.log("recipeID: ", currentRecipe.id);
-
+    
+  const {userProfile} = useContext(AppContext);
   // State for favorite status and initialization
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [isFavoriteInitialized, setIsFavoriteInitialized] = useState(false);
-
-  const fetchFavoriteRecipes = async () => {
-    try {
-      const favoriteStatus = await checkIsFavoriteRecipe(userProfile.id, currentRecipe.id);
-      setIsFavorite(favoriteStatus);
-      setIsFavoriteInitialized(true); // Mark initialization complete
-    } catch (error) {
-      console.error("Error checking favorite status:", error);
-    }
-  };
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [isInitializedStatus, setIsInitializedStatus] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchFavoriteRecipes();
-  }, [userProfile.id, currentRecipe.id]);
+    checkFavoriteStatus();
+  }, []);
+
+  const checkFavoriteStatus = async () => {
+    try {
+        const status = await checkIsFavoriteRecipe(currentRecipe.id); // Fetch displayed recipes
+        console.log(`Status get from backend for ${currentRecipe.id} : ${status}`);
+        setIsFavorite(status);
+        setIsInitializedStatus(true); //Set to favRecipesList
+    } catch (error) {
+        console.error("Error fetching recipes:", error);
+    }
+};
 
   const handleFavoriteClick = () => {
-    setIsFavorite((prev) => !prev);
+    if (!isInitializedStatus){
+      return; 
+    }  //Skip if not initialized
+    setIsFavorite(!isFavorite);
   };
 
   useEffect(() => {
-    if (!isFavoriteInitialized) return; // Skip until initialized
-
-    if (isFavorite) {
-      addFavoriteRecipe(userProfile.id, currentRecipe.id).catch((error) => {
-        console.error("Failed to add recipe to favorite list!", error);
-      });
-    } else {
-      deleteFavoriteRecipe(userProfile.id, currentRecipe.id).catch((error) => {
-        console.error("Failed to remove recipe from favorite list!", error);
-      });
+    if (isInitializedStatus){
+      if(isFavorite ){
+        addFavoriteRecipe(currentRecipe.id);
+      } else if (!isFavorite){
+        deleteFavoriteRecipe(currentRecipe.id);
+      }
     }
-  }, [isFavorite, isFavoriteInitialized]);
+  }, [isFavorite, isInitializedStatus]);
+
 
   return (
     <div className="post-box">

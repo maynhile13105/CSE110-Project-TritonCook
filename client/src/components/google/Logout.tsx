@@ -1,14 +1,10 @@
-import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
-
 const Logout = () => {
-
-  const { setToken } =useContext(AppContext);
-
+  const {setUserProfile} = useContext(AppContext);
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setToken("");
   };
 
   return (
