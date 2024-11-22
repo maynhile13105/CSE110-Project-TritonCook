@@ -31,32 +31,8 @@ afterAll(async () => {
     DELETE FROM login WHERE username IN ('testUser1', 'testUser2');
   `);
 
-  // console.log("Starting cleanup...");
-
-  // if (server) {
-  //   console.log("Closing server...");
-  //   await new Promise<void>((resolve, reject) => {
-  //     server.close((err) => {
-  //       if (err) {
-  //         console.error("Error closing server:", err);
-  //         return reject(err);
-  //       }
-  //       console.log("Server closed.");
-  //       resolve();
-  //     });
-  //   });
-  // }
-
-  // if (db) {
-  //   console.log("Closing database...");
-  //   await db.close();
-  //   console.log("Database closed.");
-  // }
-
-  // console.log("Cleanup complete.");
-
-  // console.log("Forcing process exit.");
-  // process.exit(0);
+  db.close();
+  server.close();
 });
 
 beforeEach(async () => {
