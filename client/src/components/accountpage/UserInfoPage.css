@@ -62,8 +62,28 @@
 .block-text {
     color: #000;
     font-family: Inter, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+}
+
+.block-info-container {
+    display: flex;
+    /* min-width: 240px; */
+    padding: var(--sds-size-space-300) var(--sds-size-space-400);
+    align-items: center;
+    align-self: stretch;
+    border-radius: var(--sds-size-radius-200);
+    border: var(--sds-size-stroke-border) solid var(--sds-color-border-default-default);
+    background: white;
+    width: 500px;
+    height: 40px;
+}
+
+.block-info {
+    color: #000;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
 }
