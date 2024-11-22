@@ -7,6 +7,7 @@ import { createDisplayedRecipesEndpoints } from "./endpoints/displayedRecipes-en
 import { createFavoriteRecipesEndpoints } from "./endpoints/favorite-endpoints";
 import { addRecipesToDatabase } from "./addTestRecipes";
 import { sampleRecipes } from "./samlpleRecipes";
+import { createUserInformationEndpoints } from "./endpoints/userInfo-endpoint";
 
 const express = require("express");
 const cors = require("cors");
@@ -42,6 +43,7 @@ if (require.main === module) {
   createGoogleEndpoints(app, db);
   createDisplayedRecipesEndpoints(app, db);
   createFavoriteRecipesEndpoints(app, db);
+  createUserInformationEndpoints(app, db);
 })();
 
 export default app;
