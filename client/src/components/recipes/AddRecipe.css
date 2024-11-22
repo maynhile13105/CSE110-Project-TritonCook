@@ -28,7 +28,7 @@ input {
 form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
     margin: 0 auto;
     padding: 20px;
     border-radius: 8px;
@@ -58,20 +58,24 @@ label.required::after {
 .form-actions {
     display: flex;
     justify-content: flex-start;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 75%;
+    margin-left: 10%;
+    margin-right: 30%;
+    margin-bottom: 2%;
 }
 
 button {
-    padding: 12px 30px;
+    padding: 20px 80px;
     background: #B0E0E2;
     border: none;
-    border-radius: 30px;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 30px;
     font-weight: bold;
-    text-transform: uppercase;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
-    margin-right: 15px;
+}
+
+.cancel {
+    background-color: #D9D9D9;
 }
