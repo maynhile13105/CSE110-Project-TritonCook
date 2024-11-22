@@ -3,11 +3,13 @@ import { AppContext } from '../../context/AppContext';
 
 function UserIcon() {
   const {userProfile, setUserProfile} = useContext(AppContext);
-  const {token} = useContext(AppContext);
-
+  const token = localStorage.getItem('token');
+  // const {token} = useContext(AppContext);
+  console.log(userProfile)
   useEffect(() => {
     // Check if user is already logged in by checking for a token
-    if (token) {
+    if (token != "") {
+      console.log("fetching pf")
       fetchUserProfile();
     }
   }, []);
@@ -31,7 +33,7 @@ function UserIcon() {
   
   return (
     <div>
-      {!userProfile.id && userProfile.picture? (
+      {userProfile.id && userProfile.picture? (
           <img src={userProfile.picture} alt="profile" />
       ) : (
         <img src='images/profile.svg' alt='profile' />
