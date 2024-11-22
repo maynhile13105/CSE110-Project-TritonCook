@@ -13,3 +13,4 @@ export const fetchDisplayedRecipes = async (): Promise<Recipe[]> => {
     console.log(jsonResponse.data); // Log to check the structure of the response
     return jsonResponse.data; // Return the data directly
 }
+

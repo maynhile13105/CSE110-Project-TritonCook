@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import RecipeItem from "./RecipeItem";
 import "./RecipeList.css";
 import { AppContext } from "../../context/AppContext";
 import { fetchDisplayedRecipes } from "../../utils/displayedRecipes-utils"; // Import the function here
 import { useLocation } from "react-router-dom";
+import { Recipe } from "../../types/types";
 
 const RecipeList = () => {
     const { displayedRecipes, setDisplayedRecipes } = useContext(AppContext);
@@ -18,7 +19,9 @@ const RecipeList = () => {
         try {
             const recipesList = await fetchDisplayedRecipes(); // Fetch displayed recipes
             console.log("Fetched recipes in frontend:", recipesList);  // Log the recipes
-             // Check for existing recipes and update the state correctly
+             
+            
+            // Check for existing recipes and update the state correctly
              setDisplayedRecipes((prev) => {
               if (prev.length !== recipesList.length) {
                 console.log("Setting new recipes...");
@@ -26,6 +29,7 @@ const RecipeList = () => {
               }
               return prev; // Keep the previous state if the recipes haven't changed
             });
+
         } catch (error) {
             console.error("Error fetching recipes:", error);
         }
