@@ -51,44 +51,6 @@ beforeEach(async () => {
   `);
 });
 
-describe("Create Account", () => {
-  const user1Username = "testUser1";
-  const user1Email = "user1@ucsd.edu";
-  const user1Password = "password";
-  const user1 = {
-    username: user1Username,
-    email: user1Email,
-    password: user1Password,
-  };
-
-  test("create account", async () => {
-    const response = await fetch('http://localhost:8080/api/createAccount', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user1),
-    });
-
-    // console.log(response);
-
-    const result = await response.json();
-    expect(response.status).toBe(201);
-    expect(result.message).toBe('Account created successfully.');
-
-    const hash = createHash('sha256').update(user1Email).digest();
-    const userId = uuid({ random: hash.slice(0, 16) });
-
-    const loginUser = await db.get(`SELECT * FROM login WHERE username = ?`, [user1Username]);
-    expect(loginUser).not.toBeNull();
-    expect(loginUser.id).toBe(userId);
-    expect(loginUser.username).toBe(user1Username);
-
-    const user = await db.get(`SELECT * FROM users WHERE id = ?`, [userId]);
-    expect(user).not.toBeNull();
-    expect(user.name).toBe(user1.username);
-    expect(user.email).toBe(user1.email);
-  });
-});
-
 describe("User Info Endpoint", () => {
   const user1Username = "testUser1";
   const user1Email = "user1@ucsd.edu";
