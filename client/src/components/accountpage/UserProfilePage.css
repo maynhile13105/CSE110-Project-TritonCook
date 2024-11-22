@@ -1,7 +1,115 @@
 .page_style{
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100vh; */
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;  /* Aligns the content to the top */
     height: 100vh;
+    gap: 20px;
   }
+
+  .profile-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 876px;
+    height: 281px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background-color: #F7FFE2;
+    position: relative;
+  }
+  
+  .pic_icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .pen_icon {
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+  }
+
+/* Info Block (Second Block) */
+.info-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 640px;
+    height: 479px;
+    border-radius: 20px;
+    background-color: #F7FFE2;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  .username {
+    color: #000;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    line-height: 3;
+  }
+
+/* Styling for the Second Block Content */
+.info-title {
+    color: #000;
+    font-family: Inter, sans-serif;
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 0;
+    margin-bottom: 0;
+  }
+  
+  .info-list {
+    list-style-type: disc; /* Adds a bullet point for each item */
+    padding-left: 20px; /* Space for the bullet points */
+    color: #000;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.3; /* Adjust line height for tighter spacing */
+    margin-bottom: 1px; /* Reduce gap below the list */
+    display: block;
+  }
+
+  /* Image Placeholder */
+.image-display {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align content to the start */
+    width: 590px;
+    height: 60px;
+    border-radius: 20px;
+    background-color: white;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .see-more-button {
+    padding: 5px 10px;
+    font-size: 13px;
+    font-family: Inter, sans-serif;
+    color: #000;
+    background-color: #F7FFE2;
+    border: 2px solid #000;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: auto;
+  }
+
+
