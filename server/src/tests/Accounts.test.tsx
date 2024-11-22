@@ -25,6 +25,7 @@ afterAll(async () => {
     DELETE FROM login WHERE username IN ('testUser1', 'testUser2');
   `);
 
+  db.close();
   server.close();
 });
 
