@@ -91,9 +91,11 @@
 }
 
 .ingredientsmenu{
-    position: absolute;
-    right: -174px;
-    top: 358px;
+    position: fixed;
+    left: 200px;
+    top: 479px;
+    overflow-y: auto;
+    max-height: 250px
 }
 
 .ingredientspopup{
@@ -121,9 +123,11 @@
 }
 
 .cuisinesmenu{
-    position: absolute;
-    right: -174px;
-    top: 420px;
+    position: fixed;
+    left: 200px;
+    top: 541px;
+    overflow-y: auto;
+    max-height: 250px
 }
 
 .cuisinepopup{

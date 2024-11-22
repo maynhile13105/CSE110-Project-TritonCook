@@ -1,19 +1,28 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Sidebar.css'
 import UserIcon from '../google/UserIcon';
+import { useFilterContext } from '../../context/FilterContext';
+import ingredientsData from '../../data/ingredientsData.json'
+import cuisinesData from '../../data/cuisinesData.json'
 
 const Sidebar = () => {
+  const {
+    selectedIngredients,setSelectedIngredients, 
+    selectedTime, setSelectedTime,
+    selectedCuisine, setSelectedCuisine,
+    setAppliedFilters,
+  } = useFilterContext();
+
   const[dropdown, setDropdown] = useState(false);
-  const[selectedTime, setSelectedTime] = useState<string | null>(null);
-  const[selectedCuisine, setSelectedCuisine] = useState<string | null>(null);
-  const[selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
   const[activePopup, setActivePopup] = useState<string | null>(null);
   const[ingredientSearch, setIngredientSearch] = useState('');
   const[cuisineSearch, setCuisineSearch] = useState('');
-  
-  const ingredientsList = ['Tomato', 'Chicken', 'Lettuce', 'Beef', 'Fish', 'Onion'];
-  const cuisineList = ['American', 'Chinese', 'Indian', 'Japanese', 'Korean', 'Mexican'];
+  const [recentIngredients, setRecentIngredients] = useState<string[]>([]);
+  const [recentCuisines, setRecentCuisines] = useState<string[]>([]);
+
+  const ingredientsList: string[] = ingredientsData;
+  const cuisineList: string[] = cuisinesData;
 
   const toggleDropdown = () => {
     setDropdown(!dropdown);
@@ -28,10 +37,15 @@ const Sidebar = () => {
     if (!selectedIngredients.includes(ingredient)) {
       setSelectedIngredients([...selectedIngredients, ingredient]);
     }
+    
+    setRecentIngredients((prev) => {
+      const updated = [ingredient, ...prev.filter((item) => item !== ingredient)];
+      return updated.slice(0, 5);
+    });  
   }
   
   const removeSelectedIngredients = (ingredient:string) => {
-    setSelectedIngredients(selectedIngredients.filter((ing) => ing !== ingredient));
+    setSelectedIngredients(selectedIngredients.filter((ing:string) => ing !== ingredient));
 
   }
 
@@ -46,6 +60,11 @@ const Sidebar = () => {
 
   const handleSelectedCuisine =(cuisine :string) => {
     setSelectedCuisine(cuisine);
+    setRecentCuisines((prev) => {
+      const updated = [cuisine, ...prev.filter((item) => item !== cuisine)];
+      return updated.slice(0, 5); // Keep only the last 5
+    });
+
     setActivePopup(null);
   }
 
@@ -53,6 +72,19 @@ const Sidebar = () => {
     setSelectedCuisine(null);
   }
 
+  const handleApplyFilters = () => {
+    console.log("Filters applied:", {
+      selectedIngredients,
+      selectedTime,
+      selectedCuisine,
+    });
+    
+    setAppliedFilters({
+      ingredients: selectedIngredients,
+      time: selectedTime,
+      cuisine: selectedCuisine,
+    });
+  }
   
   return (
     <div>
@@ -128,7 +160,7 @@ const Sidebar = () => {
               ))}
             </div>
           )}
-          <button className='insidefilterbutton'>Filter</button>
+          <button className='insidefilterbutton' onClick={handleApplyFilters}>Filter</button>
         </div>
     )}
         </div>
