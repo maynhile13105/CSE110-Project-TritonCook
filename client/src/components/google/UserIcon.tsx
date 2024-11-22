@@ -1,33 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import { Profile } from '../../types/types';
+import React, { useState, useEffect, useContext } from 'react';
+import { AppContext } from '../../context/AppContext';
 
 function UserIcon() {
-  const [userProfile, setUserProfile] = useState<Profile>({
-    id: "",
-    name: "",
-    email: "",
-    picture: ""
-  });
+  const {userProfile, setUserProfile} = useContext(AppContext);
+  const {token} = useContext(AppContext);
 
   useEffect(() => {
     // Check if user is already logged in by checking for a token
-    const token = localStorage.getItem('token');
     if (token) {
       fetchUserProfile();
     }
   }, []);
 
   const fetchUserProfile = async () => {
-    const token = localStorage.getItem('token');
+    //const token = localStorage.getItem('token');
     try {
-      console.log(token)
+      console.log("token: ", token);
       const res = await fetch('http://localhost:8080/api/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       const profileData = await res.json();
-      console.log(profileData.user)
+      console.log("profileData: ", profileData.user);
       setUserProfile(profileData.user);
     } catch (error) {
       console.error('Failed to fetch profile:', error);
@@ -36,7 +31,7 @@ function UserIcon() {
   
   return (
     <div>
-      {userProfile.id !== "" && userProfile.picture? (
+      {!userProfile.id && userProfile.picture? (
           <img src={userProfile.picture} alt="profile" />
       ) : (
         <img src='images/profile.svg' alt='profile' />

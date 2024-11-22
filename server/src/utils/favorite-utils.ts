@@ -30,7 +30,7 @@ export async function deleteFavoriteRecipe(req: Request, res: Response, db: Data
     res.status(202).send();
 }
 
-export async function checkFavoriteRecipe(req: Request, res: Response, db: Database) {
+export async function checkIsFavoriteRecipe(req: Request, res: Response, db: Database) {
     const { userID, recipeID } = req.params;
     if(!userID || !recipeID ){
         return res.status(400).send({error: "Missing required fields"});
@@ -61,6 +61,9 @@ export async function getFavoriteRecipes(req: Request, res: Response, db: Databa
            ORDER BY fr.time DESC;`,
           [userID]
         );
+
+        console.log("Fetched fav recipes:", favoriteRecipesList);
+
         res.status(200).json({data: favoriteRecipesList});
     } catch(error) {
         res.status(500).json({ error: "An error occurred while fetching favorite recipes." });

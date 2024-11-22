@@ -40,6 +40,22 @@ export const fetchFavoriteRecipes = async (userID: string): Promise<Recipe[]> =>
     });
 
     return favoriteRecipeList;
-}
+};
 
 //Function to check if the recipe is in the user's favorite list from backend. Method: GET
+export const checkIsFavoriteRecipe = async(userID: string, recipeID: string): Promise<boolean> => {
+    const response = await fetch(`${API_BASE_URL}/favorite/check/${userID}/${recipeID}`, {
+        method: "GET",
+    });
+
+    if(!response.ok){
+        throw new Error("Failed to check the user's favorite recipes");
+
+    }
+
+    let  isFavorite = response.json().then((jsonResponse) => {
+        return jsonResponse.data;
+    });
+    
+    return isFavorite;
+}

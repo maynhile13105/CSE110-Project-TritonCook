@@ -1,15 +1,12 @@
 import { createContext, SetStateAction, useState } from "react";
-import { Account, Recipe } from "../types/types";
+import { Profile, Recipe } from "../types/types";
 
 interface AppContextType {
     token: string;
     setToken: React.Dispatch<React.SetStateAction<string>>;
 
-    account: Account;
-    setAccount: React.Dispatch<React.SetStateAction<Account>>;
-
-    displayedRecipes: Recipe[];
-    setDisplayedRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>;
+    userProfile: Profile;
+    setUserProfile: React.Dispatch<React.SetStateAction<Profile>>;
 
     favoriteRecipes: Recipe[];
     setFavoriteRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>;
@@ -19,25 +16,22 @@ const initialState: AppContextType = {
     token: "",
     setToken:() => {},
 
-    displayedRecipes: [],
-    setDisplayedRecipes: () => {},  
     favoriteRecipes: [],
     setFavoriteRecipes: () => { },
     
-    account: {
+    userProfile: {
         id: "",
         name: "",
         email: "",
         picture: ""
     },
-    setAccount: () => {},
+    setUserProfile: () => {},
 };
 
 export const AppContext = createContext<AppContextType>(initialState);
 
 export const AppProvider = (props: any) => {
-    const [account, setAccount] = useState<Account>(initialState.account);
-    const [displayedRecipes, setDisplayedRecipes] = useState<Recipe[]>(initialState.displayedRecipes);
+    const [userProfile, setUserProfile] = useState<Profile>(initialState.userProfile);
     const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>(initialState.favoriteRecipes);
     const [token, setToken] = useState<string>(initialState.token);
     return (
@@ -47,11 +41,8 @@ export const AppProvider = (props: any) => {
                 token: token,
                 setToken: setToken,
 
-                account: account,
-                setAccount: setAccount,
-
-                displayedRecipes: displayedRecipes,
-                setDisplayedRecipes: setDisplayedRecipes,
+                userProfile: userProfile,
+                setUserProfile: setUserProfile,
 
                 favoriteRecipes: favoriteRecipes,
                 setFavoriteRecipes: setFavoriteRecipes,

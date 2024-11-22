@@ -1,13 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useContext } from "react";
 import { AppContext } from '../../context/AppContext';
 import RecipeItem from '../recipes/RecipeItem';
+import { fetchFavoriteRecipes } from '../../utils/favorite-utils';
+import { Recipe } from '../../types/types';
 
 const SavedFavoriteRecipeList = () => {
-  const {favoriteRecipes} = useContext(AppContext); 
-  const {account} = useContext(AppContext);
+  const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>([]); 
+  const {userProfile} = useContext(AppContext);
 
-  console.log('userID: ', account.id);
+  useEffect(() => {
+    loadFavoriteRecipes();
+  }, []); 
+
+  const loadFavoriteRecipes = async () => {
+      try {
+          const favRecipesList = await fetchFavoriteRecipes(userProfile.id); // Fetch displayed recipes
+          
+          setFavoriteRecipes(favRecipesList); //Set to favRecipesList
+
+      } catch (error) {
+          console.error("Error fetching recipes:", error);
+      }
+  };
+  console.log("Fav List: ", favoriteRecipes);
   return (
     <div className='recipes-container'>
       {favoriteRecipes.map((recipe) => (

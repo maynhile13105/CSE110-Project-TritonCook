@@ -9,7 +9,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { setToken, setAccount } = useContext(AppContext);
+  const { setToken } = useContext(AppContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e: { preventDefault: () => void }) => {
@@ -37,17 +37,12 @@ const LoginForm = () => {
       }
 
       const data = await response.json();
-
-      
       
       // Save the token to local storage or context
-      localStorage.setItem("token", data.token);
-
+      //localStorage.setItem("token", data.token);
+      console.log("Data token: ", data.token);
       //Save the token to the app context
-      //setToken(data.token);
-   
-
-      console.log('data:', data);
+      setToken(data.token);
 
       navigate("/home");
     } catch (err) {

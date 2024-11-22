@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import RecipeItem from "./RecipeItem";
 import "./RecipeList.css";
-import { AppContext } from "../../context/AppContext";
 import { fetchDisplayedRecipes } from "../../utils/displayedRecipes-utils"; // Import the function here
 import { useLocation } from "react-router-dom";
 import { Recipe } from "../../types/types";
 
 const RecipeList = () => {
-    const { displayedRecipes, setDisplayedRecipes } = useContext(AppContext);
+    const [displayedRecipes, setDisplayedRecipes] = useState<Recipe[]>([]);
     const location = useLocation();
 
     useEffect(() => {

@@ -10,7 +10,6 @@ export const fetchDisplayedRecipes = async (): Promise<Recipe[]> => {
 
     // Await the response and log it
     const jsonResponse = await response.json();
-    console.log(jsonResponse.data); // Log to check the structure of the response
     return jsonResponse.data; // Return the data directly
 }
 
