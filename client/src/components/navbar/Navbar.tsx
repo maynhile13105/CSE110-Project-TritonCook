@@ -19,7 +19,7 @@ const Navbar = () => {
           </Link></li>
         </ul>
         <ul className='middle'>
-          <li className='post'><Link to='/home'>
+          <li className='post'><Link to='/home/add-recipe'>
             <img className='postImage' src='images/addPost.svg' alt='post' />
           </Link></li>
           <li className='home'><Link to='/home'>

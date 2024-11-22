@@ -6,6 +6,7 @@ import CreateAccountPage from "./views/Login/CreateAccountPage";
 import Newsfeed from "./views/Newsfeed/Newsfeed";
 import RecipeList from "./components/recipes/RecipeList";
 import SearchPage from "./components/searchpage/SearchPage";
+import AddRecipe from "./components/recipes/AddRecipe";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/home" element={<Newsfeed />} >
           <Route index element={<RecipeList />} />
           <Route path="search" element={<SearchPage />} />
+          <Route path='add-recipe' element={<AddRecipe />} />
         </Route >
       </Routes>
     </div>
