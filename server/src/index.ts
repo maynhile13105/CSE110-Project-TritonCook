@@ -1,6 +1,8 @@
 import { Response } from "express";
-import initDB from "./createTable";
-import { createGoogleEndpoints } from "./google/google-endpoints";
+import { createGoogleEndpoints } from "./api/google-endpoints";
+import { createLoginEndpoints } from "./api/login-endpoints";
+import openDatabase from "./database/openDatabase";
+import initDatabase from "./database/initDatabase";
 
 const express = require("express");
 const cors = require("cors");
@@ -12,13 +14,16 @@ app.use(cors());
 app.use(express.json());
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+  });
+}
 
 // Initialize the database and start the server
 (async () => {
-  const db = await initDB();
+  await initDatabase();
+  const db = await openDatabase();
 
   // Root endpoint to get test if the server is running
   app.get("/", (req: Request, res: Response) => {
@@ -26,6 +31,8 @@ app.listen(port, () => {
     res.status(200);
   });
 
+  createLoginEndpoints(app, db);
   createGoogleEndpoints(app, db);
 })();
 
+export default app;

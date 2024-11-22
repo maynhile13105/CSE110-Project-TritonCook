@@ -1,16 +1,48 @@
 import React, { useEffect, useState } from "react";
 import "./LoginForm.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginButton from "../google/LoginButton";
 
 
+
 const LoginForm = () => {
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    console.log(username)
+    console.log(password)
+
+    try {
+      const response = await fetch("http://localhost:8080/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Invalid credentials");
+      }
+
+      const data = await response.json();
+
+      // Save the token to local storage or context
+      localStorage.setItem("token", data.token);
+
+      // Redirect to /home after successful login
+      navigate("/home");
+    } catch (err) {
+      console.error("Login failed. Please check your credentials.");
+    }
+  };
 
   return (
     <div className="login-box">
-      <form action="" method="post" className="loginForm">
+      <form onSubmit={handleLogin} className="loginForm">
         <div>
           <label>Username</label>
         </div>
@@ -21,9 +53,9 @@ const LoginForm = () => {
             id="username"
             placeholder="Enter Username"
             required
-            value={userName}
+            value={username}
             data-testid="username-intput-field"
-            onChange={(e) => setUserName(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
         <div>
