@@ -14,9 +14,11 @@ app.use(cors());
 app.use(express.json());
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+  });
+}
 
 // Initialize the database and start the server
 (async () => {
