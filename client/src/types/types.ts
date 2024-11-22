@@ -13,5 +13,6 @@ export type Recipe = {
 	estimate: number;
 	ingredients: string[];
 	result: string;
+	instructions: string[];
 	favorite: boolean;
 };
