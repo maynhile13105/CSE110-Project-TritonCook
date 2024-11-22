@@ -1,23 +1,27 @@
 import { Request, Response } from "express";
-import { Database } from "sqlite"; // Replace with your actual DB library
+import { Database } from "sqlite";
+const jwt = require('jsonwebtoken');
+
+const JWT_SECRET = process.env.JWT_SECRET
 
 export async function loadUserInfo(req: Request, res: Response, db: Database) {
-    const { userID } = req.params;
-    if (!userID) {
-        return res.status(400).json({ error: "Missing userID parameter" });
-    }
-    
-    try {
-        // Query to fetch favorite recipes for the user, ordered by the time they were added to favorites
-        const userInfo = await db.all(
-          `SELECT * 
-           FROM users
-           WHERE id = ?;`,
-          [userID]
-        );
-        res.status(200).json({data: userInfo});
-    } catch(error) {
-        res.status(500).json({ error: "An error occurred while fetching favorite recipes." });
-    }
-  
+  const token = req.headers.authorization?.split(' ')[1];
+
+  if (!token) return res.status(401).json({ error: 'Unauthorized' });
+
+  try {
+    // Verify the JWT token
+    const decoded = jwt.verify(token, JWT_SECRET);
+    // console.log(decoded)
+    const userId = decoded.userId;
+    console.log(userId)
+
+    // Retrieve user information from the database
+    const user = await db.get(`SELECT * FROM users WHERE id = ?`, [userId]);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json({ user });
+  } catch (error) {
+    console.error('JWT verification error:', error);
+    res.status(401).json({ error: 'Unauthorized' });
+  }
 }
