@@ -54,6 +54,9 @@ afterAll(async () => {
   }
 
   console.log("Cleanup complete.");
+
+  console.log("Forcing process exit.");
+  process.exit(0);
 });
 
 beforeEach(async () => {
