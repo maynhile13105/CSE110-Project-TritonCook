@@ -7,7 +7,7 @@ const Logout = () => {
   const { setToken } =useContext(AppContext);
 
   const handleLogout = () => {
-    //localStorage.removeItem('token');
+    localStorage.removeItem('token');
     setToken("");
   };
 

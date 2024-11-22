@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GoogleCredentialResponse } from "../../types/types";
 import "./LoginButton.css"
 import { useNavigate } from "react-router-dom";
@@ -6,8 +6,9 @@ import { AppContext } from "../../context/AppContext";
 
 const LoginButton = () => {
   const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-  const { setToken } = useContext(AppContext);
   const navigate = useNavigate();
+  const { token, setToken } = useContext(AppContext);
+
 
   useEffect(() => {
     /* global google */
@@ -25,19 +26,21 @@ const LoginButton = () => {
   }, []);
 
   const handleCredentialResponse = async (response: GoogleCredentialResponse) => {
-    const token = response.credential;
-    console.log('Encoded JWT ID token:', token);
+    const t = response.credential;
+    console.log('Encoded JWT ID token:', t);
 
     try {
       const res = await fetch('http://localhost:8080/api/google-signin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token }),
+        body: JSON.stringify({ token: t }),
       });
 
       const data = await res.json();
       console.log('JWT from server:', data);
-      setToken(data.token);
+      localStorage.setItem("token", data.sessionToken);
+      setToken(data.sessionToken);
+      console.log(token)
       navigate("/home");
     } catch (error) {
       console.error('Failed to authenticate:', error);
