@@ -25,8 +25,13 @@ afterAll(async () => {
     DELETE FROM login WHERE username IN ('testUser1', 'testUser2');
   `);
 
-  db.close();
-  server.close();
+  await db.close();
+  await new Promise<void>((resolve, reject) => {
+    server.close((err) => {
+      if (err) return reject(err);
+      resolve();
+    });
+  });
 });
 
 beforeEach(async () => {
