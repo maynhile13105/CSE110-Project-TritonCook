@@ -13,7 +13,7 @@ const port = 8080;
 
 beforeAll(async () => {
   // Check for JWT_SECRET
-  const JWT_SECRET = process.env.JWT_SECRET || "DefaultKey";
+  const JWT_SECRET = process.env.JWT_SECRET;
   if (!JWT_SECRET) {
     throw new Error("JWT_SECRET is not defined. Please set it in the environment.");
   }
@@ -294,11 +294,11 @@ describe("Login", () => {
     expect(response.status).toBe(200);
     expect(result.token).toBeDefined();
 
-    // const hash = createHash('sha256').update(user1Email).digest();
-    // const userId = uuid({ random: hash.slice(0, 16) });
+    const hash = createHash('sha256').update(user1Email).digest();
+    const userId = uuid({ random: hash.slice(0, 16) });
 
-    // const decodedToken = jwt.verify(result.token, process.env.JWT_SECRET);
-    // expect(decodedToken.userId).toBeDefined();
-    // expect(decodedToken.userId).toBe(userId);
+    const decodedToken = jwt.verify(result.token, process.env.JWT_SECRET);
+    expect(decodedToken.userId).toBeDefined();
+    expect(decodedToken.userId).toBe(userId);
   });
 });
