@@ -64,11 +64,12 @@
     display: inline-flex;
     padding: 15px 163px 13px 6px; /* Top, right, bottom, left */
     align-items: flex-start;
-    gap: 19px;
+    gap: 20px;
     border-radius: 20px;
     background: #F7FFE2;
     width: 500px;
     height: 30px;
+
 }
 
 .block-text-container {
@@ -164,3 +165,10 @@
     gap: 20px; /* Adjust space between containers */
     position: relative;
 }
+
+.block-icon {
+    width: 48px;
+    height: 39px;
+    flex-shrink: 0; /* Prevent the icon from resizing */
+    margin-right: 1px;
+  }
