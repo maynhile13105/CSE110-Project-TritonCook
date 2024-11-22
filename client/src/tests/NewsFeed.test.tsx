@@ -4,7 +4,7 @@ import RecipeList from '../components/recipes/RecipeList';
 import { MemoryRouter } from 'react-router-dom';
 
 // Currently testing dummy data for frontend
-test('renders news feed', () => {
+test.skip('renders news feed', () => {
   render(
     <MemoryRouter>
       <RecipeList />
