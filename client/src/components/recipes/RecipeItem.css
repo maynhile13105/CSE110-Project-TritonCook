@@ -63,7 +63,15 @@
     gap: 10px;
 }
 
+.like-button {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
 .horizontal-line {
     border-top: 1px solid #030000;
-    margin: 20px 0;     
-  }
+    margin: 20px 0;
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./CreateAccountForm.css";
 import { useNavigate } from "react-router-dom";
 const CreateAccountForm = () => {

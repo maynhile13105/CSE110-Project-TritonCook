@@ -9,31 +9,31 @@ const Navbar = () => {
     <div>
       <main className='navbar'>
         <ul className='left'>
-          <li className='logo'><Link to='/home'>
+        <Link to='/home'><li className='logo' data-testid='logo'>
             <img src='images/logo-round.svg'
               alt='logo' />
-          </Link></li>
-          <li className='notif'><Link to='/home'>
+          </li></Link>
+          <Link to='/home'><li className='notif' data-testid='notif'>
             <img className='notifImage' src='images/notif-bell.svg'
               alt='notif' />
-          </Link></li>
+          </li></Link>
         </ul>
         <ul className='middle'>
-          <li className='post'><Link to='/home'>
+          <Link to='/home'><li className='post' data-testid='post'>
             <img className='postImage' src='images/addPost.svg' alt='post' />
-          </Link></li>
-          <li className='home'><Link to='/home'>
+          </li></Link>
+          <Link to='/home'><li className='home' data-testid='home'>
             <img src='images/home.svg' alt='home' />
-          </Link></li>
-          <li className='search'><Link to='/home/search'>
+          </li></Link>
+          <Link to='/home/search'><li className='search' data-testid='search'>
             <img src='images/search.svg' alt='search'/>
-          </Link></li>
+          </li></Link>
         </ul>
         <ul className='right'>
-          <Logout />
-          <li className='profile'><Link to='/home'>
+          <Logout date-testid='logout'/>
+          <Link to='/home'><li className='profile' data-testid='profile'>
             <UserIcon />
-          </Link></li>
+          </li></Link>
         </ul>
       </main>
     </div>
