@@ -9,10 +9,11 @@ export type GoogleCredentialResponse = {
 
 export type Recipe = {
   id: number;
-  name: string;
+  title: string;
+  ingredients: string;
   estimate: number;
-  ingredients: string[];
-  image: string;
+  cuisine: string;
+  result_img: string;
 };
 
 export type Profile = {

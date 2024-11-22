@@ -28,48 +28,47 @@ const AddRecipe = () => {
       <div className='outer'>
         <div className='formContainer'>
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label className='required'>Title</label>
-                    <input
-                        type="text"
-                        value={formData.title}
-                        onChange={handleChange}
-                        required
-                    />
+              <div className="form-group">
+                  <label className='required'>Title</label>
+                  <input
+                      type="text"
+                      value={formData.title}
+                      onChange={handleChange}
+                      placeholder='What do you have in mind?'
+                      required
+                  />
+              </div>
+              <div className="form-group">
+                <label className='required'>Ingredients</label>
+                <input
+                    value={formData.ingredients}
+                    onChange={handleChange}
+                    placeholder="Use a comma to separate ingredients"
+                    required
+                />
                 </div>
                 <div className="form-group">
-                    <label className='required'>Ingredients</label>
-                    <input
-                        value={formData.ingredients}
-                        onChange={handleChange}
-                        required
-                    />
+                <label className='required'>Estimated Time</label>
+                <input
+                  value={formData.time}
+                  onChange={handleChange}
+                  placeholder='Amount'
+                  required
+                />
                 </div>
                 <div className="form-group">
-                    <label className='required'>Estimate Time</label>
-                    <input
-                        value={formData.time}
-                        onChange={handleChange}
-                        required
-                    />
+                  <label className='required'>Final results image</label>
+                  <input
+                    type="file"
+                    value={formData.image}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
-                <div className="form-group">
-                    <label className='required'>Final results image</label>
-                    <input
-                        type="file"
-                        value={formData.image}
-                        onChange={handleChange}
-                        required
-                        />
-                    </div>
-                    <div className="form-actions">
-                        <button type="button">
-                            Cancel
-                        </button>
-                        <button type="button" >
-                            Post
-                        </button>
-                    </div>
+                <div className="form-actions">
+                  <button type="button">Cancel</button>
+                  <button type="button">Post</button>
+                </div>
                 </form>
             </div>
         </div>
