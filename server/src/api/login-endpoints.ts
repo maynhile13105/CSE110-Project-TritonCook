@@ -17,8 +17,8 @@ export function createLoginEndpoints(app: any, db: Database) {
       return res.status(400).json({ error: 'Username and password are required.' });
     }
 
-    console.log(username)
-    console.log(password)
+    // console.log(username)
+    // console.log(password)
 
     try {
       const user = await db.get(`SELECT * FROM login WHERE username = ?`, [username]);
