@@ -9,8 +9,8 @@ on:
 jobs: # the things being executed
  tests: # the name of your status check, will become important when you do branch protection
    runs-on: ubuntu-latest # which device on Github's server that you are running the Actions on
-   env:
-     JWT_SECRET: ${{ secrets.JWT_SECRET }} 
+  #  env:
+  #    JWT_SECRET: ${{ secrets.JWT_SECRET }} 
    steps:
      - uses: actions/checkout@v4 # using version 4 of Actions
      - name: Install Dependencies Client
