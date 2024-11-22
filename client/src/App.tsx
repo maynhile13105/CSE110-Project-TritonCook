@@ -8,6 +8,8 @@ import RecipeList from "./components/recipes/RecipeList";
 import SearchPage from "./components/searchpage/SearchPage";
 import SuccessfulRegister from "./components/loginForm/SuccessfulRegister";
 import GuestAccount from "./components/accountpage/GuestAccount";
+import UserProfilePage from "./components/accountpage/UserProfilePage";
+import Newsfeed_NavBar from "./views/Newsfeed/Newsfeed_NavBar";
 
 
 function App() {
@@ -24,6 +26,9 @@ function App() {
           <Route index element={<RecipeList />} />
           <Route path="search" element={<SearchPage />} />
         </Route >
+          <Route path="/home" element={<Newsfeed_NavBar />} >
+          <Route path="profile" element={<UserProfilePage />} />
+        </Route>
       </Routes>
     </div>
 
