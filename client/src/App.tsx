@@ -10,6 +10,7 @@ import SuccessfulRegister from "./components/loginForm/SuccessfulRegister";
 import GuestAccount from "./components/accountpage/GuestAccount";
 import UserProfilePage from "./components/accountpage/UserProfilePage";
 import Newsfeed_NavBar from "./views/Newsfeed/Newsfeed_NavBar";
+import UserInfoPage from "./components/accountpage/UserInfoPage";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         </Route >
           <Route path="/home" element={<Newsfeed_NavBar />} >
           <Route path="profile" element={<UserProfilePage />} />
+          <Route path="info" element={<UserInfoPage />} />
         </Route>
       </Routes>
     </div>
