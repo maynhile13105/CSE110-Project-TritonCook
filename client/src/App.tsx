@@ -9,6 +9,7 @@ import SearchPage from "./components/searchpage/SearchPage";
 import SuccessfulRegister from "./components/loginForm/SuccessfulRegister";
 import GuestAccount from "./components/accountpage/GuestAccount";
 
+
 function App() {
   return (
     <div>
