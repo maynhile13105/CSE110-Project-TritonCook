@@ -61,7 +61,7 @@ export async function deleteFavoriteRecipe(req: Request, res: Response, db: Data
     res.status(500).json({ error: 'An error occurred while deleting the favorite recipe.' });
   }
 }
-
+/*
 export async function checkIsFavoriteRecipe(req: Request, res: Response, db: Database) {
   const userID = verifyToken(req);
   if (!userID) return res.status(401).json({ error: 'Unauthorized' });
@@ -87,7 +87,7 @@ export async function checkIsFavoriteRecipe(req: Request, res: Response, db: Dat
     console.error('Error checking favorite status:', error);
     res.status(500).json({ error: 'An error occurred while checking the favorite recipe.' });
   }
-}
+}*/
 
 export async function getFavoriteRecipes(req: Request, res: Response, db: Database) {
   const userID = verifyToken(req);

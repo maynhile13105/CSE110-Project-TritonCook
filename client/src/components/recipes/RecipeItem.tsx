@@ -2,8 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Profile, Recipe } from "../../types/types";
 import './RecipeItem.css'
 import { Link } from "react-router-dom";
-import { addFavoriteRecipe, checkIsFavoriteRecipe, deleteFavoriteRecipe } from "../../utils/favorite-utils";
-import { AppContext } from "../../context/AppContext";
+import { addFavoriteRecipe, deleteFavoriteRecipe } from "../../utils/favorite-utils";
 
 
 interface RecipeItemProps {
@@ -19,7 +18,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe, initialFavoriteS
 
   const handleFavoriteClick = () => {
   
-    let newFavoriteStatus = !isFavorite;
+    const newFavoriteStatus = !isFavorite;
 
     setIsFavorite(newFavoriteStatus); // Update state
 

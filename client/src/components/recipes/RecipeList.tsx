@@ -41,7 +41,19 @@ const RecipeList = () => {
         }
       };
     
+      const removeFavRecipe = (recipeId: string) => {
+        // Remove the unfavorited recipe from the list
+        setFavoriteRecipes((prevFavorites) =>
+          prevFavorites.filter((recipe) => recipe.id !== recipeId)
+        );
+      };
 
+      const addFavRecipe = (recipeId: string) => {
+        // Remove the unfavorited recipe from the list
+        setFavoriteRecipes((prevFavorites) =>
+          prevFavorites.filter((recipe) => recipe.id !== recipeId)
+        );
+      };
   return (
     <>
       {displayedRecipes.length > 0 ? (
@@ -51,7 +63,7 @@ const RecipeList = () => {
               <RecipeItem
                currentRecipe={recipe}
                initialFavoriteStatus={favoriteRecipes.some((fav) => fav.id === recipe.id)}
-
+               onFavoriteToggle={favoriteRecipes.some((fav) => fav.id === recipe.id)? removeFavRecipe:addFavRecipe} // Pass the callback
               />
             </div>
           ))}
