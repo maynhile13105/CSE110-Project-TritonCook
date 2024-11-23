@@ -3,13 +3,16 @@ import RecipeItem from "./RecipeItem";
 import "./RecipeList.css";
 import { fetchDisplayedRecipes } from "../../utils/displayedRecipes-utils"; // Import the function here
 import { Recipe } from "../../types/types";
+import { fetchFavoriteRecipes } from "../../utils/favorite-utils";
 
 const RecipeList = () => {
     const [displayedRecipes, setDisplayedRecipes] = useState<Recipe[]>([]);
-    
+    const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>([]);
+
 
     useEffect(() => {
-      loadRecipes()
+      loadRecipes();
+      loadFavorites();
     }, []); 
 
     console.log("Initial displayedRecipes:", displayedRecipes); // Check the initial value of displayedRecipes
@@ -28,6 +31,17 @@ const RecipeList = () => {
     };
 
 
+    const loadFavorites = async () => {
+        try {
+          const favoriteList = await fetchFavoriteRecipes(); // Fetch favorite recipes
+          console.log("Fetched fav recipes in frontend:", favoriteList);  // Log the recipes
+          setFavoriteRecipes(favoriteList);
+        } catch (error) {
+          console.error("Error fetching favorite recipes:", error);
+        }
+      };
+    
+
   return (
     <>
       {displayedRecipes.length > 0 ? (
@@ -35,14 +49,9 @@ const RecipeList = () => {
           {displayedRecipes.map((recipe) => (
             <div className="post-item" key={recipe.id}>
               <RecipeItem
-                id={recipe.id}
-                title={recipe.title}
-                estimate={recipe.estimate}
-                ingredients={recipe.ingredients}
-                result_img={recipe.result_img}
-                userID={recipe.userID}
-                cuisine={recipe.cuisine}
-                time={recipe.time}
+               currentRecipe={recipe}
+               initialFavoriteStatus={favoriteRecipes.some((fav) => fav.id === recipe.id)}
+
               />
             </div>
           ))}

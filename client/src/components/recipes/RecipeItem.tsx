@@ -2,49 +2,38 @@ import { useContext, useEffect, useState } from "react";
 import { Profile, Recipe } from "../../types/types";
 import './RecipeItem.css'
 import { Link } from "react-router-dom";
-import { addFavoriteRecipe, checkIsFavoriteRecipe, deleteFavoriteRecipe, fetchFavoriteRecipes } from "../../utils/favorite-utils";
+import { addFavoriteRecipe, checkIsFavoriteRecipe, deleteFavoriteRecipe } from "../../utils/favorite-utils";
 import { AppContext } from "../../context/AppContext";
 
 
-const RecipeItem = (currentRecipe: Recipe) => {
-    
-  const {userProfile} = useContext(AppContext);
+interface RecipeItemProps {
+  currentRecipe: Recipe;
+  initialFavoriteStatus: boolean;
+  onFavoriteToggle?: (recipeId: string) => void;
+}
+
+const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe, initialFavoriteStatus, onFavoriteToggle,}) => {
+
   // State for favorite status and initialization
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
-  const [isInitializedStatus, setIsInitializedStatus] = useState<boolean>(false);
-
-  useEffect(() => {
-    checkFavoriteStatus();
-  }, []);
-
-  const checkFavoriteStatus = async () => {
-    try {
-        const status = await checkIsFavoriteRecipe(currentRecipe.id); // Fetch displayed recipes
-        console.log(`Status get from backend for ${currentRecipe.id} : ${status}`);
-        setIsFavorite(status);
-        setIsInitializedStatus(true); //Set to favRecipesList
-    } catch (error) {
-        console.error("Error fetching recipes:", error);
-    }
-};
+  const [isFavorite, setIsFavorite] = useState<boolean>(initialFavoriteStatus);
 
   const handleFavoriteClick = () => {
-    if (!isInitializedStatus){
-      return; 
-    }  //Skip if not initialized
-    setIsFavorite(!isFavorite);
-  };
+  
+    let newFavoriteStatus = !isFavorite;
 
-  useEffect(() => {
-    if (isInitializedStatus){
-      if(isFavorite ){
-        addFavoriteRecipe(currentRecipe.id);
-      } else if (!isFavorite){
-        deleteFavoriteRecipe(currentRecipe.id);
+    setIsFavorite(newFavoriteStatus); // Update state
+
+    // Call appropriate API based on the new favorite status
+    if (newFavoriteStatus) {
+      addFavoriteRecipe(currentRecipe.id);
+    } else {
+      deleteFavoriteRecipe(currentRecipe.id);
+      if (onFavoriteToggle) {
+        onFavoriteToggle(currentRecipe.id); // Notify parent about the change
       }
     }
-  }, [isFavorite, isInitializedStatus]);
-
+  };
+  
 
   return (
     <div className="post-box">
@@ -55,7 +44,7 @@ const RecipeItem = (currentRecipe: Recipe) => {
         </div>
         <button className="like-button" onClick={handleFavoriteClick}>
           <img
-            src={!isFavorite ? "images/like-unliked.svg" : "images/Heart.svg"}
+            src={isFavorite ? "images/Heart.svg" : "images/like-unliked.svg"}
             alt="Button Image"
           />
         </button>

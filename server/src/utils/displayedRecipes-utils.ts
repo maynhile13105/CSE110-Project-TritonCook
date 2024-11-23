@@ -4,7 +4,7 @@ import { Database } from "sqlite"; // Replace with your actual DB library
 export async function loadDisplayedRecipes(req: Request, res: Response, db: Database) {
   try {
     // Log to check the database connection
-    console.log("Fetching displayed recipes...");
+    //console.log("Fetching displayed recipes...");
 
     // Query to fetch the 100 most recent recipes
     const recipes = await db.all(
@@ -12,7 +12,7 @@ export async function loadDisplayedRecipes(req: Request, res: Response, db: Data
     );
 
      // Log the recipes fetched from the database
-    console.log("Fetched recipes:", recipes);
+    //console.log("Fetched recipes:", recipes);
 
     // Respond with the fetched recipes
     res.status(200).json({ data: recipes });

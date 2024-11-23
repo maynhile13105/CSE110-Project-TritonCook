@@ -1,31 +1,31 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import RecipeItem from "../recipes/RecipeItem";
 import "./SavedFavoriteRecipeList.css";
 import { Recipe } from "../../types/types";
 import { fetchFavoriteRecipes } from "../../utils/favorite-utils";
 
 const SavedFavoriteRecipeList = () => {
-    const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>([]);
+  const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>([]);
 
-    useEffect(() => {
-      loadFavoriteRecipes()
-    }, []); 
+  useEffect(() => {
+    loadFavoriteRecipes();
+  }, []);
 
-    console.log("Initial favoriteRecipes:", favoriteRecipes); // Check the initial value of displayedRecipes
-    const loadFavoriteRecipes = async () => {
-        try {
-            const favoriteRecipesList = await fetchFavoriteRecipes(); // Fetch displayed recipes
-            console.log("Fetched recipes in frontend:", favoriteRecipesList);  // Log the recipes
-             
-            
-            // Check for existing recipes and update the state correctly
-            setFavoriteRecipes(favoriteRecipesList);
+  const loadFavoriteRecipes = async () => {
+    try {
+      const favoriteRecipesList = await fetchFavoriteRecipes(); // Fetch displayed recipes
+      setFavoriteRecipes(favoriteRecipesList);
+    } catch (error) {
+      console.error("Error fetching recipes:", error);
+    }
+  };
 
-        } catch (error) {
-            console.error("Error fetching recipes:", error);
-        }
-    };
-
+  const handleFavoriteToggle = (recipeId: string) => {
+    // Remove the unfavorited recipe from the list
+    setFavoriteRecipes((prevFavorites) =>
+      prevFavorites.filter((recipe) => recipe.id !== recipeId)
+    );
+  };
 
   return (
     <>
@@ -34,14 +34,9 @@ const SavedFavoriteRecipeList = () => {
           {favoriteRecipes.map((recipe) => (
             <div className="post-item" key={recipe.id}>
               <RecipeItem
-                id={recipe.id}
-                title={recipe.title}
-                estimate={recipe.estimate}
-                ingredients={recipe.ingredients}
-                result_img={recipe.result_img}
-                userID={recipe.userID}
-                cuisine={recipe.cuisine}
-                time={recipe.time}
+                currentRecipe={recipe}
+                initialFavoriteStatus={true}
+                onFavoriteToggle={handleFavoriteToggle} // Pass the callback
               />
             </div>
           ))}
@@ -52,7 +47,7 @@ const SavedFavoriteRecipeList = () => {
         </h1>
       )}
     </>
-  );  
+  );
 };
 
 export default SavedFavoriteRecipeList;

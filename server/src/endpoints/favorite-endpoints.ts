@@ -3,23 +3,29 @@ import { addFavoriteRecipe, checkIsFavoriteRecipe, deleteFavoriteRecipe, getFavo
 import { Request, Response } from "express";
 
 export function createFavoriteRecipesEndpoints(app: any, db: Database) {
-  app.post("/favorite", (req: Request, res: Response) => {
-    console.log("Received request for displayed recipes");
+
+  //Add to the favotie list
+  app.post("/favorite/add/:recipeID", (req: Request, res: Response) => {
+    console.log("Received request for ADD FAVORITE recipes");
     addFavoriteRecipe(req, res, db);
   });
 
-  app.delete("/favorite/:userID/:recipeID", (req: Request, res: Response) => {
-    console.log("Received request for displayed recipes");
+  //Remove out of the favorite list
+  app.delete("/favorite/remove/:userID/:recipeID", (req: Request, res: Response) => {
+    console.log("Received request for DELETE FAVOTRITE recipes");
     deleteFavoriteRecipe(req, res, db);
   });
 
+  //Get The List
   app.get("/favorite", (req: Request, res: Response) => {
-    console.log("Received request for displayed recipes");
+    console.log("Received request for displayed FAVORITE recipes");
     getFavoriteRecipes(req, res, db);
   });
 
+  //Check favorite
   app.get("/favorite/check/:userID/:recipeID", (req: Request, res: Response) => {
-    console.log("Received request for displayed recipes");
+    console.log("Received request for CHECK FAVORITE STATUS");
     checkIsFavoriteRecipe(req, res, db);
   })
 }
+

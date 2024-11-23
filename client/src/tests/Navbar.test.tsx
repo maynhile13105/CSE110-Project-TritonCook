@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import Navbar from '../components/navbar/Navbar';
+import Navbar from '../components/Navbar/Navbar';
 import userEvent from '@testing-library/user-event';
 describe('Navbar Component', () => {
   const renderNavbar = () =>
