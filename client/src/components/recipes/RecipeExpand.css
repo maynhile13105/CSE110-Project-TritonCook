@@ -75,3 +75,30 @@
     border-top: 1px solid #030000;
     margin: 20px 0;
 }
+
+.side-button {
+    top: 50%;
+    background-color: #FFF1C2;
+    color: black;
+    border: none;
+    font-size: 2rem;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+    z-index: 10;
+    justify-content: center;
+    align-items: center;
+}
+
+.side-button:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.left-button {
+    left: 10px;
+}
+
+.right-button {
+    right: 10px;
+}

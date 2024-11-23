@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from 'react-router-dom';
 import { RecipeContext } from '../../context/RecipeContext';
 import { Recipe } from '../../types/types';
@@ -10,6 +10,7 @@ const RecipeExpand = () => {
     const id = Number(params.id);
 
     const { recipes, setRecipes, favorites, setFavorites } = useContext(RecipeContext);
+    const [currentStep, setCurrentStep] = useState(0);
 
     const handleFavoriteClick = (id: number) => {
         const updatedRecipes = recipes.map((recipe) =>
@@ -25,7 +26,18 @@ const RecipeExpand = () => {
     }, [recipes]);
 
     const recipe = recipes.filter((r) => r.id === id)[0];
-    console.log(recipe);
+     // Handlers for instruction navigation
+    const goToNextStep = () => {
+      if (currentStep < recipe.instructions.length - 1) {
+        setCurrentStep(currentStep + 1);
+      }
+    };
+
+    const goToPreviousStep = () => {
+        if (currentStep > 0) {
+            setCurrentStep(currentStep - 1);
+        }
+    };
 
     return (
         <div className="post-box">
@@ -47,12 +59,26 @@ const RecipeExpand = () => {
             <br />
             <div>
                 Instructions:
-                {recipe.instructions.map((instr) => (
-                    <div>
-                        <img src={instr} className='post-img' />
+                <div className="instruction-step">
+                    <div className="instruction-content">
+                      <button onClick={goToPreviousStep} disabled={currentStep === 0} className="side-button right-button">
+                        &lt;
+                      </button>
+                      {recipe.instructions[currentStep] && (
+                        <img
+                            src={recipe.instructions[currentStep]}
+                            className="post-img"
+                            alt={`Step ${currentStep + 1}`}
+                        />
+                        )}
+                      <button onClick={goToNextStep} disabled={currentStep === recipe.instructions.length - 1}
+                      className="side-button right-button">
+                            &gt;
+                        </button>
                     </div>
-                ))}
+                </div>
             </div>
+
             <br />
             <div>
                 Results:
