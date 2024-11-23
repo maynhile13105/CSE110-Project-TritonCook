@@ -11,10 +11,15 @@ const AddRecipe = () => {
         title: '',
         ingredients: '',
         time: '',
-        image: '',
+        image: null,
+        instructions: null,
         cuisine: '',
-        instructions: ''
     });
+
+      // Function to close the error box
+    const closeErrorBox = () => {
+      setError("");
+    };
 
     // Handle form submission
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -61,6 +66,18 @@ const AddRecipe = () => {
         [name]: value
       });
     };
+
+  // Handle file input change
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, files } = e.target;
+    if (files && files.length > 0) {
+      setFormData({
+        ...formData,
+        [name]: files[0], // Store the selected file
+      });
+    }
+  }
+
 
     return (
       <div className='outer'>
@@ -111,9 +128,8 @@ const AddRecipe = () => {
                   <label className='required'>Instructions</label>
                   <input
                     type="file"
-                    name="image"
-                    value={formData.instructions}
-                    onChange={handleChange}
+                    name="instructions"
+                    onChange={handleFileChange}
                     required
                   />
                 </div>
@@ -122,8 +138,7 @@ const AddRecipe = () => {
                   <input
                     type="file"
                     name="image"
-                    value={formData.image}
-                    onChange={handleChange}
+                    onChange={handleFileChange}
                     required
                   />
                 </div>
@@ -138,6 +153,9 @@ const AddRecipe = () => {
                   <p>{error}</p>
                 )}
               </div>
+              <button className="edit-button" onClick={closeErrorBox}>
+            Edit
+          </button>
             </div>)}
                 <div className="form-actions">
                   <button type="button" className='cancel'>Cancel</button>
