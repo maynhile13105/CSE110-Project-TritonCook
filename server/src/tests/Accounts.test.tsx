@@ -5,7 +5,6 @@ import { createHash } from 'crypto';
 import { v4 as uuid } from 'uuid';
 const jwt = require('jsonwebtoken');
 import openDatabase from "../database/openDatabase";
-import initDatabase from "../database/initDatabase";
 
 let server: Server;
 let db: Database;
@@ -19,7 +18,6 @@ beforeAll(async () => {
   }
 
   db = await openDatabase();
-  await initDatabase();
   server = await app.listen(port);
 
   // Wait for server startup for constancy on slower devices

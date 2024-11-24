@@ -1,7 +1,6 @@
 import { Response } from "express";
 import { createGoogleEndpoints } from "./api/google-endpoints";
 import { createLoginEndpoints } from "./api/login-endpoints";
-import openDatabase from "./database/openDatabase";
 import initDatabase from "./database/initDatabase";
 import { createDisplayedRecipesEndpoints } from "./endpoints/displayedRecipes-endpoints";
 import { createFavoriteRecipesEndpoints } from "./endpoints/favorite-endpoints";
@@ -27,8 +26,7 @@ if (require.main === module) {
 
 // Initialize the database and start the server
 (async () => {
-  await initDatabase();
-  const db = await openDatabase();
+  const db = await initDatabase();
 
   // Add sample test recipes; takes id 1-5
   await addRecipesToDatabase(db, sampleRecipes);
