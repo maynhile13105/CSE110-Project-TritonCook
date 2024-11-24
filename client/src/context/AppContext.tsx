@@ -12,7 +12,7 @@ interface AppContextType {
     setFavoriteRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>;
 }
 
-const initialState: AppContextType = {
+export const initialState: AppContextType = {
     token: "",
     setToken:() => {},
 

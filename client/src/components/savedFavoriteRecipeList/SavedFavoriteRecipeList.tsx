@@ -1,31 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import RecipeItem from "../recipes/RecipeItem";
 import "./SavedFavoriteRecipeList.css";
-import { Recipe } from "../../types/types";
 import { fetchFavoriteRecipes } from "../../utils/favorite-utils";
+import { AppContext } from "../../context/AppContext";
+import { Link, useLocation } from "react-router-dom";
 
 const SavedFavoriteRecipeList = () => {
-  const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>([]);
-
+  const token = localStorage.getItem("token");
+  
+  const {favoriteRecipes, setFavoriteRecipes} = useContext(AppContext);
   useEffect(() => {
-    loadFavoriteRecipes();
+    loadFavorites();
   }, []);
 
-  const loadFavoriteRecipes = async () => {
+  const loadFavorites = async () => {
     try {
-      const favoriteRecipesList = await fetchFavoriteRecipes(); // Fetch displayed recipes
-      setFavoriteRecipes(favoriteRecipesList);
+      const favoriteList = await fetchFavoriteRecipes(); // Fetch favorite recipes
+      console.log("Fetched fav recipes in frontend:", favoriteList);  // Log the recipes
+      setFavoriteRecipes(favoriteList);
     } catch (error) {
-      console.error("Error fetching recipes:", error);
+      console.error("Error fetching favorite recipes:", error);
     }
   };
 
-  const handleFavoriteToggle = (recipeId: string) => {
-    // Remove the unfavorited recipe from the list
-    setFavoriteRecipes((prevFavorites) =>
-      prevFavorites.filter((recipe) => recipe.id !== recipeId)
-    );
-  };
 
   return (
     <>
@@ -35,16 +32,31 @@ const SavedFavoriteRecipeList = () => {
             <div className="post-item" key={recipe.id}>
               <RecipeItem
                 currentRecipe={recipe}
-                initialFavoriteStatus={true}
-                onFavoriteToggle={handleFavoriteToggle} // Pass the callback
               />
             </div>
           ))}
         </div>
       ) : (
-        <h1 style={{ textAlign: "center", fontSize: "40px", fontWeight: "bold" }}>
-          No favorite recipes to display.
-        </h1>
+        <div>
+          {token ? 
+            (<h1 style={{ textAlign: "center", fontSize: "40px", fontWeight: "bold" }}>
+              No favorite recipes to display.
+            </h1>)
+            
+          :
+            (
+            <div  className="Announcement">
+              <h2 style={{ textAlign: "center", fontSize: "40px", fontWeight: "bold" }}>
+                <span>Please sign in to see your favorite recipes!</span>
+              </h2>
+
+              <Link to="/">
+                <button>Sign In</button>
+              </Link>
+            </div>)
+          }
+        </div>
+        
       )}
     </>
   );

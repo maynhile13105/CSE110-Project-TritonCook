@@ -4,15 +4,17 @@ import "./RecipeList.css";
 import { fetchDisplayedRecipes } from "../../utils/displayedRecipes-utils"; // Import the function here
 import { Recipe } from "../../types/types";
 import { fetchFavoriteRecipes } from "../../utils/favorite-utils";
+import { useLocation } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
 
 const RecipeList = () => {
     const [displayedRecipes, setDisplayedRecipes] = useState<Recipe[]>([]);
-    const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>([]);
+    const {favoriteRecipes} = useContext(AppContext);
+    const location = useLocation();
 
-
+    console.log("Fav recipes in Item List", favoriteRecipes);
     useEffect(() => {
       loadRecipes();
-      loadFavorites();
     }, []); 
 
     console.log("Initial displayedRecipes:", displayedRecipes); // Check the initial value of displayedRecipes
@@ -30,30 +32,14 @@ const RecipeList = () => {
         }
     };
 
+    useEffect(() => {
+      if (location.pathname === "/home") {
+          loadRecipes(); // Refresh recipes when navigating to home
+      }
+    }, [location]); // Dependency on location to re-fetch when path changes
 
-    const loadFavorites = async () => {
-        try {
-          const favoriteList = await fetchFavoriteRecipes(); // Fetch favorite recipes
-          console.log("Fetched fav recipes in frontend:", favoriteList);  // Log the recipes
-          setFavoriteRecipes(favoriteList);
-        } catch (error) {
-          console.error("Error fetching favorite recipes:", error);
-        }
-      };
+   
     
-      const removeFavRecipe = (recipeId: string) => {
-        // Remove the unfavorited recipe from the list
-        setFavoriteRecipes((prevFavorites) =>
-          prevFavorites.filter((recipe) => recipe.id !== recipeId)
-        );
-      };
-
-      const addFavRecipe = (recipeId: string) => {
-        // Remove the unfavorited recipe from the list
-        setFavoriteRecipes((prevFavorites) =>
-          prevFavorites.filter((recipe) => recipe.id !== recipeId)
-        );
-      };
   return (
     <>
       {displayedRecipes.length > 0 ? (
@@ -62,8 +48,6 @@ const RecipeList = () => {
             <div className="post-item" key={recipe.id}>
               <RecipeItem
                currentRecipe={recipe}
-               initialFavoriteStatus={favoriteRecipes.some((fav) => fav.id === recipe.id)}
-               onFavoriteToggle={favoriteRecipes.some((fav) => fav.id === recipe.id)? removeFavRecipe:addFavRecipe} // Pass the callback
               />
             </div>
           ))}

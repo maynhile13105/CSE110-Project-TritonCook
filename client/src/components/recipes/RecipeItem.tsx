@@ -1,38 +1,50 @@
 import { useContext, useEffect, useState } from "react";
 import { Profile, Recipe } from "../../types/types";
-import './RecipeItem.css'
+import './RecipeItem.css';
 import { Link } from "react-router-dom";
 import { addFavoriteRecipe, deleteFavoriteRecipe } from "../../utils/favorite-utils";
-
+import { AppContext } from "../../context/AppContext";
 
 interface RecipeItemProps {
   currentRecipe: Recipe;
-  initialFavoriteStatus: boolean;
-  onFavoriteToggle?: (recipeId: string) => void;
 }
 
-const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe, initialFavoriteStatus, onFavoriteToggle,}) => {
+const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
+  const { favoriteRecipes, setFavoriteRecipes } = useContext(AppContext);
 
-  // State for favorite status and initialization
-  const [isFavorite, setIsFavorite] = useState<boolean>(initialFavoriteStatus);
+  // State for handling favorite status
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  // State for modal visibility
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    const isFavoriteStatus = favoriteRecipes.some((fav) => fav.id === currentRecipe.id);
+    setIsFavorite(isFavoriteStatus);
+  }, [favoriteRecipes, currentRecipe.id]);
 
   const handleFavoriteClick = () => {
-  
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      // Show the popup if the user is not logged in
+      setIsModalVisible(true);
+      return;
+    }
+
     const newFavoriteStatus = !isFavorite;
+    setIsFavorite(newFavoriteStatus);
 
-    setIsFavorite(newFavoriteStatus); // Update state
-
-    // Call appropriate API based on the new favorite status
     if (newFavoriteStatus) {
       addFavoriteRecipe(currentRecipe.id);
+      setFavoriteRecipes((prev) => [currentRecipe, ...prev]);
     } else {
       deleteFavoriteRecipe(currentRecipe.id);
-      if (onFavoriteToggle) {
-        onFavoriteToggle(currentRecipe.id); // Notify parent about the change
-      }
+      setFavoriteRecipes((prevFavorites) =>
+        prevFavorites.filter((recipe) => recipe.id !== currentRecipe.id)
+      );
     }
   };
-  
 
   return (
     <div className="post-box">
@@ -69,9 +81,22 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe, initialFavoriteS
         <img src="/Comment.svg" alt="Comment" />
         <img src="/Report.svg" alt="Report" />
       </div>
+
+      {/* Modal for not logged in */}
+      {isModalVisible && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Login Required</h2>
+            <p>You must log in to use this feature.</p>
+            <button onClick={() => setIsModalVisible(false)}>Close</button>
+            <Link to="/">
+              <button>Go to Login</button>
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
-
 
 export default RecipeItem;
