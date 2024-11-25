@@ -29,7 +29,7 @@ export async function addFavoriteRecipe(req: Request, res: Response, db: Databas
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    await db.run('INSERT INTO favorite_recipes (userID, recipeID) VALUES (?, ?);', [userID, recipeID]);
+    await db.run('INSERT OR REPLACE INTO favorite_recipes (userID, recipeID) VALUES (?, ?);', [userID, recipeID]);
     res.status(201).json({ userID: userID, recipeID });
   } catch (error) {
     return res.status(400).send({ error: `Recipe could not be added to your favorite list, ${error}` });

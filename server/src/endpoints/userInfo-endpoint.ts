@@ -5,7 +5,7 @@ import { loadUserInfo, loadUsername } from "../utils/userInfo-utils";
 export function createUserInformationEndpoints(app: any, db: Database){
 
     app.get("/userInfo", (req: Request, res: Response) => {
-        console.log("Received request for userInfo");
+        console.log("Received request for user info");
         loadUserInfo(req, res, db);
     });
 

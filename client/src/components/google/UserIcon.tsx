@@ -22,7 +22,7 @@ function UserIcon() {
     const token = localStorage.getItem('token');
     try {
       console.log("token: ", token);
-      const res = await fetch('http://localhost:8080/api/profile', {
+      const res = await fetch('http://localhost:8080/userInfo', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -1,12 +1,9 @@
-import { open } from "sqlite";
-import sqlite3 from "sqlite3";
+import openDatabase from "./openDatabase";
 
-const initDB = async () => {
+const initDatabase = async () => {
   // Open the database connection
-  const db = await open({
-    filename: "database.sqlite",
-    driver: sqlite3.Database,
-  });
+  const db = await openDatabase();
+  
   // Create a table "users" if it doesn't exist
   await db.exec(`
    CREATE TABLE IF NOT EXISTS users (
@@ -61,6 +58,7 @@ const initDB = async () => {
       userID TEXT,
       recipeID TEXT,
       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (userID, recipeID),
       FOREIGN KEY (recipeID) REFERENCES recipes(id) ON DELETE CASCADE ON UPDATE CASCADE,
       FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE    
     );
@@ -117,4 +115,4 @@ const initDB = async () => {
   return db;
 };
 
-export default initDB;
+export default initDatabase;

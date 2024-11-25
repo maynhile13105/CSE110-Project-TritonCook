@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './Newsfeed.css';
-import Sidebar from '../../components/Navbar/Sidebar';
-import Navbar from '../../components/Navbar/Navbar';
+import Sidebar from '../../components/navbar/Sidebar';
+import Navbar from '../../components/navbar/Navbar';
 import { Outlet } from 'react-router-dom';
 import { fetchFavoriteRecipes } from '../../utils/favorite-utils';
 import { AppContext } from '../../context/AppContext';

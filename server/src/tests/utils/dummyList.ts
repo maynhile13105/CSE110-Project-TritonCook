@@ -1,5 +1,4 @@
-import { Profile, Recipe } from "./types";
-
+import { Profile, Recipe } from "../../types";
 
 export const sampleUsers: Profile[] = [
   {
@@ -7,7 +6,7 @@ export const sampleUsers: Profile[] = [
     name: "TritonCook1",
     email: "tritoncook1@ucsd.edu",
     picture: "https://media.istockphoto.com/id/1829241109/photo/enjoying-a-brunch-together.jpg?b=1&s=612x612&w=0&k=20&c=Mn_EPBAGwtzh5K6VyfDmd7Q5eJFXSHhGWVr3T4WDQRo="
-  }, 
+  },
   {
     id: "user2",
     name: "TritonCook2",
@@ -82,17 +81,17 @@ export const sampleRecipes: Recipe[] = [
     ingredients: "water, noodles, egg",
     result_img: 'https://static01.nyt.com/images/2018/05/01/dining/01COOKING-PERFECTINSTANTRAMEN1/01COOKING-PERFECTINSTANTRAMEN1-googleFourByThree-v2.jpg',
     userID: "user1",
-    time: '"2024-11-20T18:00:00Z"'
+    time: '"2024-11-10T18:00:00Z"'
   },
   {
     id: "7",
-    title : 'Frozen Pizza',
+    title: 'Frozen Pizza',
     estimate: " < 20 minutes",
     ingredients: " frozen pizza",
-    result_img : 'https://cdn.apartmenttherapy.info/image/upload/v1557254295/k/Photo/Tips/2019-05-You-Should-Be-Grilling-Frozen-Pizza/GrillingFrozenPizzaOption3.jpg',
+    result_img: 'https://cdn.apartmenttherapy.info/image/upload/v1557254295/k/Photo/Tips/2019-05-You-Should-Be-Grilling-Frozen-Pizza/GrillingFrozenPizzaOption3.jpg',
     userID: "user2",
     cuisine: "Italian",
-    time: "2024-11-21T18:00:00Z"
+    time: "2024-11-11T18:00:00Z"
   },
   {
     id: "8",
@@ -102,7 +101,7 @@ export const sampleRecipes: Recipe[] = [
     result_img: 'https://www.allrecipes.com/thmb/ZO5edyo6JhS1ZFELyDepR0Y170w=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/21353-italian-spaghetti-sauce-with-meatballs-DDMFS-4x3-a9a1528b4f06483dbec38d0c2945c378.jpg',
     cuisine: "Italian",
     userID: "user1",
-    time: "2024-11-22T18:00:00Z"
+    time: "2024-11-12T18:00:00Z"
   },
   {
     id: "9",
@@ -112,7 +111,7 @@ export const sampleRecipes: Recipe[] = [
     result_img: 'https://www.allrecipes.com/thmb/s0mJbUaWhT4cvgMRK28grMkUXcU=/0x512/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/8805-CrispyFriedChicken-mfs-3x2-072-d55b8406d4ae45709fcdeb58a04143c2.jpg',
     cuisine: "Korean",
     userID: "user3",
-    time: "2024-11-23T18:00:00Z"
+    time: "2024-11-13T18:00:00Z"
   },
   {
     id: "10",
@@ -122,7 +121,7 @@ export const sampleRecipes: Recipe[] = [
     result_img: 'https://i2.wp.com/www.downshiftology.com/wp-content/uploads/2019/04/Cobb-Salad-4-1.jpg',
     cuisine: "Asian-American",
     userID: "user2",
-    time: "2024-11-23T18:00:00Z"
+    time: "2024-11-13T18:00:00Z"
   },
 
 ];

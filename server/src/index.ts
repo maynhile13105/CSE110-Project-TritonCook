@@ -1,11 +1,11 @@
 import { Response } from "express";
-import initDB from "./createTable";
 import { createGoogleEndpoints } from "./api/google-endpoints";
 import { createLoginEndpoints } from "./api/login-endpoints";
+import initDatabase from "./database/initDatabase";
 import { createDisplayedRecipesEndpoints } from "./endpoints/displayedRecipes-endpoints";
 import { createFavoriteRecipesEndpoints } from "./endpoints/favorite-endpoints";
-import { addRecipesToDatabase, addUsersToDatabase } from "./addTestRecipes";
-import { sampleRecipes, sampleUsers } from "./dummyList";
+import { addRecipesToDatabase, addUsersToDatabase } from "./tests/utils/addTestRecipes";
+import { sampleRecipes, sampleUsers } from "./tests/utils/dummyList";
 import { createUserInformationEndpoints } from "./endpoints/userInfo-endpoint";
 
 const express = require("express");
@@ -18,13 +18,15 @@ app.use(cors());
 app.use(express.json());
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
-});
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+  });
+}
 
 // Initialize the database and start the server
 (async () => {
-  const db = await initDB();
+  const db = await initDatabase();
 
   //Add sample user:
   await addUsersToDatabase(db, sampleUsers);
@@ -45,3 +47,4 @@ app.listen(port, () => {
   createUserInformationEndpoints(app, db);
 })();
 
+export default app;
