@@ -41,7 +41,7 @@ const LoginForm = () => {
       
       // Save the token to local storage or context
       localStorage.setItem("token", data.token);
-      console.log("Data token: ", data.token);
+
       //Save the token to the app context
       setToken(data.token);
       console.log(token)

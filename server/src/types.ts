@@ -8,3 +8,11 @@ export type Recipe = {
   result_img: string;
   time: string //The time the recipe was posted
 };
+
+
+export type Profile = {
+  id: string;
+  name: string;
+  email: string;
+  image: string
+}

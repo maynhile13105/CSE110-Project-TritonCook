@@ -4,6 +4,7 @@ import './RecipeItem.css';
 import { Link } from "react-router-dom";
 import { addFavoriteRecipe, deleteFavoriteRecipe } from "../../utils/favorite-utils";
 import { AppContext } from "../../context/AppContext";
+import { fetchUsername } from "../../utils/userInfo-utils";
 
 interface RecipeItemProps {
   currentRecipe: Recipe;
@@ -11,6 +12,25 @@ interface RecipeItemProps {
 
 const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
   const { favoriteRecipes, setFavoriteRecipes } = useContext(AppContext);
+
+  //Get recipe owner's username
+  const [ownerUsername, setownerUsername] = useState<string>("");
+  useEffect(()=>{
+    loadOwnerUsername();
+  }, [currentRecipe.userID]);
+
+  const loadOwnerUsername = async () => {
+    try {
+        const ownername = await fetchUsername(currentRecipe.userID); // Fetch displayed recipes
+        console.log("Fetched recipes in frontend:", ownername);  // Log the recipes
+         
+        // Check for existing recipes and update the state correctly
+        setownerUsername(ownername);
+
+    } catch (error) {
+        console.error("Error fetching recipes:", error);
+    }
+};
 
   // State for handling favorite status
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
@@ -45,6 +65,9 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
       );
     }
   };
+
+  
+
 
   return (
     <div className="post-box">
@@ -90,7 +113,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
             <p>You must log in to use this feature.</p>
             <button onClick={() => setIsModalVisible(false)}>Close</button>
             <Link to="/">
-              <button>Go to Login</button>
+              <button>Sign in</button>
             </Link>
           </div>
         </div>

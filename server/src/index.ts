@@ -5,7 +5,7 @@ import { createLoginEndpoints } from "./api/login-endpoints";
 import { createDisplayedRecipesEndpoints } from "./endpoints/displayedRecipes-endpoints";
 import { createFavoriteRecipesEndpoints } from "./endpoints/favorite-endpoints";
 import { addRecipesToDatabase } from "./addTestRecipes";
-import { sampleRecipes } from "./samlpleRecipes";
+import { sampleRecipes } from "./dummyList";
 
 const express = require("express");
 const cors = require("cors");
@@ -38,5 +38,6 @@ app.listen(port, () => {
   createGoogleEndpoints(app, db);
   createDisplayedRecipesEndpoints(app, db);
   createFavoriteRecipesEndpoints(app, db);
+  createUserInformationEndpoints(app, db);
 })();
 

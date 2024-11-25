@@ -1,5 +1,5 @@
 import { Database } from "sqlite";
-import { Recipe } from "./types";
+import { Profile, Recipe } from "./types";
 
 export async function addRecipesToDatabase(db: Database, recipes: Recipe[]) {
   try {
@@ -29,6 +29,35 @@ export async function addRecipesToDatabase(db: Database, recipes: Recipe[]) {
         console.log(`Added recipe with ID: ${recipe.id}`);
       } else {
         console.log(`Recipe with ID: ${recipe.id} already exists.`);
+      }
+    }
+  } catch (error) {
+    console.error("Error adding recipes to database:", error);
+  }
+}
+
+
+export async function addUsersToDatabase(db: Database, users: Profile[]) {
+  try {
+    for (const user of users) {
+      // Check if the recipe already exists in the database
+      const existingUser= await db.get(
+        `SELECT * FROM users WHERE id = ?;`,
+        [user.id]
+      );
+
+      // If the recipe does not exist, insert it
+      if (!existingUser) {
+        await db.run(
+          `INSERT INTO users (id, name, email, image)
+           VALUES (?, ?, ?, ?);`,
+          [
+            user.id,
+          ]
+        );
+        console.log(`Added user with ID: ${user.id}`);
+      } else {
+        console.log(`Recipe with ID: ${user.id} already exists.`);
       }
     }
   } catch (error) {
