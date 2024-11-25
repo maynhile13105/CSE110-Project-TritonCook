@@ -7,6 +7,7 @@ import { createFavoriteRecipesEndpoints } from "./endpoints/favorite-endpoints";
 import { addRecipesToDatabase, addUsersToDatabase } from "./tests/utils/addTestRecipes";
 import { sampleRecipes, sampleUsers } from "./tests/utils/dummyList";
 import { createUserInformationEndpoints } from "./endpoints/userInfo-endpoint";
+import { createLikeEndpoints } from "./endpoints/like-endpoint";
 
 const express = require("express");
 const cors = require("cors");
@@ -45,6 +46,7 @@ if (require.main === module) {
   createDisplayedRecipesEndpoints(app, db);
   createFavoriteRecipesEndpoints(app, db);
   createUserInformationEndpoints(app, db);
+  createLikeEndpoints(app, db);
 })();
 
 export default app;

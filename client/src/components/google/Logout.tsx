@@ -4,11 +4,15 @@ import { AppContext, initialState } from '../../context/AppContext';
 const Logout = () => {
   const {setUserProfile} = useContext(AppContext);
   const {setFavoriteRecipes} = useContext(AppContext);
+  const { setLikedRecipes} = useContext(AppContext);
+  const { setToken} = useContext(AppContext);
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     setUserProfile(initialState.userProfile);
     setFavoriteRecipes(initialState.favoriteRecipes);
-
+    setLikedRecipes(initialState.likedRecipes);
+    setToken(initialState.token);
   };
 
   return (

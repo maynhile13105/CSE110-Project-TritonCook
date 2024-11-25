@@ -60,20 +60,21 @@ const initDatabase = async () => {
       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       PRIMARY KEY (userID, recipeID),
       FOREIGN KEY (recipeID) REFERENCES recipes(id) ON DELETE CASCADE ON UPDATE CASCADE,
-      FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE    
+      FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+      PRIMARY KEY (userID, recipeID)    
     );
   `);
 
   // Create a table "likes" if it doesn't exist
   await db.exec(`
     CREATE TABLE IF NOT EXISTS likes (
-      likeID TEXT,
       recipeID TEXT,
       userID TEXT,
       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      PRIMARY KEY (likeID),
       FOREIGN KEY (recipeID) REFERENCES recipes(id) ON DELETE CASCADE ON UPDATE CASCADE,
       FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+      PRIMARY KEY (userID, recipeID)    
+
     );
   `);
 

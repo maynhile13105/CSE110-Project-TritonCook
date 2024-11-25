@@ -6,7 +6,7 @@ import CreateAccountPage from "./views/Login/CreateAccountPage";
 import Newsfeed from "./views/Newsfeed/Newsfeed";
 import RecipeList from "./components/recipes/RecipeList";
 import SearchPage from "./components/searchpage/SearchPage";
-import SavedFavoriteRecipeList from "./components/savedFavoriteRecipeList/SavedFavoriteRecipeList";
+import SavedFavoriteRecipeList from "./components/recipes/SavedFavoriteRecipeList";
 import { AppProvider } from "./context/AppContext";
 
 

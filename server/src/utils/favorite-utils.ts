@@ -1,5 +1,6 @@
 import { Database } from "sqlite";
 import { Request, Response } from "express";
+
 const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET
@@ -18,6 +19,7 @@ function verifyToken(req: Request): string | null {
 }
 
 export async function addFavoriteRecipe(req: Request, res: Response, db: Database) {
+  //Authorize user
   const userID = verifyToken(req);
   if (!userID) return res.status(401).json({ error: 'Unauthorized' });
 
@@ -37,6 +39,7 @@ export async function addFavoriteRecipe(req: Request, res: Response, db: Databas
 }
 
 export async function deleteFavoriteRecipe(req: Request, res: Response, db: Database) {
+  //Authorize user
   const userID = verifyToken(req);
   if (!userID) return res.status(401).json({ error: 'Unauthorized' });
 
@@ -90,6 +93,7 @@ export async function checkIsFavoriteRecipe(req: Request, res: Response, db: Dat
 }*/
 
 export async function getFavoriteRecipes(req: Request, res: Response, db: Database) {
+  //Authorize user
   const userID = verifyToken(req);
   if (!userID) return res.status(401).json({ error: 'Unauthorized' });
 

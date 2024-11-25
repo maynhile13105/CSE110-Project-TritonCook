@@ -10,6 +10,9 @@ interface AppContextType {
 
     favoriteRecipes: Recipe[];
     setFavoriteRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>;
+
+    likedRecipes: Recipe[];
+    setLikedRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>;
 }
 
 export const initialState: AppContextType = {
@@ -18,6 +21,9 @@ export const initialState: AppContextType = {
 
     favoriteRecipes: [],
     setFavoriteRecipes: () => { },
+
+    likedRecipes: [], //Store the list of recipes that user liked
+    setLikedRecipes: () => {},
     
     userProfile: {
         id: "",
@@ -33,6 +39,7 @@ export const AppContext = createContext<AppContextType>(initialState);
 export const AppProvider = (props: any) => {
     const [userProfile, setUserProfile] = useState<Profile>(initialState.userProfile);
     const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>(initialState.favoriteRecipes);
+    const [likeRecipes, setLikeRecipes] = useState<Recipe[]>(initialState.likedRecipes);
     const [token, setToken] = useState<string>(initialState.token);
     return (
         <AppContext.Provider
@@ -46,6 +53,9 @@ export const AppProvider = (props: any) => {
 
                 favoriteRecipes: favoriteRecipes,
                 setFavoriteRecipes: setFavoriteRecipes,
+
+                likedRecipes: likeRecipes,
+                setLikedRecipes: setLikeRecipes,
             }}
         >
             {props.children}

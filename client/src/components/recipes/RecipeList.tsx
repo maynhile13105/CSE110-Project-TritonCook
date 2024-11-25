@@ -3,21 +3,21 @@ import RecipeItem from "./RecipeItem";
 import "./RecipeList.css";
 import { fetchDisplayedRecipes } from "../../utils/displayedRecipes-utils"; // Import the function here
 import { Recipe } from "../../types/types";
-import { fetchFavoriteRecipes } from "../../utils/favorite-utils";
 import { useLocation } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 
 const RecipeList = () => {
     const [displayedRecipes, setDisplayedRecipes] = useState<Recipe[]>([]);
-    const {favoriteRecipes} = useContext(AppContext);
-    const location = useLocation();
+    //const {favoriteRecipes} = useContext(AppContext);
+    //const {likedRecipes} = useContext(AppContext);
 
-    console.log("Fav recipes in Item List", favoriteRecipes);
+    const location = useLocation();
+    
     useEffect(() => {
       loadRecipes();
     }, []); 
 
-    console.log("Initial displayedRecipes:", displayedRecipes); // Check the initial value of displayedRecipes
+    //console.log("Initial displayedRecipes:", displayedRecipes); // Check the initial value of displayedRecipes
     const loadRecipes = async () => {
         try {
             const recipesList = await fetchDisplayedRecipes(); // Fetch displayed recipes
@@ -38,7 +38,8 @@ const RecipeList = () => {
       }
     }, [location]); // Dependency on location to re-fetch when path changes
 
-   
+   //console.log("Fav recipes in Item List", favoriteRecipes);
+   //console.log("Liked recipes in Item List", likedRecipes);
     
   return (
     <>
