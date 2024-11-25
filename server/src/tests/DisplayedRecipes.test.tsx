@@ -1,8 +1,8 @@
 import { Server } from "http";
 import { Database } from "sqlite";
 import app from "../index";
-import { addRecipesToDatabase } from "../addTestRecipes";
-import { sampleRecipes } from "../samlpleRecipes";
+import { addRecipesToDatabase } from "./utils/addTestRecipes";
+import { sampleRecipes } from "./utils/samlpleRecipes";
 import openDatabase from "../database/openDatabase";
 
 let server: Server;

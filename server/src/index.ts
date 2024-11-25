@@ -4,8 +4,8 @@ import { createLoginEndpoints } from "./api/login-endpoints";
 import initDatabase from "./database/initDatabase";
 import { createDisplayedRecipesEndpoints } from "./endpoints/displayedRecipes-endpoints";
 import { createFavoriteRecipesEndpoints } from "./endpoints/favorite-endpoints";
-import { addRecipesToDatabase } from "./addTestRecipes";
-import { sampleRecipes } from "./samlpleRecipes";
+import { addRecipesToDatabase } from "./tests/utils/addTestRecipes";
+import { sampleRecipes } from "./tests/utils/samlpleRecipes";
 import { createUserInformationEndpoints } from "./endpoints/userInfo-endpoint";
 
 const express = require("express");
