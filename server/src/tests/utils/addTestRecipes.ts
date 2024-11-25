@@ -1,5 +1,5 @@
 import { Database } from "sqlite";
-import { Profile, Recipe } from "./types";
+import { Profile, Recipe } from "../../types";
 
 export async function addRecipesToDatabase(db: Database, recipes: Recipe[]) {
   try {
