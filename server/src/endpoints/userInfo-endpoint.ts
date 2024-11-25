@@ -9,7 +9,7 @@ export function createUserInformationEndpoints(app: any, db: Database){
         loadUserInfo(req, res, db);
     });
 
-    app.get("/user/:id", (req: Request, res: Response) => {
+    app.get("/userInfo/:id", (req: Request, res: Response) => {
         console.log("Received request for username");
         loadUsername(req, res, db);
     })

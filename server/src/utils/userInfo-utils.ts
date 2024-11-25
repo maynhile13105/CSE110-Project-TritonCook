@@ -25,6 +25,7 @@ export async function loadUserInfo(req: Request, res: Response, db: Database) {
     res.status(401).json({ error: 'Unauthorized' });
   }
 };
+
 export async function loadUsername(req: Request, res: Response, db: Database) {
   const { id } = req.params;
 

@@ -4,8 +4,9 @@ import { createGoogleEndpoints } from "./api/google-endpoints";
 import { createLoginEndpoints } from "./api/login-endpoints";
 import { createDisplayedRecipesEndpoints } from "./endpoints/displayedRecipes-endpoints";
 import { createFavoriteRecipesEndpoints } from "./endpoints/favorite-endpoints";
-import { addRecipesToDatabase } from "./addTestRecipes";
-import { sampleRecipes } from "./dummyList";
+import { addRecipesToDatabase, addUsersToDatabase } from "./addTestRecipes";
+import { sampleRecipes, sampleUsers } from "./dummyList";
+import { createUserInformationEndpoints } from "./endpoints/userInfo-endpoint";
 
 const express = require("express");
 const cors = require("cors");
@@ -25,7 +26,10 @@ app.listen(port, () => {
 (async () => {
   const db = await initDB();
 
-  // Add sample test recipes; takes id 1-5
+  //Add sample user:
+  await addUsersToDatabase(db, sampleUsers);
+
+  // Add sample test recipes; takes id 1-10
   await addRecipesToDatabase(db, sampleRecipes);
 
   // Root endpoint to get test if the server is running

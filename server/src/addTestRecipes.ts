@@ -49,11 +49,9 @@ export async function addUsersToDatabase(db: Database, users: Profile[]) {
       // If the recipe does not exist, insert it
       if (!existingUser) {
         await db.run(
-          `INSERT INTO users (id, name, email, image)
+          `INSERT INTO users (id, name, email, picture)
            VALUES (?, ?, ?, ?);`,
-          [
-            user.id,
-          ]
+          [ user.id, user.name, user.email, user.picture ]
         );
         console.log(`Added user with ID: ${user.id}`);
       } else {

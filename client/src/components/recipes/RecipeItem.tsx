@@ -66,15 +66,12 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
     }
   };
 
-  
-
-
   return (
     <div className="post-box">
       <div className="user-inf">
         <div className="close">
           <img src="/profile.svg" alt="Profile" />
-          Username
+          {ownerUsername}
         </div>
         <button className="like-button" onClick={handleFavoriteClick}>
           <img

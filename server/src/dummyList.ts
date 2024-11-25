@@ -3,22 +3,22 @@ import { Profile, Recipe } from "./types";
 
 export const sampleUsers: Profile[] = [
   {
-    id: 'test1',
-    name: 'TritonCook1',
-    email: 'tritoncook1@ucsd.edu',
-    image: 'https://media.istockphoto.com/id/1829241109/photo/enjoying-a-brunch-together.jpg?b=1&s=612x612&w=0&k=20&c=Mn_EPBAGwtzh5K6VyfDmd7Q5eJFXSHhGWVr3T4WDQRo='
+    id: "user1",
+    name: "TritonCook1",
+    email: "tritoncook1@ucsd.edu",
+    picture: "https://media.istockphoto.com/id/1829241109/photo/enjoying-a-brunch-together.jpg?b=1&s=612x612&w=0&k=20&c=Mn_EPBAGwtzh5K6VyfDmd7Q5eJFXSHhGWVr3T4WDQRo="
   }, 
   {
-    id: 'test2',
-    name: 'TritonCook2',
-    email: 'tritoncook2@ucsd.edu',
-    image: 'https://static.vecteezy.com/system/resources/previews/036/804/331/non_2x/ai-generated-assorted-indian-food-on-dark-wooden-background-free-photo.jpg'
+    id: "user2",
+    name: "TritonCook2",
+    email: "tritoncook2@ucsd.edu",
+    picture: "https://static.vecteezy.com/system/resources/previews/036/804/331/non_2x/ai-generated-assorted-indian-food-on-dark-wooden-background-free-photo.jpg"
   },
   {
-    id: 'test3',
-    name: 'TritonCook3',
-    email: 'tritoncook1@ucsd.edu',
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeMAY3Z-205kWN7XF5u2F8GdNrSs6-RvcMOw&s'
+    id: "user3",
+    name: "TritonCook3",
+    email: "tritoncook1@ucsd.edu",
+    picture: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeMAY3Z-205kWN7XF5u2F8GdNrSs6-RvcMOw&s"
   }
 ];
 
