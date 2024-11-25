@@ -58,6 +58,7 @@ const initDatabase = async () => {
       userID TEXT,
       recipeID TEXT,
       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (userID, recipeID),
       FOREIGN KEY (recipeID) REFERENCES recipes(id) ON DELETE CASCADE ON UPDATE CASCADE,
       FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE    
     );
