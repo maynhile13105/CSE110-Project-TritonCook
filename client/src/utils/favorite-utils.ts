@@ -2,13 +2,14 @@ import { API_BASE_URL } from "../constants/constants";
 import { Recipe } from "../types/types";
 
 // Function to add favorite recipe to the backend. Method: POST
-export const addFavoriteRecipe = async (userID: string, recipeID: string): Promise<void> => {
-    const response = await fetch(`${API_BASE_URL}/favorite`, {
+export const addFavoriteRecipe = async (recipeID: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/favorite/add/${recipeID}`, {
         method: "POST",
         headers: {
             "Content-Type" : "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // Include token if needed
         },
-        body: JSON.stringify({ userID, recipeID }),
+        body: JSON.stringify({ recipeID }),
     });
     if(!response.ok){
         throw new Error("Failed to add recipe to your favorite list!");
@@ -17,9 +18,13 @@ export const addFavoriteRecipe = async (userID: string, recipeID: string): Promi
 }
 
 //Function to delete favorite recipe in the backend. Method: DELETE
-export const deleteFavoriteRecipe = async (userID: string, recipeID: string): Promise<void> => {
-    const response = await fetch(`${API_BASE_URL}/favorite/${userID}/${recipeID}`, {
+export const deleteFavoriteRecipe = async (recipeID: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/favorite/remove/${recipeID}`, {
         method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // Include token if needed
+        },
     });
     if(!response.ok){
         throw new Error ("Failed to remove recipe out of your favorite list!");
@@ -27,9 +32,14 @@ export const deleteFavoriteRecipe = async (userID: string, recipeID: string): Pr
 };
 
 //Function to get all favorite recipes of the user from the backend. Method: GET
-export const fetchFavoriteRecipes = async (userID: string): Promise<Recipe[]> => {
-    const response = await fetch(`${API_BASE_URL}/favorite/${userID}`, {
+export const fetchFavoriteRecipes = async (): Promise<Recipe[]> => {
+    const response = await fetch(`${API_BASE_URL}/favorite`, {
         method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // Include token if needed
+        },
+
     })
     if(!response.ok){
         throw new Error("Failed to fetch the user's favorite recipes");
@@ -41,11 +51,15 @@ export const fetchFavoriteRecipes = async (userID: string): Promise<Recipe[]> =>
 
     return favoriteRecipeList;
 };
-
+/*
 //Function to check if the recipe is in the user's favorite list from backend. Method: GET
-export const checkIsFavoriteRecipe = async(userID: string, recipeID: string): Promise<boolean> => {
-    const response = await fetch(`${API_BASE_URL}/favorite/check/${userID}/${recipeID}`, {
+export const checkIsFavoriteRecipe = async(recipeID: string): Promise<boolean> => {
+    const response = await fetch(`${API_BASE_URL}/favorite/check/${recipeID}`, {
         method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // Include token if needed
+        },
     });
 
     if(!response.ok){
@@ -58,4 +72,4 @@ export const checkIsFavoriteRecipe = async(userID: string, recipeID: string): Pr
     });
     
     return isFavorite;
-}
+}*/

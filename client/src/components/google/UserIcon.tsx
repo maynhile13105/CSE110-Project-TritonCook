@@ -1,14 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Profile } from '../../types/types';
 import { error } from 'console';
+import { AppContext } from '../../context/AppContext';
 
 function UserIcon() {
-  const [userProfile, setUserProfile] = useState<Profile>({
-    id: "",
-    name: "",
-    email: "",
-    picture: ""
-  });
+  const {userProfile, setUserProfile} = useContext(AppContext);
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [imageSrc, setImageSrc] = useState("images/profile.svg");

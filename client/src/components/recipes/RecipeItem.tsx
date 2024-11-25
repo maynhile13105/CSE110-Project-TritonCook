@@ -1,63 +1,81 @@
 import { useContext, useEffect, useState } from "react";
-import { Account, Recipe } from "../../types/types";
-import './RecipeItem.css'
+import { Profile, Recipe } from "../../types/types";
+import './RecipeItem.css';
 import { Link } from "react-router-dom";
+import { addFavoriteRecipe, deleteFavoriteRecipe } from "../../utils/favorite-utils";
 import { AppContext } from "../../context/AppContext";
-import { addFavoriteRecipe, checkIsFavoriteRecipe, deleteFavoriteRecipe } from "../../utils/favorite-utils";
+import { fetchUsername } from "../../utils/userInfo-utils";
 
+interface RecipeItemProps {
+  currentRecipe: Recipe;
+}
 
-const RecipeItem = (currentRecipe: Recipe) => {
-  const { userProfile } = useContext(AppContext);
+const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
+  const { favoriteRecipes, setFavoriteRecipes } = useContext(AppContext);
 
-  console.log("userID: ", userProfile.id);
-  console.log("recipeID: ", currentRecipe.id);
+  //Get recipe owner's username
+  const [ownerUsername, setownerUsername] = useState<string>("");
+  useEffect(()=>{
+    loadOwnerUsername();
+  }, [currentRecipe.userID]);
 
-  // State for favorite status and initialization
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [isFavoriteInitialized, setIsFavoriteInitialized] = useState(false);
-
-  const fetchFavoriteRecipes = async () => {
+  const loadOwnerUsername = async () => {
     try {
-      const favoriteStatus = await checkIsFavoriteRecipe(userProfile.id, currentRecipe.id);
-      setIsFavorite(favoriteStatus);
-      setIsFavoriteInitialized(true); // Mark initialization complete
+        const ownername = await fetchUsername(currentRecipe.userID); // Fetch displayed recipes
+        console.log("Fetched recipes in frontend:", ownername);  // Log the recipes
+         
+        // Check for existing recipes and update the state correctly
+        setownerUsername(ownername);
+
     } catch (error) {
-      console.error("Error checking favorite status:", error);
+        console.error("Error fetching recipes:", error);
     }
-  };
+};
+
+  // State for handling favorite status
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  // State for modal visibility
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   useEffect(() => {
-    fetchFavoriteRecipes();
-  }, [userProfile.id, currentRecipe.id]);
+    const isFavoriteStatus = favoriteRecipes.some((fav) => fav.id === currentRecipe.id);
+    setIsFavorite(isFavoriteStatus);
+  }, [favoriteRecipes, currentRecipe.id]);
 
   const handleFavoriteClick = () => {
-    setIsFavorite((prev) => !prev);
-  };
+    const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    if (!isFavoriteInitialized) return; // Skip until initialized
-
-    if (isFavorite) {
-      addFavoriteRecipe(userProfile.id, currentRecipe.id).catch((error) => {
-        console.error("Failed to add recipe to favorite list!", error);
-      });
-    } else {
-      deleteFavoriteRecipe(userProfile.id, currentRecipe.id).catch((error) => {
-        console.error("Failed to remove recipe from favorite list!", error);
-      });
+    if (!token) {
+      // Show the popup if the user is not logged in
+      setIsModalVisible(true);
+      return;
     }
-  }, [isFavorite, isFavoriteInitialized]);
+
+    const newFavoriteStatus = !isFavorite;
+    setIsFavorite(newFavoriteStatus);
+
+    if (newFavoriteStatus) {
+      addFavoriteRecipe(currentRecipe.id);
+      setFavoriteRecipes((prev) => [currentRecipe, ...prev]);
+    } else {
+      deleteFavoriteRecipe(currentRecipe.id);
+      setFavoriteRecipes((prevFavorites) =>
+        prevFavorites.filter((recipe) => recipe.id !== currentRecipe.id)
+      );
+    }
+  };
 
   return (
     <div className="post-box">
       <div className="user-inf">
         <div className="close">
           <img src="/profile.svg" alt="Profile" />
-          Username
+          {ownerUsername}
         </div>
         <button className="like-button" onClick={handleFavoriteClick}>
           <img
-            src={!isFavorite ? "images/like-unliked.svg" : "images/Heart.svg"}
+            src={isFavorite ? "images/Heart.svg" : "images/like-unliked.svg"}
             alt="Button Image"
           />
         </button>
@@ -83,9 +101,22 @@ const RecipeItem = (currentRecipe: Recipe) => {
         <img src="/Comment.svg" alt="Comment" />
         <img src="/Report.svg" alt="Report" />
       </div>
+
+      {/* Modal for not logged in */}
+      {isModalVisible && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Login Required</h2>
+            <p>You must log in to use this feature.</p>
+            <button onClick={() => setIsModalVisible(false)}>Close</button>
+            <Link to="/">
+              <button>Sign in</button>
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
-
 
 export default RecipeItem;

@@ -4,8 +4,8 @@ import { createLoginEndpoints } from "./api/login-endpoints";
 import initDatabase from "./database/initDatabase";
 import { createDisplayedRecipesEndpoints } from "./endpoints/displayedRecipes-endpoints";
 import { createFavoriteRecipesEndpoints } from "./endpoints/favorite-endpoints";
-import { addRecipesToDatabase } from "./tests/utils/addTestRecipes";
-import { sampleRecipes } from "./tests/utils/samlpleRecipes";
+import { addRecipesToDatabase, addUsersToDatabase } from "./tests/utils/addTestRecipes";
+import { sampleRecipes, sampleUsers } from "./tests/utils/dummyList";
 import { createUserInformationEndpoints } from "./endpoints/userInfo-endpoint";
 
 const express = require("express");
@@ -28,7 +28,10 @@ if (require.main === module) {
 (async () => {
   const db = await initDatabase();
 
-  // Add sample test recipes; takes id 1-5
+  //Add sample user:
+  await addUsersToDatabase(db, sampleUsers);
+
+  // Add sample test recipes; takes id 1-10
   await addRecipesToDatabase(db, sampleRecipes);
 
   // Root endpoint to get test if the server is running

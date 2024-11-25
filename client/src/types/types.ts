@@ -20,10 +20,3 @@ export type Profile = {
   picture: string
 }
 
-
-export type Account = {
-  id: string;
-  name: string;
-  email: string;
-  picture: string
-}

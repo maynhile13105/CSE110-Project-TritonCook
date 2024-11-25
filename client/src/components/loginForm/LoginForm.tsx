@@ -3,6 +3,7 @@ import "./LoginForm.css";
 import { Link, useNavigate } from "react-router-dom";
 import LoginButton from "../google/LoginButton";
 import { AppContext } from "../../context/AppContext";
+import { API_BASE_URL } from "../../constants/constants";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -24,7 +25,7 @@ const LoginForm = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:8080/api/login", {
+      const response = await fetch(`${API_BASE_URL}/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +41,7 @@ const LoginForm = () => {
       
       // Save the token to local storage or context
       localStorage.setItem("token", data.token);
-      console.log("Data token: ", data.token);
+
       //Save the token to the app context
       setToken(data.token);
       console.log(token)
@@ -109,7 +110,9 @@ const LoginForm = () => {
       </div>
 
       <div style={{ marginLeft: "10px", padding: "10px", width: "90%", borderBottom: "2px solid #439BBD" }} />
-      <div style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>New to TritonCook?</div>
+      <div style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>
+        New to TritonCook?
+      </div>
 
       <div className="CreateAccount">
         <div className="create-account-button">
@@ -119,9 +122,21 @@ const LoginForm = () => {
         </div>
       </div>
 
-      <div style={{ marginLeft: "45%", padding: "10px", fontSize: "35px" }}>Or</div>
-
+      <div style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>
+        Another way to login?
+      </div>
       <LoginButton />
+      <div className="or-divider">
+        Or
+      </div>
+
+      <div className="guest">
+        <div className="guest-account-button">
+          <Link to="/home" className="guest-account-link">
+            <span>Continue As Guest</span>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

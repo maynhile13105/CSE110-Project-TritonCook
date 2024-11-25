@@ -1,6 +1,6 @@
 import { Database } from "sqlite";
 import { Request, Response } from "express";
-import { loadUserInfo } from "../utils/userInfo-utils";
+import { loadUserInfo, loadUsername } from "../utils/userInfo-utils";
 
 export function createUserInformationEndpoints(app: any, db: Database){
 
@@ -8,6 +8,11 @@ export function createUserInformationEndpoints(app: any, db: Database){
         console.log("Received request for user info");
         loadUserInfo(req, res, db);
     });
+
+    app.get("/userInfo/:id", (req: Request, res: Response) => {
+        console.log("Received request for username");
+        loadUsername(req, res, db);
+    })
 
 
 }

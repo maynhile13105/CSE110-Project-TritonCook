@@ -32,7 +32,7 @@ it("should return the most recent recipes ordered by time", async () => {
   const response = await fetch('http://localhost:8080/displayedRecipes', { method: "GET" });
   const rec = (await response.json()).data;
   expect(response.status).toBe(200);
-  expect(rec).toHaveLength(5); // We inserted 5 recipes
+  expect(rec).toHaveLength(10); // We inserted 5 recipes
   expect(rec[0].title).toBe("Spaghetti Aglio e Olio"); // Most recent
   expect(rec[1].title).toBe("Avocado Toast"); // Second most recent
 });

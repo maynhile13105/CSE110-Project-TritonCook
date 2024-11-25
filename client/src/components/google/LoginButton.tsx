@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { GoogleCredentialResponse } from "../../types/types";
 import "./LoginButton.css"
 import { useNavigate } from "react-router-dom";

@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AppContext } from '../../context/AppContext';
-
+import { useContext } from 'react';
+import { AppContext, initialState } from '../../context/AppContext';
 const Logout = () => {
-
-  const { setToken } =useContext(AppContext);
-
+  const {setUserProfile} = useContext(AppContext);
+  const {setFavoriteRecipes} = useContext(AppContext);
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setToken("");
+    setUserProfile(initialState.userProfile);
+    setFavoriteRecipes(initialState.favoriteRecipes);
+
   };
 
   return (

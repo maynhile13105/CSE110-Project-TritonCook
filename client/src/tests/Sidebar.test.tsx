@@ -1,8 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import Sidebar from '../components/navbar/Sidebar';
-
+import Sidebar from '../components/Navbar/Sidebar';
 describe('Sidebar Component', () => {
   const renderSidebar = () =>
     render(

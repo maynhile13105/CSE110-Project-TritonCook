@@ -59,7 +59,7 @@ const Sidebar = () => {
       <div className='sidebar-container' role='button'>
         <div className='mainbuttons-container'>
         <div className='profilebutton'><Link to="#"><div className="profile-content"><UserIcon data-testid='UserIcon'/><span>Profile</span></div></Link></div>
-        <div className='favoritebutton'><Link to="#"><img id="saved-icon" src='/images/favorite.svg' alt='favoriteIcon'/>Favorites</Link></div>
+        <div className='favoritebutton'><Link to="favorite"><img id="saved-icon" src='/images/favorite.svg' alt='favoriteIcon'/>Favorites</Link></div>
         <div className='friendsbutton'><Link to="#"><img id="friends-icon" src='/images/friends.svg' alt='friendsIcon'/>Friends</Link></div>
         <div className='filterbutton' onClick={toggleDropdown} data-testid="filter-button"><Link to="#"><img id="filter-icon" src='/images/filter.svg' alt='filterIcon'/>Filter</Link></div>
         

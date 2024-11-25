@@ -91,7 +91,7 @@ describe("Favorites", () => {
   });
 
   test("add favorite in", async () => {
-    const response = await fetch("http://localhost:8080/favorite", {
+    const response = await fetch("http://localhost:8080/favorite/add/1", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -112,7 +112,7 @@ describe("Favorites", () => {
   });
 
   test("add duplicate favorite in", async () => {
-    const response1 = await fetch("http://localhost:8080/favorite", {
+    const response1 = await fetch("http://localhost:8080/favorite/add/1", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -125,7 +125,7 @@ describe("Favorites", () => {
     expect(rec1).toBeDefined();
     expect(rec1).toBe("1");
 
-    const response2 = await fetch("http://localhost:8080/favorite", {
+    const response2 = await fetch("http://localhost:8080/favorite/add/1", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -146,7 +146,7 @@ describe("Favorites", () => {
   });
 
   test("add different favorite in", async () => {
-    const response1 = await fetch("http://localhost:8080/favorite", {
+    const response1 = await fetch("http://localhost:8080/favorite/add/1", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -159,7 +159,7 @@ describe("Favorites", () => {
     expect(rec1).toBeDefined();
     expect(rec1).toBe("1");
 
-    const response2 = await fetch("http://localhost:8080/favorite", {
+    const response2 = await fetch("http://localhost:8080/favorite/add/2", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -180,7 +180,7 @@ describe("Favorites", () => {
   });
 
   test("get after favoriting", async () => {
-    const response_favorite = await fetch("http://localhost:8080/favorite", {
+    const response_favorite = await fetch("http://localhost:8080/favorite/add/1", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -206,7 +206,7 @@ describe("Favorites", () => {
   });
 
   test("get after favoriting many", async () => {
-    const response1 = await fetch("http://localhost:8080/favorite", {
+    const response1 = await fetch("http://localhost:8080/favorite/add/1", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -219,7 +219,7 @@ describe("Favorites", () => {
     expect(rec1).toBeDefined();
     expect(rec1).toBe("1");
 
-    const response2 = await fetch("http://localhost:8080/favorite", {
+    const response2 = await fetch("http://localhost:8080/favorite/add/2", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -279,5 +279,4 @@ describe("Favorites", () => {
       body: JSON.stringify({ recipeID: "1" }),
     });
   });
-
 });

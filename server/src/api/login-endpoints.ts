@@ -34,7 +34,7 @@ export function createLoginEndpoints(app: any, db: Database) {
       const token = jwt.sign(
         { userId: user.id },
         JWT_SECRET,
-        { expiresIn: '1h' }
+        { expiresIn: '3h' }
       );
 
       res.json({ token });

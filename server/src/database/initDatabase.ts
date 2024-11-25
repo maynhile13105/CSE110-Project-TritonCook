@@ -111,7 +111,7 @@ const initDatabase = async () => {
     
     );
   `)
-
+  
   return db;
 };
 
