@@ -1,4 +1,4 @@
-import { Profile, Recipe } from "../../types";
+import { Profile, Recipe } from "./types";
 
 export const sampleUsers: Profile[] = [
   {
