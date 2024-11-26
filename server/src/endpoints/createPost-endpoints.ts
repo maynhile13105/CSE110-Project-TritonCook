@@ -2,11 +2,11 @@ import { Database } from "sqlite";
 import { Request, Response } from "express";
 import { createPost, deletePost } from "../utils/createPost-utils";
 
-export function createFavoriteRecipesEndpoints(app: any, db: Database) {
+export function createPostEndpoints(app: any, db: Database, up: any) {
   // Create post
   app.post("/post", (req: Request, res: Response) => {
     console.log("Received request for adding post");
-    createPost(req, res, db);
+    createPost(req, res, db, up);
   });
 
   // Remove post

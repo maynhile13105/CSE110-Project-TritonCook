@@ -18,17 +18,26 @@ function verifyToken(req: Request): string | null {
   }
 }
 
-export async function createPost(req: Request, res: Response, db: Database) {
+export async function createPost(req: Request, res: Response, db: Database, up: any) {
   const userID = verifyToken(req);
   if (!userID) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
     const { title, ingredients, estimate, cuisine } = req.body;
+    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
     const postId = uuidv4();
-    // TODO
-    res.status(201).json(postId);
+    await db.run(
+      `
+      INSERT INTO recipes (id, userID, title, ingredients, estimate, cuisine, result_img)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+      `,
+      [postId, userID, title, ingredients, estimate, cuisine, imagePath]
+    );
+
+    res.status(201).json({ postId, message: "Recipe successfully added." });
   } catch (error) {
-    return res.status(400).send({ error: `Recipe could not be added to your favorite list, ${error}` });
+    console.error("Error adding recipe:", error);
+    res.status(500).json({ error: "An error occurred while adding the recipe." });
   }
 }
 
