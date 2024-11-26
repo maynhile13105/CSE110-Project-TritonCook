@@ -1,77 +1,103 @@
 import React, { useState } from 'react';
 import './SearchPage.css';
+import RecommendationSearch from './RecommendationSearch';
 
 const SearchPage: React.FC = () => {
   const [searchInput, setSearchInput] = useState('');
   const [isPopUpVisible, setPopUpVisible] = useState(false);
   const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [recommendationCount, setRecommendationCount] = useState(0);
   const [historyItems, setHistoryItems] = useState<string[]>([
     'Example History Search 1',
-  ]); // Start with an empty history list
+  ]);
+  const database = [
+    'Mac and cheese',
+    'Quick recipes',
+    'Easy dinner ideas',
+    'Baked pasta',
+    'Cheesy lasagna',
+    'Creamy chicken soup',
+    'Healthy salads',
+    'Vegetarian dishes',
+  ];
+  
 
   // Handle changes in the search input field
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(event.target.value);
-    setDropdownVisible(event.target.value === ''); // Only show dropdown if the input is empty
+    const input = event.target.value;
+    setSearchInput(input);
+  
+    // Show dropdown only if there are matching recommendations or history
+    if (
+      input.trim() !== "" &&
+      database.some((item) => item.toLowerCase().includes(input.toLowerCase()))
+    ) {
+      setDropdownVisible(true);
+    } else if (input.trim() === "" && historyItems.length > 0) {
+      setDropdownVisible(true);
+    } else {
+      setDropdownVisible(false); // Hide dropdown when no match or input
+    }
   };
 
   // Clear the input when delete icon is clicked
   const handleClearInput = () => {
-    setSearchInput('')
+    setSearchInput('');
     setDropdownVisible(true); // Optionally show dropdown again when cleared
   };
 
   // Show dropdown when the search bar is clicked
   const handleSearchClick = () => {
-    setDropdownVisible(true);
-  };
-
-  // Set clicked history item as the search input and hide dropdown
-  const handleDropdownItemClick = (item: string) => {
-    setSearchInput(item);
-    setDropdownVisible(false);
+    if (historyItems.length > 0 || searchInput.trim() !== "") {
+      setDropdownVisible(true);
+    } else {
+      setDropdownVisible(false); // Ensure dropdown is hidden
+    }
   };
 
   // Handle Enter key to show pop-up
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && searchInput.trim() !== '') {
-      setHistoryItems(prevItems => {
-        // Check if the input already exists in the history
+      setHistoryItems((prevItems) => {
         const existingIndex = prevItems.indexOf(searchInput);
-        // If it exists, remove it first to prevent duplication
         let updatedItems = existingIndex !== -1
-          ? prevItems.filter(item => item !== searchInput)
+          ? prevItems.filter((item) => item !== searchInput)
           : prevItems;
-        // Add the new search term to the top of the list
         updatedItems = [searchInput, ...updatedItems];
-        // Limit the list to the latest 10 items
         return updatedItems.slice(0, 10);
       });
       setSearchInput('');
-      setPopUpVisible(true); // Show the pop-up
-      setDropdownVisible(false); // Hide dropdown if visible
+      setPopUpVisible(true);
+      setDropdownVisible(false);
     }
   };
 
   // Delete a history item by index
   const handleDeleteHistoryItem = (index: number) => {
-    setHistoryItems(prevItems => prevItems.filter((_, i) => i !== index));
+    setHistoryItems((prevItems) => {
+      const updatedItems = prevItems.filter((_, i) => i !== index);
+      if (updatedItems.length === 0) {
+        setDropdownVisible(false); // Hide dropdown when no history items remain
+      }
+      return updatedItems;
+    });
   };
 
+  // Calculate dynamic dropdown height
+  const dropdownHeight = `${searchInput ? 
+    Math.min(14 + recommendationCount * 7.5, 50) : // Use recommendationCount here
+    Math.min(15 + Math.min(historyItems.length, 5) * 7.5, 50)   // For history search
+  }vh`;
+  
+  
+  
   return (
     <div className="search-page">
       {/* Wrapper for content that should be blurred */}
       <div className={isPopUpVisible ? 'blurred' : ''}>
         <div
-          className={`search-bar ${
-            isDropdownVisible && historyItems.length > 0 ? 'expanded' : ''
-          }`}
-          style={{
-            height:
-              isDropdownVisible && historyItems.length > 0
-                ? `${Math.min(20 + historyItems.length * 8, 80)}vh`
-                : '13vh', // Initial height
-          }}
+          className={`search-bar ${isDropdownVisible ? 'expanded' : ''}`}
+          style={{ height: dropdownHeight }} 
         >
           <input
             type="text"
@@ -85,33 +111,51 @@ const SearchPage: React.FC = () => {
           <div className="search-icon">
             <img src="/images/searchIcon.svg" alt="Search Icon" />
           </div>
-  
+
+          {/* Dropdown Menu for History or Recommendation Items */}
+          {isDropdownVisible && (
+            <div className="history-items">
+              {searchInput ? (
+                /* Show recommendation items when there's input */
+                <RecommendationSearch
+                  searchInput={searchInput}
+                  database={database}
+                  onRecommendationCount={(count) => setRecommendationCount(count)}
+                />
+              ) : (
+                /* Show history items when input is empty */
+                historyItems.map((item, index) => (
+                  <div key={index} className="history-item">
+                    <div
+                      onClick={() => {
+                        setSearchInput(item);
+                        setDropdownVisible(false);
+                      }}
+                      className="history-item-content"
+                    >
+                      <img src="/images/historyArrow.svg" alt="Arrow" />
+                      {item}
+                    </div>
+                    <button
+                      className="delete-history-item"
+                      onClick={() => handleDeleteHistoryItem(index)}
+                    >
+                      x
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+
           {/* Delete Icon - appears only when input is not empty */}
           {searchInput && (
             <div className="delete-icon" onClick={handleClearInput}>
               <img src="/images/closeIcon.svg" alt="Clear Input" />
             </div>
           )}
-  
-          {/* Dropdown Menu for History Items */}
-          {isDropdownVisible && (
-            <div className="history-items">
-              {historyItems.map((item, index) => (
-                <div key={index} className="history-item">
-                  <div onClick={() => handleDropdownItemClick(item)} className="history-item-content">
-                    <img src="images/historyArrow.svg" alt="Arrow" />
-                    {item}
-                  </div>
-                  {/* Delete Button for each history item */}
-                  <button className="delete-history-item" onClick={() => handleDeleteHistoryItem(index)}>
-                    x
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
         </div>
-  
+
         <div className="info-text">
           <p>
             Busy today?<br />
@@ -131,7 +175,7 @@ const SearchPage: React.FC = () => {
           </div>
         </div>
       </div>
-  
+
       {/* Pop-up Window */}
       {isPopUpVisible && (
         <div className="popup-container">
@@ -150,7 +194,6 @@ const SearchPage: React.FC = () => {
       )}
     </div>
   );
-  
 };
 
 export default SearchPage;
