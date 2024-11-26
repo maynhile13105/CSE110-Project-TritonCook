@@ -10,23 +10,23 @@ const Navbar = () => {
       <main className='navbar'>
         <ul className='left'>
         <Link to='/home'><li className='logo' data-testid='logo'>
-            <img src='images/logo-round.svg'
+            <img src='/images/logo-round.svg'
               alt='logo' />
           </li></Link>
           <Link to='/home'><li className='notif' data-testid='notif'>
-            <img className='notifImage' src='images/notif-bell.svg'
+            <img className='notifImage' src='/images/notif-bell.svg'
               alt='notif' />
           </li></Link>
         </ul>
         <ul className='middle'>
           <Link to='/home'><li className='post' data-testid='post'>
-            <img className='postImage' src='images/addPost.svg' alt='post' />
+            <img className='postImage' src='/images/addPost.svg' alt='post' />
           </li></Link>
           <Link to='/home'><li className='home' data-testid='home'>
-            <img src='images/home.svg' alt='home' />
+            <img src='/images/home.svg' alt='home' />
           </li></Link>
           <Link to='/home/search'><li className='search' data-testid='search'>
-            <img src='images/search.svg' alt='search'/>
+            <img src='/images/search.svg' alt='search'/>
           </li></Link>
         </ul>
         <ul className='right'>

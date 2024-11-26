@@ -5,9 +5,11 @@ import { fetchDisplayedRecipes } from "../../utils/displayedRecipes-utils"; // I
 import { Recipe } from "../../types/types";
 import { useLocation } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
+import { useFilterContext } from "../../context/FilterContext";
 
 const RecipeList = () => {
     const [displayedRecipes, setDisplayedRecipes] = useState<Recipe[]>([]);
+    const { appliedFilters } = useFilterContext();
     //const {favoriteRecipes} = useContext(AppContext);
     //const {likedRecipes} = useContext(AppContext);
 
@@ -25,8 +27,13 @@ const RecipeList = () => {
              
             
             // Check for existing recipes and update the state correctly
-             setDisplayedRecipes(recipesList);
-
+            setDisplayedRecipes((prev) => {
+                if (prev.length !== recipesList.length) {
+                  console.log("Updating recipe list...");
+                  return recipesList;
+                }
+                return prev;
+            });
         } catch (error) {
             console.error("Error fetching recipes:", error);
         }
@@ -41,24 +48,53 @@ const RecipeList = () => {
    //console.log("Fav recipes in Item List", favoriteRecipes);
    //console.log("Liked recipes in Item List", likedRecipes);
     
+
+  const filterRecipes = (recipes: Recipe[]): Recipe[] => {
+    return recipes.filter((recipe) => {
+      const matchesIngredients =
+        appliedFilters.ingredients.length === 0 ||
+        appliedFilters.ingredients.every((ingredient: string) =>
+          recipe.ingredients.toLowerCase().includes(ingredient.toLowerCase())
+        );
+
+      const matchesTime = (() => {
+        if (!appliedFilters.time) return true;
+
+        const timeThreshold = parseInt(appliedFilters.time.replace(/\D/g, ""));
+        const recipeEstimate = parseInt(recipe.estimate.replace(/\D/g, ""));
+
+        if (appliedFilters.time.includes("<")) {
+          return recipeEstimate <= timeThreshold;
+        } else if (appliedFilters.time.includes(">")) {
+          return recipeEstimate > timeThreshold;
+        }
+        return false;
+      })();
+
+      const matchesCuisine =
+        !appliedFilters.cuisine ||
+        recipe.cuisine.toLowerCase() === appliedFilters.cuisine.toLowerCase();
+
+      return matchesIngredients && matchesTime && matchesCuisine;
+    });
+  };
+
+  const filteredRecipes = filterRecipes(displayedRecipes);
+
   return (
-    <>
-      {displayedRecipes.length > 0 ? (
-        <div className="recipes-container">
-          {displayedRecipes.map((recipe) => (
-            <div className="post-item" key={recipe.id}>
-              <RecipeItem
-               currentRecipe={recipe}
-              />
-            </div>
-          ))}
-        </div>
+    <div className="recipes-container">
+      {filteredRecipes.length > 0 ? (
+        filteredRecipes.map((recipe) => (
+          <div className="post-item" key={recipe.id}>
+            <RecipeItem currentRecipe={recipe} />
+          </div>
+        ))
       ) : (
         <h1 style={{ textAlign: "center", fontSize: "40px", fontWeight: "bold" }}>
           No recipes to display.
         </h1>
       )}
-    </>
+     </div>
   );  
 };
 

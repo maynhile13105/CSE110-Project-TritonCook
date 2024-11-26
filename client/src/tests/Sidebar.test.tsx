@@ -2,11 +2,17 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import Sidebar from '../components/navbar/Sidebar';
+import { FilterProvider } from '../context/FilterContext';
+import ingredientsData from '../data/ingredientsData.json'
+import cuisinesData from '../data/cuisinesData.json'
+
 describe('Sidebar Component', () => {
   const renderSidebar = () =>
     render(
       <BrowserRouter>
-        <Sidebar />
+        <FilterProvider>
+          <Sidebar />
+        </FilterProvider>
       </BrowserRouter>
     );
 
@@ -79,9 +85,9 @@ describe('Sidebar Component', () => {
     
         expect(screen.getByTestId('ingredients-popup')).toBeInTheDocument();
     
-        fireEvent.click(screen.getByText('Tomato', {selector: '.ingredientspopup'} ));
+        fireEvent.click(screen.getByText('Tomatoes', {selector: '.ingredientspopup'} ));
     
-        expect(screen.getByText('Tomato', { selector: '.selectedingredienttext' })).toBeInTheDocument();
+        expect(screen.getByText('Tomatoes', { selector: '.selectedingredienttext' })).toBeInTheDocument();
     
         expect(screen.getByText('×', { selector: '.removeingredient' })).toBeInTheDocument();
       });
@@ -94,7 +100,7 @@ describe('Sidebar Component', () => {
 
         expect(screen.getByTestId('ingredients-popup')).toBeInTheDocument();
       
-        const allIngredients = ['Tomato', 'Chicken', 'Lettuce', 'Beef', 'Fish', 'Onion'];
+        const allIngredients = ingredientsData;
         allIngredients.forEach((ingredient) => {
           expect(screen.getByText(ingredient, { selector: '.ingredientspopup' })).toBeInTheDocument();
         });
@@ -102,9 +108,9 @@ describe('Sidebar Component', () => {
         const searchInput = screen.getByPlaceholderText('Search');
         fireEvent.change(searchInput, { target: { value: 'Tom' } });
 
-        expect(screen.getByText('Tomato', { selector: '.ingredientspopup' })).toBeInTheDocument();
+        expect(screen.getByText('Tomatoes', { selector: '.ingredientspopup' })).toBeInTheDocument();
         allIngredients
-          .filter((ingredient) => ingredient !== 'Tomato')
+          .filter((ingredient) => ingredient !== 'Tomatoes')
           .forEach((ingredient) => {
             expect(screen.queryByText(ingredient, { selector: '.ingredientspopup' })).not.toBeInTheDocument();
           });

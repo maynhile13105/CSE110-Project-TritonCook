@@ -133,7 +133,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
         </div>
         <button className="fav-button" onClick={handleFavoriteClick}>
           <img
-            src={isFavorite ? "images/Heart.svg" : "images/unfavorite.svg"}
+            src={isFavorite ? "/images/Heart.svg" : "/images/unfavorite.svg"}
             alt="Button Image"
           ></img>
         </button>
@@ -158,7 +158,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
         <div className="like-container">
           <button className="like-button" onClick={handleLikeClick}>
             <img
-              src={isLiked ? "images/colored-thumbs-up.svg" : "images/uncolored-thumbs-up.svg"}
+              src={isLiked ? "/images/colored-thumbs-up.svg" : "/images/uncolored-thumbs-up.svg"}
               alt={isLiked ? "Like button Image" : "Unlike button image"}
               style={{width : "40px"}}
             ></img>

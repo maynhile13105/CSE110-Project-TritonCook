@@ -18,7 +18,7 @@ const Logout = () => {
   return (
     <li className="logout">
       <Link to="/" onClick={handleLogout}>
-        <img src="images/logout.svg" alt="logout" />
+        <img src="/images/logout.svg" alt="logout" />
       </Link>
     </li>
   );

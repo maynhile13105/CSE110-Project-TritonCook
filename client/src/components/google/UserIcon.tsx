@@ -1,10 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Profile } from '../../types/types';
 import { error } from 'console';
-import { AppContext } from '../../context/AppContext';
 
 function UserIcon() {
-  const {userProfile, setUserProfile} = useContext(AppContext);
+  const [userProfile, setUserProfile] = useState<Profile>({
+    id: "",
+    name: "",
+    email: "",
+    picture: ""
+  });
 
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [imageSrc, setImageSrc] = useState("images/profile.svg");
@@ -22,7 +26,7 @@ function UserIcon() {
     const token = localStorage.getItem('token');
     try {
       console.log("token: ", token);
-      const res = await fetch('http://localhost:8080/userInfo', {
+      const res = await fetch('http://localhost:8080/api/profile', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
