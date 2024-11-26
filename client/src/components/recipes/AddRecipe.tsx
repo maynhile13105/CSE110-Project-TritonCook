@@ -69,6 +69,27 @@ const AddRecipe = () => {
     });
   };
 
+  const handleAddInstruction = () => {
+    if (newInstruction.text || newInstruction.image) {
+      setFormData({
+        ...formData,
+        instructions: [...formData.instructions, newInstruction],
+      });
+      // Reset the newInstruction state
+      setNewInstruction({ text: '', image: null });
+    }
+  };
+
+  const handleInstructionFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+    if (files && files.length > 0) {
+      setNewInstruction({
+        ...newInstruction,
+        image: files[0],
+      });
+    }
+  };
+
   // Handle file input change
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
@@ -87,18 +108,6 @@ const AddRecipe = () => {
       ...newInstruction,
       text: value,
     });
-  };
-
-  // Handle adding a new instruction step
-  const handleAddInstruction = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    if (newInstruction.text || newInstruction.image) {
-      setFormData({
-        ...formData,
-        instructions: [...formData.instructions, newInstruction],
-      });
-      setNewInstruction({ text: '', image: null });
-    }
   };
 
   return (
@@ -146,24 +155,37 @@ const AddRecipe = () => {
               required
             />
           </div>
-          <div className="form-group">
+          <div>
             <label className='required'>Instructions</label>
-              <input
-                type="text"
-                name="instructionText"
-                value={newInstruction.text}
-                onChange={handleInstructionTextChange}
-                placeholder="Add instruction step with image"
-              />
-          </div>
-          <div className='form-group'>
-            <label></label>
-          <input
-                type="file"
-                name="instructionImage"
-                accept="image/*"
-                onChange={handleFileChange}
-              />
+            {formData.instructions.map((instruction, index) => (
+              <div key={index} className="instruction-item">
+                <span>Step {index + 1}: {instruction.text}</span>
+                {instruction.image && (
+                  <div className="instruction-image">
+                    <img
+                      src={URL.createObjectURL(instruction.image)}
+                      alt={`Instruction ${index + 1}`}
+                      style={{ width: '80px', height: '80px', objectFit: 'cover' }}
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
+            <input
+              type="text"
+              name="instructionText"
+              value={newInstruction.text}
+              onChange={handleInstructionTextChange}
+              placeholder="Add instruction step with image"
+            />
+            <br /> <br />
+            <input
+              type="file"
+              name="instructionImage"
+              accept="image/*"
+              onChange={handleInstructionFileChange}
+            />
+            <button type="button" onClick={handleAddInstruction}>Add Instruction</button>
           </div>
 
           <div className="form-group">
