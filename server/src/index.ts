@@ -17,6 +17,14 @@ const port = 8080;
 
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
+
+const fs = require('fs');
+const uploadDir = './uploads';
+
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
 
 // Start the server
 if (require.main === module) {
