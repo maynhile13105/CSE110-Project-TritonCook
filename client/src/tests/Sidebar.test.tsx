@@ -1,19 +1,20 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router-dom';
 import Sidebar from '../components/navbar/Sidebar';
 import { FilterProvider } from '../context/FilterContext';
 import ingredientsData from '../data/ingredientsData.json'
 import cuisinesData from '../data/cuisinesData.json'
+import userEvent from '@testing-library/user-event';
 
 describe('Sidebar Component', () => {
   const renderSidebar = () =>
     render(
       <BrowserRouter>
-        <FilterProvider>
-          <Sidebar />
-        </FilterProvider>
-      </BrowserRouter>
+      <FilterProvider>
+        <Sidebar />
+      </FilterProvider>
+    </BrowserRouter>
     );
 
     //Sidebar Tests
@@ -29,6 +30,16 @@ describe('Sidebar Component', () => {
 
         expect(screen.getByText('Filter')).toBeInTheDocument();
         expect(screen.getByAltText('filterIcon')).toBeInTheDocument();
+      });
+
+
+    it('navigates to /home/favorite when the Favorites button is clicked', () => {
+      renderSidebar();
+    
+      expect(screen.getByTestId('FavoriteButton')).toBeInTheDocument();
+
+      userEvent.click(screen.getByTestId('FavoriteButton'));
+      expect(window.location.pathname).toBe('/home/favorite')
       });
 
     //Dropdown Tests
