@@ -12,7 +12,7 @@ const port = 8080;
 beforeAll(async () => {
   db = await openDatabase();
   server = await app.listen(port);
-  await addRecipesToDatabase(db, sampleRecipes);
+  // await addRecipesToDatabase(db, sampleRecipes);
 
   // Wait for server startup for constancy on slower devices
   function delay(ms: number) {

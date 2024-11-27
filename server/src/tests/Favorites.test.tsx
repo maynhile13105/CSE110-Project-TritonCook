@@ -15,7 +15,7 @@ const userId = "7e24928f-926d-400c-bd36-7acb3190948c" // Hardcoded user id
 beforeAll(async () => {
   db = await openDatabase();
   server = await app.listen(port);
-  await addRecipesToDatabase(db, sampleRecipes);
+  // await addRecipesToDatabase(db, sampleRecipes);
 
   // Wait for server startup for constancy on slower devices
   function delay(ms: number) {
