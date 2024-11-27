@@ -12,7 +12,7 @@ import UserProfilePage from "./components/accountpage/UserProfilePage";
 import Newsfeed_NavBar from "./views/Newsfeed/Newsfeed_NavBar";
 import UserInfoPage from "./components/accountpage/UserInfoPage";
 import EditUserInfo from "./components/accountpage/EditUserInfo";
-
+import FriendProfilePage from "./components/accountpage/FriendProfilePage";
 
 function App() {
   return (
@@ -32,6 +32,7 @@ function App() {
           <Route path="profile" element={<UserProfilePage />} />
           <Route path="info" element={<UserInfoPage />} />
           <Route path="edit" element={<EditUserInfo />} />
+          <Route path="friends" element={<FriendProfilePage />} />
         </Route>
       </Routes>
     </div>
