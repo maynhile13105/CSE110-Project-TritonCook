@@ -26,6 +26,11 @@ export async function createPost(req: Request, res: Response, db: Database, up: 
     const { title, ingredients, estimate, cuisine } = req.body;
     const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
     const postId = uuidv4();
+
+    if (!title || !ingredients || !estimate || !cuisine) {
+      return res.status(400).json({ error: 'Missing fields.' });
+    }
+
     await db.run(
       `
       INSERT INTO recipes (id, userID, title, ingredients, estimate, cuisine, result_img)

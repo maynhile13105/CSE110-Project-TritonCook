@@ -133,6 +133,22 @@ describe("Posts", () => {
     expect(post).toBeUndefined();
   });
 
+  test("create post with missing fields", async () => {
+    const response = await fetch("http://localhost:8080/post", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({}),
+    });
+
+    const result = await response.json();
+
+    expect(response.status).toBe(400);
+    expect(result.error).toBe("Missing fields.");
+  });
+
   test("create and delete post successfully", async () => {
     const postId = "test-post-id";
 
