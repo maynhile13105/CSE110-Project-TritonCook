@@ -178,6 +178,18 @@ describe("Favorites", () => {
     expect(liked).toHaveLength(2);
   });
 
+  test("add favorite when unauthorized", async () => {
+    const response = await fetch("http://localhost:8080/favorite/add/1", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const rec = await response.json();
+    expect(response.status).toBe(401);
+    expect(rec.error).toBe("Unauthorized")
+  })
+
   test("get after favoriting", async () => {
     const response_favorite = await fetch("http://localhost:8080/favorite/add/1", {
       method: "POST",
@@ -244,8 +256,8 @@ describe("Favorites", () => {
     expect(rec_get[1].title).toBe("Vegetable Stir Fry");
   });
 
-  test.skip("delete favorited", async () => {
-    const response_favorite = await fetch("http://localhost:8080/favorite", {
+  test("delete favorited", async () => {
+    const response_favorite = await fetch("http://localhost:8080/favorite/add/1", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -269,7 +281,7 @@ describe("Favorites", () => {
     expect(rec_get).toHaveLength(1);
     expect(rec_get[0].title).toBe("Spaghetti Aglio e Olio");
 
-    const response_del = await fetch("http://localhost:8080/favorite", {
+    const response_del = await fetch("http://localhost:8080/favorite/remove/1", {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -277,5 +289,18 @@ describe("Favorites", () => {
       },
       body: JSON.stringify({ recipeID: "1" }),
     });
+    expect(response_del.status).toBe(202);
   });
+
+  test("delete nonexistent", async () => {
+    const response_del = await fetch("http://localhost:8080/favorite/remove/1", {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ recipeID: "1" }),
+    });
+    expect(response_del.status).toBe(404);
+  })
 });
