@@ -1,23 +1,26 @@
 .page_style{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    gap: 20px;
-  }
+  display: flex;
+  justify-content: center;
+  /* flex-direction: column; */
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh; /* Ensures container can expand */
+  overflow: auto; /* Enables scrolling */
+  gap: 20px;
+}
 
-  .profile-block {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 876px;
-    height: 281px;
-    flex-shrink: 0;
-    border-radius: 20px;
-    background-color: #F7FFE2;
-    position: relative;
-  }
+.profile-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 876px;
+  height: 281px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background-color: #F7FFE2;
+  position: relative;
+  overflow: visible; /* Ensures content isn't cut off */
+}
   
   .pic_icon {
     display: flex;
@@ -120,8 +123,8 @@
     display: inline-flex;
     flex-direction: column;
     justify-content: flex-end;
-    width: 80px; /* Ensure uniform width */
-    height: 50px; /* Ensure uniform height */
+    width: 80px;
+    height: 50px;
     align-items: center;
     padding: 16px 23px 0px 22px;
     border-radius: 20px;
