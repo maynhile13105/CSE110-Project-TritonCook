@@ -2,8 +2,6 @@ import { Server } from "http";
 import { Database } from "sqlite";
 import app from "../index";
 const jwt = require('jsonwebtoken');
-import { addRecipesToDatabase } from "./utils/addTestRecipes";
-import { sampleRecipes } from "./utils/samlpleRecipes";
 import openDatabase from "../database/openDatabase";
 
 let server: Server;
@@ -15,7 +13,6 @@ const userId = "7e24928f-926d-400c-bd36-7acb3190948c" // Hardcoded user id
 beforeAll(async () => {
   db = await openDatabase();
   server = await app.listen(port);
-  await addRecipesToDatabase(db, sampleRecipes);
 
   // Wait for server startup for constancy on slower devices
   function delay(ms: number) {
@@ -78,7 +75,7 @@ afterAll(async () => {
 });
 
 describe("Posts", () => {
-  test.skip("create post successfully", async () => {
+  test("create post successfully", async () => {
     const postData = {
       title: "Test Recipe",
       ingredients: "Test Ingredient",
@@ -90,6 +87,7 @@ describe("Posts", () => {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(postData),
     });
@@ -103,5 +101,79 @@ describe("Posts", () => {
     const post = await db.get("SELECT * FROM recipes WHERE id = ?", [result.postId]);
     expect(post).toBeDefined();
     expect(post.title).toBe(postData.title);
+    expect(post.ingredients).toBe(postData.ingredients);
+    expect(post.estimate).toBe(postData.estimate);
+    expect(post.cuisine).toBe(postData.cuisine);
+    expect(post.imagePath).toBeUndefined();
+  });
+
+  test("unauthorized create post", async () => {
+    const postData = {
+      title: "Test Recipe",
+      ingredients: "Test Ingredient",
+      estimate: "30 mins",
+      cuisine: "Test Cuisine",
+    };
+
+    const response = await fetch("http://localhost:8080/post", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(postData),
+    });
+    const result = await response.json();
+
+    expect(response.status).toBe(401);
+    expect(result.postId).toBeUndefined();
+    expect(result.error).toBe('Unauthorized');
+
+    // Verify the post is in the database
+    const post = await db.get("SELECT * FROM recipes WHERE id = ?", [result.postId]);
+    expect(post).toBeUndefined();
+  });
+
+  test("create and delete post successfully", async () => {
+    const postId = "test-post-id";
+
+    // Insert a sample post
+    await db.run(
+      "INSERT INTO recipes (id, userID, title, ingredients, estimate, cuisine, result_img) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [postId, userId, "Test Title", "Test Ingredients", "30 mins", "Test Cuisine", null]
+    );
+
+    const response = await fetch("http://localhost:8080/post", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ postId }),
+    });
+
+    const result = await response.json();
+
+    expect(response.status).toBe(202);
+    expect(result.message).toBe("Recipe successfully deleted from your favorite list.");
+
+    // Verify the post is removed from the database
+    const post = await db.get("SELECT * FROM recipes WHERE id = ?", [postId]);
+    expect(post).toBeUndefined();
+  });
+
+  test("fail to delete non-existent post", async () => {
+    const response = await fetch("http://localhost:8080/post", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ postId: "non-existent-id" }),
+    });
+
+    const result = await response.json();
+
+    expect(response.status).toBe(404);
+    expect(result.error).toBe("Recipe not found or you do not have permission to delete it.");
   });
 });
