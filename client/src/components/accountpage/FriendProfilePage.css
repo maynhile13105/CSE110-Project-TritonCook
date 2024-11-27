@@ -247,3 +247,15 @@ width: 25px;
 height: 25px;
 }
 
+.user-name-friend{
+  color: #000;
+  font-family: Inter;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  margin-top: 320px;
+  margin-left: -530px;
+  
+}
+

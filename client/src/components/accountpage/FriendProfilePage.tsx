@@ -50,6 +50,9 @@ const FriendProfilePage = () => {
                   </div>
                 </div>
               </div>
+              <div className="user-name-friend">
+                    Username
+              </div>
           </div>
   
           {/* Center Buttons */}
