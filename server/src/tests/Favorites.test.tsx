@@ -97,7 +97,6 @@ describe("Favorites", () => {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ recipeID: "1" }),
     });
     const rec = (await response.json()).recipeID;
     expect(response.status).toBe(201);
