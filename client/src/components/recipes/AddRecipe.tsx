@@ -156,12 +156,12 @@ const AddRecipe = () => {
             />
           </div>
           <div>
-            <label className='required'>Instructions</label>
+            <label className='required instr-label'>Instructions</label>
             {formData.instructions.map((instruction, index) => (
-              <div key={index} className="instruction-item">
+              <div key={index} className="instr-list">
                 <span>Step {index + 1}: {instruction.text}</span>
                 {instruction.image && (
-                  <div className="instruction-image">
+                  <div>
                     <img
                       src={URL.createObjectURL(instruction.image)}
                       alt={`Instruction ${index + 1}`}
@@ -171,6 +171,7 @@ const AddRecipe = () => {
                 )}
               </div>
             ))}
+            <div className='instr-input'>
             <input
               type="text"
               name="instructionText"
@@ -178,14 +179,16 @@ const AddRecipe = () => {
               onChange={handleInstructionTextChange}
               placeholder="Add instruction step with image"
             />
-            <br /> <br />
+            <br />
             <input
               type="file"
               name="instructionImage"
               accept="image/*"
               onChange={handleInstructionFileChange}
             />
+            <br /> <br />
             <button type="button" onClick={handleAddInstruction}>Add Instruction</button>
+            </div>
           </div>
 
           <div className="form-group">
