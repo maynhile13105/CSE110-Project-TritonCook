@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import Navbar from '../components/navbar/Navbar';
 import userEvent from '@testing-library/user-event';
@@ -19,34 +19,24 @@ describe('Navbar Component', () => {
     expect(screen.getByAltText('home')).toBeInTheDocument();
     expect(screen.getByAltText('search')).toBeInTheDocument();
     expect(screen.getByAltText('logout')).toBeInTheDocument();
-    expect(screen.getByAltText('profile')).toBeInTheDocument();
+    expect(screen.getByTestId('profile')).toBeInTheDocument();
   });
 
-  it('should navigate to /home when the Home button is clicked', async () => {
+  it('should navigate to /home when the Home button is clicked', () => {
     renderNavbar();
 
-    const homeLink = screen.getByAltText('home');
-    expect(homeLink).toBeInTheDocument();
+    expect(screen.getByTestId('home')).toBeInTheDocument();
 
-    const anchor = homeLink.closest('a');
-    if (anchor) {
-      userEvent.click(anchor);
-      expect(window.location.pathname).toBe('/home');
-    }
+    userEvent.click(screen.getByTestId('home'));
+    expect(window.location.pathname).toBe('/home');
   });
 
-  it('should navigate to /home/search when the Search button is clicked', async () => {
+  it('should navigate to /home/search when the Search button is clicked', () => {
     renderNavbar();
 
-    const searchLink = screen.getByAltText('search');
-    expect(searchLink).toBeInTheDocument();
+    expect(screen.getByTestId('search')).toBeInTheDocument();
 
-    const anchor = searchLink.closest('a');
-    if (anchor) {
-      userEvent.click(anchor);
-      expect(window.location.pathname).toBe('/home/search');
-    }
+    userEvent.click(screen.getByTestId('search'));
+    expect(window.location.pathname).toBe('/home/search');
   });
-
-  
 });

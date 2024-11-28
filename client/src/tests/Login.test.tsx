@@ -36,7 +36,7 @@ test('renders login page', () => {
   //Test username
   const username = screen.getByText("Username");
   expect(username).toBeInTheDocument();
-  const usernameInputField = screen.getByTestId("username-intput-field");
+  const usernameInputField = screen.getByTestId("username-input-field");
   expect(usernameInputField).toBeInTheDocument();
 
 
