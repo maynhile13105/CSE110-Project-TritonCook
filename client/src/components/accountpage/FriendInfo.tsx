@@ -25,6 +25,12 @@ import "./FriendInfo.css";
     );
 
 const FriendInfo = () => {
+    const friendInfoData = [
+        { label: "Email", info: "students@ucsd.edu" },
+        { label: "DOB", info: "MM/DD/YYYY" },
+        { label: "Ethic", info: "Asian/Asian American" },
+        { label: "Phone", info: "+1(123)-456-7890" },
+    ];
     return (
         <div className="page_style">
           <div className="profile-block">
@@ -99,22 +105,19 @@ const FriendInfo = () => {
               </div>
           </div>
   
-          <div className="info-block">
-              <div className="username">UserName</div>
-              <div className="info-title">Title</div>
-              <ul className="info-list">
-              <li>List item 1</li>
-              <li>List item 2</li>
-              <li>List item 3</li>
-              </ul>
-              <button className="see-more-button">... see more</button>
-  
-              <div className="image-display">
-                  <p>
-                      image placeholder
-                  </p>
-              </div>
-          </div>
+          {/* Blocks Below Button */}
+          <div className="block-container">
+                    {friendInfoData.map((data, index) => (
+                        <div className="block" key={index}>
+                            <div className="block-text-container">
+                                <span className="block-text">{data.label}</span>
+                            </div>
+                            <div className="block-info-container">
+                                <span className="block-info">{data.info}</span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
           </div>
   
         </div>
