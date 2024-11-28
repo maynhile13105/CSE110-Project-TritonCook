@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import './RecommendationSearch.css';
+import './RecSearch.css';
 import { useNavigate } from 'react-router-dom';
+import { addSearchHistory } from "../../utils/history-utils";
 
 interface RecommendationSearchProps {
   searchInput: string;
   database: string[];
   onRecommendationCount: (count: number) => void;
 }
-  
 
-const RecommendationSearch: React.FC<RecommendationSearchProps> = ({
+const RecSearch: React.FC<RecommendationSearchProps> = ({
   searchInput,
   database,
   onRecommendationCount,
@@ -20,30 +20,47 @@ const RecommendationSearch: React.FC<RecommendationSearchProps> = ({
   // Function to find the closest matches
   const findClosestMatches = (input: string, data: string[]): string[] => {
     if (!input.trim()) return [];
-    return data
-      .filter((item) => item.toLowerCase().includes(input.toLowerCase()))
-      .slice(0, 5); // Limit to top 5 results
+    const exactMatches = data.filter((item) =>
+      item.toLowerCase() === input.toLowerCase()
+    );
+    const partialMatches = data.filter(
+      (item) =>
+        item.toLowerCase().includes(input.toLowerCase()) &&
+        !exactMatches.includes(item)
+    );
+    return [...exactMatches, ...partialMatches].slice(0, 5); // Prioritize exact matches, limit to 5
   };
 
   // Update recommendations whenever searchInput changes
   useEffect(() => {
     const matches = findClosestMatches(searchInput, database);
-    setRecommendations(matches);
+
+    // If no matches, use searchInput as the only recommendation
+    if (matches.length === 0 && searchInput.trim()) {
+      setRecommendations([searchInput]);
+    } else {
+      setRecommendations(matches);
+    }
   }, [searchInput, database]);
 
   // Send recommendation count to parent
   useEffect(() => {
     onRecommendationCount(recommendations.length); // Send count to parent
-  }, [recommendations]);
+  }, [recommendations, onRecommendationCount]);
 
-  const handleItemClick = (item: string) => {
-    // Navigate to the posts page with search query
-    navigate('/posts', { state: { searchQuery: item } });
+  const handleItemClick = async (item: string) => {
+    try {
+      await addSearchHistory(item); // Save clicked recommendation to the backend
+    } catch (error) {
+      console.error("Error saving search history:", error);
+    }
+    // Navigate to the results page with the clicked query
+    navigate('/home/results', { state: { searchQuery: item } });
   };
 
   return (
-    <div
-      className={`recommendation-bar ${recommendations.length > 0 ? 'expanded' : ''}`}>
+    <div className={`recommendation-bar expanded`}>
+      {/* Render recommendation items */}
       {recommendations.map((item, index) => (
         <div
           key={index}
@@ -60,4 +77,4 @@ const RecommendationSearch: React.FC<RecommendationSearchProps> = ({
   );
 };
 
-export default RecommendationSearch;
+export default RecSearch;
