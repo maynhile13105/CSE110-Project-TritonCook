@@ -11,7 +11,6 @@ import { AppProvider } from "./context/AppContext";
 import { FilterProvider } from "./context/FilterContext";
 import ResultsPage from "./components/results/ResultsPage";
 
-
 function App() {
   return (
     <AppProvider>
