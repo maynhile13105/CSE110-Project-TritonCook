@@ -9,6 +9,7 @@ import SearchPage from "./components/searchpage/SearchPage";
 import SavedFavoriteRecipeList from "./components/recipes/SavedFavoriteRecipeList";
 import { AppProvider } from "./context/AppContext";
 import { FilterProvider } from "./context/FilterContext";
+import ResultsPage from "./components/results/ResultsPage";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route index element={<RecipeList />} />
             <Route path="search" element={<SearchPage />} />
             <Route path="favorite" element={<SavedFavoriteRecipeList />} />
+            <Route path="results" element={<ResultsPage />} />
           </Route >
         </Routes>
       </FilterProvider>
