@@ -81,7 +81,7 @@ export const sampleRecipes: Recipe[] = [
     ingredients: "water, noodles, egg",
     result_img: 'https://static01.nyt.com/images/2018/05/01/dining/01COOKING-PERFECTINSTANTRAMEN1/01COOKING-PERFECTINSTANTRAMEN1-googleFourByThree-v2.jpg',
     userID: "user1",
-    time: '"2024-11-10T18:00:00Z"'
+    time: "2024-11-10T18:00:00Z"
   },
   {
     id: "7",
