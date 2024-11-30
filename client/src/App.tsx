@@ -9,7 +9,7 @@ import SearchPage from "./components/searchpage/SearchPage";
 import SavedFavoriteRecipeList from "./components/recipes/SavedFavoriteRecipeList";
 import { AppProvider } from "./context/AppContext";
 import { FilterProvider } from "./context/FilterContext";
-import UserProfilePage from "./components/accountpage/UserProfilePage";
+import UserProfilePage from "./views/UserProfile/UserProfilePage";
 
 
 function App() {
