@@ -9,8 +9,8 @@ export function createDisplayedRecipesEndpoints(app: any, db: Database){
         getDisplayedRecipes(req, res, db);
     });
 
-    app.get("/displayedPostedRecipes/:recipeID", (req: Request, res: Response) => {
-        console.log("Received request for getting user's posted recipes");
+    app.get("/displayedPostedRecipes/:userID", (req: Request, res: Response) => {
+        //console.log("Received request for getting user's posted recipes");
         getUserPostedRecipes(req, res, db);
     });
 

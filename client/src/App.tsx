@@ -27,7 +27,7 @@ function App() {
             <Route path="search" element={<SearchPage />} />
             <Route path="favorite" element={<SavedFavoriteRecipeList />} />
           </Route >
-          <Route path="/profile" element={<UserProfilePage />} >
+          <Route path="/profile/:username" element={<UserProfilePage />}>
             <Route index element={<UserPostedRecipesList />} />
           </Route>
         </Routes>

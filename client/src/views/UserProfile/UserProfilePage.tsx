@@ -1,34 +1,37 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 import "./UserProfilePage.css";
 import Navbar from "../../components/navbar/Navbar";
-import { AppContext } from "../../context/AppContext";
-import { fetchUserProfile } from "../../utils/userInfo-utils";
+import { AppContext, initialState } from "../../context/AppContext";
+import { fetchProfileUsingUsername, } from "../../utils/userInfo-utils";
+import { Profile } from "../../types/types";
 
 
 const UserProfilePage = () => {
-  const {userProfile, setUserProfile} = useContext(AppContext);
+  const { username } = useParams(); //Get userID from the URL
+  //const {userProfile, setUserProfile} = useContext(AppContext); // the user's profile who is using the app.
+  const [ownerAccountPage, setOwnerAccountPage] = useState<Profile>(initialState.userProfile);
   const [avatar, setAvatar] = useState<string>("/images/no-image.jpg");
 
   useEffect(() => {
-    loadUserProfile();
-  },[])
+    if(username)
+    loadUserProfile(username);
+  },[username])
 
-  const loadUserProfile = async () => {
+  const loadUserProfile = async (username: string) => {
     try {
-      const profile = await fetchUserProfile(); // Fetch favorite recipes
-      //console.log("Fetched fav recipes in frontend:", favoriteList);  // Log the recipes
-      setUserProfile(profile);
+      const profile = await fetchProfileUsingUsername(username); 
+      setOwnerAccountPage(profile);
     } catch (error) {
-      console.error("Error fetching favorite recipes:", error);
+      console.error("Error fetching profile using username:", error);
     }
   };
 
   useEffect(() => {
-    if (userProfile.picture) {
-      setAvatar(userProfile.picture);
+    if (ownerAccountPage.picture) {
+      setAvatar(ownerAccountPage.picture);
     }
-  }, [userProfile.picture]); // Depend on userProfile.picture to update avatar
+  }, [ownerAccountPage.picture]); // Depend on ownerAccountPage.picture to update avatar
   return (
     <div>
       <div className="topbar">
@@ -44,7 +47,7 @@ const UserProfilePage = () => {
                 
           <div className="posts">
             {/* <span className="button-text">Posts</span> */}
-            <Link to="/profile" className="button-text">Posts</Link>
+            <Link to={`/profile/${ownerAccountPage.name}`} className="button-text">Posts</Link>
             <img src="/images/post-icon.svg" style={{width:"30px"}}/>
           </div>
       
@@ -66,7 +69,7 @@ const UserProfilePage = () => {
 
             {/* Right Corner Edit Icon */}
             <div className="username">
-              {userProfile.name}
+              {ownerAccountPage.name}
             </div>
           </div>
   

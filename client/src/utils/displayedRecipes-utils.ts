@@ -17,9 +17,9 @@ export const fetchDisplayedRecipes = async (): Promise<Recipe[]> => {
 
 //Function to get all posted recipes of the user from the backend. Method: GET
 export const fetchUserPostedRecipes = async (userID: string): Promise<Recipe[]> => {
+    console.log("userID before sending request: ", [userID]);
     const response = await fetch(`${API_BASE_URL}/displayedPostedRecipes/${userID}`, { 
-        method: "GET",
-
+        method: "GET"
     });
     if(!response.ok){
         throw new Error("Failed to fetch the user's posted recipes");

@@ -2,6 +2,7 @@
   height: 100vh; /* Ensure this container fills the full height */
   display: flex;
   flex-direction: row; /* Align sidebar and content side-by-side */
+  overflow: hidden; /* Prevents the page from scrolling when sidebar and content are fixed */
   padding-top: 10px;
 }
 
@@ -104,6 +105,8 @@
   gap: 30px;
   position: relative;
   align-items: center;
+  overflow-y: auto; /* Enable scrolling in the main content area */
+
 }
 
   

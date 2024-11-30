@@ -1,10 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Sidebar.css'
 import UserIcon from '../google/UserIcon';
 import { useFilterContext } from '../../context/FilterContext';
 import ingredientsData from '../../data/ingredientsData.json'
 import cuisinesData from '../../data/cuisinesData.json'
+import { AppContext } from '../../context/AppContext';
+import { fetchUserProfile } from '../../utils/userInfo-utils';
 
 const Sidebar = () => {
   const {
@@ -86,12 +88,26 @@ const Sidebar = () => {
       cuisine: selectedCuisine,
     });
   }
+
+  const {userProfile, setUserProfile} = useContext(AppContext);
+  useEffect(() => {
+    loadUserProfile();
+  }, []);
+
+  const loadUserProfile = async () => {
+    try {
+      const profile = await fetchUserProfile(); // Fetch favorite recipes
+      setUserProfile(profile);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  };
   
   return (
     <div>
       <div className='sidebar-container' role='button'>
         <div className='mainbuttons-container'>
-        <Link to="/profile"><div className='profilebutton'><div className="profile-content"><UserIcon data-testid='UserIcon'/><span>Profile</span></div></div></Link>
+        <Link to={`/profile/${userProfile.name}`}><div className='profilebutton'><div className="profile-content"><UserIcon data-testid='UserIcon'/><span>Profile</span></div></div></Link>
         <Link to="/home/favorite"><div className='favoritebutton' data-testid='FavoriteButton'><img id="saved-icon" src='/images/favorite.svg' alt='favoriteIcon'/>Favorites</div></Link>
         <Link to="#"><div className='friendsbutton'><img id="friends-icon" src='/images/friends.svg' alt='friendsIcon'/>Friends</div></Link>
         <Link to="#"><div className='filterbutton' onClick={toggleDropdown} data-testid="filter-button"><img id="filter-icon" src='/images/filter.svg' alt='filterIcon'/>Filter</div></Link>

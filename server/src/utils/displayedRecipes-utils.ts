@@ -23,7 +23,9 @@ export async function getDisplayedRecipes(req: Request, res: Response, db: Datab
 
 export async function getUserPostedRecipes(req: Request, res: Response, db: Database) {
 
+  console.log("Fetching posted recipes...");
   const {userID} = req.params;
+  console.log("userID received in backend: ", [userID]);
   if(!userID) {
     return res.status(400).json({ error: 'Missing required fields: userID' });
   }

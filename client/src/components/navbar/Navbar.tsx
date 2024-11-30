@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import './Navbar.css';
 import UserIcon from '../google/UserIcon';
 import Logout from '../google/Logout';
+import { AppContext } from '../../context/AppContext';
 
 const Navbar = () => {
+  const {userProfile} = useContext(AppContext);
+  
   return (
     <div>
       <main className='navbar'>
@@ -31,7 +34,7 @@ const Navbar = () => {
         </ul>
         <ul className='right'>
           <Logout date-testid='logout'/>
-          <Link to='/profile'><li className='profile' data-testid='profile'>
+          <Link to={`/profile/${userProfile.name}`}><li className='profile' data-testid='profile'>
             <UserIcon />
           </li></Link>
         </ul>

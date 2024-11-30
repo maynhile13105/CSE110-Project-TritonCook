@@ -63,3 +63,32 @@ export async function loadUsername(req: Request, res: Response, db: Database) {
     return res.status(500).json({ error: "An error occurred while fetching the username." });
   }
 }
+
+
+
+export async function loadUserProfileUsingUsername(req: Request, res: Response, db: Database) {
+  const { name } = req.params;
+
+  // Validate input
+  if (!name) {
+    return res.status(400).json({ error: "User ID is required." });
+  }
+
+  try {
+    // Fetch user from the database
+    const user = await db.get(`SELECT * FROM users WHERE name = ?`, [name]);
+
+
+    // Check if the user exists
+    if (!user) {
+      console.warn(`User not found for ID: ${name}`);
+      return res.status(404).json({ error: "User not found." });
+    }
+    //console.log('Profile in backend:', JSON.stringify(user, null, 2));
+
+    return res.status(200).json({ user });
+  } catch (error) {
+    console.error('JWT verification error:', error);
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+}
