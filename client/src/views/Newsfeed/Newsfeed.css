@@ -3,11 +3,13 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   margin: 0;
+  overflow: hidden; /* Prevent scrolling of the entire page */
 }
 
 .under-navbar {
   display: flex;
   flex-direction: row;
+  height: 100vh;
 }
 
 
@@ -15,11 +17,12 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
+  width: 100%;
+
 }
 
 .sidebar {
-  position: sticky;
-  top: 120px;
+  position: fixed; /* Fixed position for the sidebar */
   align-self: flex-start;
   height: calc(100vh - 120px);
   z-index: 500;
@@ -29,5 +32,10 @@ body {
 }
 
 .page-content {
-  width: 100%;
+  overflow-y: scroll; /* Enable scrolling in the main content area */
+  margin-left: 200px; /* Leave space for the sidebar */
+  width: calc(100% - 200px); /* Make the content area take the rest of the space */
+  height: 100vh; /* Full height */
+  margin-top: 94px; /* Optional: Add padding around content */
+
 }
