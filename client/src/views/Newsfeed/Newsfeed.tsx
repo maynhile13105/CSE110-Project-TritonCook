@@ -24,7 +24,7 @@ const Newsfeed = () => {
         setFavoriteRecipes([]);
       } else{
         const favoriteList = await fetchFavoriteRecipes(); // Fetch favorite recipes
-        console.log("Fetched fav recipes in frontend:", favoriteList);  // Log the recipes
+        //console.log("Fetched fav recipes in frontend:", favoriteList);  // Log the recipes
         setFavoriteRecipes(favoriteList);
       } 
     }catch (error) {
@@ -39,7 +39,7 @@ const Newsfeed = () => {
         setFavoriteRecipes([]);
       } else{
         const likedList = await fetchLikedRecipes(); // Fetch like recipes from backend
-        console.log("Fetched liked recipes in frontend:", likedList);  // Log the recipes
+        //console.log("Fetched liked recipes in frontend:", likedList);  // Log the recipes
         setLikedRecipes(likedList);
       } 
     }catch (error) {

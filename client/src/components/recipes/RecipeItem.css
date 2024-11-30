@@ -63,7 +63,7 @@
     gap: 10px;
 }
 
-.fav-button, .like-button {
+.fav-button, .like-button, #delete-button{
     outline: none;
     border: none;
     box-shadow: none;
@@ -122,4 +122,14 @@
   .like-container{
     display: flex;
     flex-direction: row;
+  }
+
+  .visible{
+    display: block;
+    transition: opacity 0.3 ease;
+    opacity: 1;
+  }
+
+  .hidden{
+    display: none;
   }

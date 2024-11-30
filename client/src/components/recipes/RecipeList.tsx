@@ -23,13 +23,13 @@ const RecipeList = () => {
     const loadRecipes = async () => {
         try {
             const recipesList = await fetchDisplayedRecipes(); // Fetch displayed recipes
-            console.log("Fetched recipes in frontend:", recipesList);  // Log the recipes
+            //console.log("Fetched recipes in frontend:", recipesList);  // Log the recipes
              
             
             // Check for existing recipes and update the state correctly
             setDisplayedRecipes((prev) => {
                 if (prev.length !== recipesList.length) {
-                  console.log("Updating recipe list...");
+                  //console.log("Updating recipe list...");
                   return recipesList;
                 }
                 return prev;

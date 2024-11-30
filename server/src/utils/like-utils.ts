@@ -56,7 +56,7 @@ export async function fetchLikedRecipes(req: Request, res: Response, db: Databas
       `,[userID]
     );
 
-    console.log('Fetched liked recipes:', likedRecipesList);
+    //console.log('Fetched liked recipes:', likedRecipesList);
     res.status(200).json({ data: likedRecipesList });
   } catch (error) {
     console.error('Error fetching liked recipes:', error);
@@ -72,7 +72,7 @@ export async function addLike(req: Request, res: Response, db: Database) {
   
     try {
       // Log to check the database connection
-      console.log("Adding like status...");
+      //console.log("Adding like status...");
       const { recipeID } = req.body;
       if (!recipeID) {
         return res.status(400).json({ error: 'Missing required fields' });

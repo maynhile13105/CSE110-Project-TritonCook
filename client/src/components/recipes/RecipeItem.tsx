@@ -12,6 +12,9 @@ interface RecipeItemProps {
 };
 
 const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
+  //State for user's profile
+  const {userProfile} = useContext(AppContext);
+
   // State for favorite recipes list
   const { favoriteRecipes, setFavoriteRecipes } = useContext(AppContext);
 
@@ -78,7 +81,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
   useEffect(() => {
    loadNumberOfLikes(); 
   }, [currentRecipe.id]);
-  console.log(`Liked Recipes in Recipe Item: ${likedRecipes}`);
+  //console.log(`Liked Recipes in Recipe Item: ${likedRecipes}`);
   useEffect(() => {
     const isLikeStatus = likedRecipes.some((recipe) => recipe.id === currentRecipe.id);
     //console.log(`${currentRecipe.id}: ${isLikeStatus}`);
@@ -131,12 +134,21 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
           <img src="/profile.svg" alt="Profile" />
           {ownerUsername}
         </div>
-        <button className="fav-button" onClick={handleFavoriteClick}>
-          <img
-            src={isFavorite ? "/images/Heart.svg" : "/images/unfavorite.svg"}
-            alt="Button Image"
-          ></img>
-        </button>
+        <ul>
+          <button className={userProfile.name === ownerUsername ? 'visible' : "hidden"} id="delete-button" >
+            <img 
+              src={"/images/trashcan-icon.svg"}
+              alt="Delete Image"
+              style={{width: "30px"}}
+            />
+          </button>
+          <button className="fav-button" onClick={handleFavoriteClick}>
+            <img
+              src={isFavorite ? "/images/Heart.svg" : "/images/unfavorite.svg"}
+              alt="Button Image"
+            />
+          </button>
+        </ul>
       </div>
       <br />
       <div className="post-name">{currentRecipe.title}</div>

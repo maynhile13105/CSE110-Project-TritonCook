@@ -4,22 +4,29 @@ const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET
 
-export async function loadUserInfo(req: Request, res: Response, db: Database) {
+function verifyToken(req: Request): string | null {
   const token = req.headers.authorization?.split(' ')[1];
-
-  if (!token) return res.status(401).json({ error: 'Unauthorized' });
+  if (!token) return null;
 
   try {
-    // Verify the JWT token
     const decoded = jwt.verify(token, JWT_SECRET);
-    // console.log(decoded)
-    const userId = decoded.userId;
-    console.log(userId)
+    return decoded.userId;
+  } catch (error) {
+    console.error('JWT verification error:', error);
+    return null;
+  }
+}
 
+export async function loadUserProfile(req: Request, res: Response, db: Database) {
+  const userID = verifyToken(req);
+  if (!userID) return res.status(401).json({ error: 'Unauthorized' });
+
+  try {
     // Retrieve user information from the database
-    const user = await db.get(`SELECT * FROM users WHERE id = ?`, [userId]);
+    const user = await db.get(`SELECT * FROM users WHERE id = ?`, [userID]);
+    console.log('Profile in backend:', JSON.stringify(user, null, 2));
     if (!user) return res.status(404).json({ error: 'User not found' });
-    res.json({ user });
+    return res.status(200).json({ user });
   } catch (error) {
     console.error('JWT verification error:', error);
     res.status(401).json({ error: 'Unauthorized' });
@@ -49,7 +56,7 @@ export async function loadUsername(req: Request, res: Response, db: Database) {
       return res.status(404).json({ error: "User not found." });
     }
 
-    console.log(`Fetched username for ID ${id}:`, user.name);
+    //console.log(`Fetched username for ID ${id}:`, user.name);
     return res.status(200).json({ data: user.name });
   } catch (error) {
     console.error(`Error fetching username for ID ${id}:`, error);

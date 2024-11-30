@@ -16,7 +16,7 @@ const SavedFavoriteRecipeList = () => {
   const loadFavorites = async () => {
     try {
       const favoriteList = await fetchFavoriteRecipes(); // Fetch favorite recipes
-      console.log("Fetched fav recipes in frontend:", favoriteList);  // Log the recipes
+      //console.log("Fetched fav recipes in frontend:", favoriteList);  // Log the recipes
       setFavoriteRecipes(favoriteList);
     } catch (error) {
       console.error("Error fetching favorite recipes:", error);
