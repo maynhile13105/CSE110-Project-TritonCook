@@ -58,6 +58,7 @@ const CreateAccountForm = () => {
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
+
         <div>
           <label>Email</label>
         </div>
@@ -71,6 +72,12 @@ const CreateAccountForm = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          {isEmailRegistered && (
+            <div className="alert">
+              <img src="/images/warning.svg" alt="Warning" className="alert-icon"/>
+              Your email has been registered!
+            </div>
+          )}
         </div>
 
         <div>
@@ -101,6 +108,33 @@ const CreateAccountForm = () => {
             value={confirmedPass}
             onChange={(e) => setConfirmedPass(e.target.value)}
           />
+          {isPasswordMismatch && (
+            <div className="alert">
+              <img src="/images/warning.svg" alt="Warning" className="alert-icon"/>
+              Password and Confirmed Password are not matched!
+            </div>
+          )}
+        </div>
+
+        <div>
+          <label>Date of Birth</label>
+        </div>
+        <div className="dob-input">
+          <input
+            type="text"
+            name="dob"
+            id="dob"
+            placeholder="Enter DOB (mm/dd/yyyy)"
+            required
+            value={dob}
+            onChange={(e) => setDob(e.target.value)}
+          />
+          {isInvalidDob && (
+            <div className="alert">
+              <img src="/images/warning.svg" alt="Warning" className="alert-icon"/>
+              Invalid Date Of Birth! Please fill in by format mm/dd/yyyy
+            </div>
+          )}
         </div>
 
         <div>
@@ -114,3 +148,4 @@ const CreateAccountForm = () => {
 };
 
 export default CreateAccountForm;
+

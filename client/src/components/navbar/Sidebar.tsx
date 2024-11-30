@@ -72,6 +72,7 @@ const Sidebar = () => {
     setSelectedCuisine(null);
   }
 
+
   const handleApplyFilters = () => {
     console.log("Filters applied:", {
       selectedIngredients,
@@ -124,7 +125,6 @@ const Sidebar = () => {
           )}  
           
           <div className='dropdown' onClick={() => togglePopup('time')}><Link to="#"><img id="filterarrow" src='/images/filterarrow.svg' />Estimated Time</Link></div>
-          
           {selectedTime && (
             <div className='selectedtime'>
               <span className='selectedtimetext'>{selectedTime}</span>
