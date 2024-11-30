@@ -67,7 +67,7 @@
   font-size: 25px;
   color: black;
 }
-.fav-button, .like-button, #delete-button{
+.fav-button, .like-button, #delete-button, #report-button{
     outline: none;
     border: none;
     box-shadow: none;

@@ -4,6 +4,7 @@
   flex-direction: row; /* Align sidebar and content side-by-side */
   overflow: hidden; /* Prevents the page from scrolling when sidebar and content are fixed */
   padding-top: 10px;
+
 }
 
 .sidebar-profilePage{

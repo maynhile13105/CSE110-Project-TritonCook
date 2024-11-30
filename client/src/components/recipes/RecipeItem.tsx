@@ -134,21 +134,12 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
           <img src="/profile.svg" alt="Profile" />
           <Link to={`/profile/${ownerUsername}`} className="recipe-owner">{ownerUsername}</Link>
         </div>
-        <ul>
-          <button className={userProfile.name === ownerUsername ? 'visible' : "hidden"} id="delete-button" >
-            <img 
-              src={"/images/trashcan-icon.svg"}
-              alt="Delete Image"
-              style={{width: "30px"}}
-            />
-          </button>
-          <button className="fav-button" onClick={handleFavoriteClick}>
-            <img
-              src={isFavorite ? "/images/Heart.svg" : "/images/unfavorite.svg"}
-              alt="Button Image"
-            />
-          </button>
-        </ul>
+        <button className="fav-button" onClick={handleFavoriteClick}>
+          <img
+            src={isFavorite ? "/images/Heart.svg" : "/images/unfavorite.svg"}
+            alt="Button Image"
+          />
+        </button>
       </div>
       <br />
       <div className="post-name">{currentRecipe.title}</div>
@@ -175,10 +166,25 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
               style={{width : "40px"}}
             ></img>
           </button>
-          <p style={{fontSize: "20px"}}>{numberOfLikes} {numberOfLikes>0? "likes" : "like"}</p>
+          <p style={{fontSize: "20px"}}>{numberOfLikes}</p>
         </div>
         <img src="/Comment.svg" alt="Comment" />
-        <img src="/Report.svg" alt="Report" />
+
+        <button className={userProfile.name === ownerUsername ? 'visible' : "hidden"} id="delete-button" >
+            <img 
+              src={"/images/trashcan-icon.svg"}
+              alt="Delete Image"
+              style={{width: "30px"}}
+            />
+          </button>
+
+          <button className={userProfile.name === ownerUsername ? 'hidden' : "visible"} id="report-button" >
+            <img 
+              src="/Report.svg" 
+              alt="Report"
+              style={{width: "30px"}}
+            />
+          </button>
       </div>
 
       {/* Modal for not logged in */}
