@@ -24,14 +24,17 @@ export const fetchUserProfile = async (): Promise<Profile> => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${localStorage.getItem("token")}`, // Include token if needed
         },
-    });
+    })
 
-    if (!response.ok) {
+    if(!response.ok){
         throw new Error("Failed to fetch the user profile");
     }
 
-    const jsonResponse = await response.json(); // Await the JSON parsing
+    // Parse the JSON response
+    const jsonResponse = await response.json();
+    console.log("Response from backend:", jsonResponse); // Add this log
 
-    // Return the correct field from the response
-    return jsonResponse.user; // Adjust based on backend structure
-};
+        
+    // Return the data from the response
+    return jsonResponse.user;  // Assuming data is what you want (adjust if needed)
+}

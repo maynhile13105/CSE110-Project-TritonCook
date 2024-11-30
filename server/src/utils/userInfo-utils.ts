@@ -29,7 +29,7 @@ export async function loadUserProfile(req: Request, res: Response, db: Database)
     return res.status(200).json({ user });
   } catch (error) {
     console.error('JWT verification error:', error);
-    res.status(401).json({ error: 'Unauthorized' });
+    return res.status(401).json({ error: 'Unauthorized' });
   }
 };
 

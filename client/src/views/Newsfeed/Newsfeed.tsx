@@ -6,16 +6,19 @@ import { Outlet } from 'react-router-dom';
 import { fetchFavoriteRecipes } from '../../utils/favorite-utils';
 import { AppContext } from '../../context/AppContext';
 import { fetchLikedRecipes } from '../../utils/like-utils';
+import { fetchUserProfile } from '../../utils/userInfo-utils';
 
 const Newsfeed = () => {
 
   const token = localStorage.getItem("token");
   const {setFavoriteRecipes} = useContext(AppContext);
   const {setLikedRecipes} = useContext(AppContext);
+  const {setUserProfile} = useContext(AppContext);
 
   useEffect(() => {
     loadFavorites();
     loadLikes();
+    loadUserProfile();
   }, []);
 
   const loadFavorites = async () => {
@@ -29,6 +32,16 @@ const Newsfeed = () => {
       } 
     }catch (error) {
       console.error("Error fetching favorite recipes:", error);
+    }
+  };
+
+  const loadUserProfile = async () => {
+    try {
+      const profile = await fetchUserProfile(); // Fetch user profile
+      console.log("Fetched user profile in frontend:", profile);  // Log the recipes
+      setUserProfile(profile);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
     }
   };
 

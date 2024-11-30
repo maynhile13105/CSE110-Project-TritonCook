@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Database } from "sqlite"; // Replace with your actual DB library
 
-export async function loadDisplayedRecipes(req: Request, res: Response, db: Database) {
+export async function getDisplayedRecipes(req: Request, res: Response, db: Database) {
   try {
     // Log to check the database connection
     //console.log("Fetching displayed recipes...");
@@ -15,8 +15,38 @@ export async function loadDisplayedRecipes(req: Request, res: Response, db: Data
     //console.log("Fetched recipes:", recipes);
 
     // Respond with the fetched recipes
-    res.status(200).json({ data: recipes });
+    return res.status(200).json({ data: recipes });
   } catch (error) {
-    res.status(500).json({ error: "An error occurred while fetching recipes." });
+    return res.status(500).json({ error: "An error occurred while fetching recipes." });
+  }
+}
+
+export async function getUserPostedRecipes(req: Request, res: Response, db: Database) {
+
+  const {userID} = req.params;
+  if(!userID) {
+    return res.status(400).json({ error: 'Missing required fields: userID' });
+  }
+
+  console.log("UserID in backend: ", userID);
+
+  try {
+    // Log to check the database connection
+    //console.log("Fetching user's posted recipes...");
+    const recipes = await db.all(
+      `SELECT * 
+       FROM recipes
+       WHERE userID = ?
+       ORDER BY time DESC;
+      `, [userID]
+    );
+
+     // Log the recipes fetched from the database
+    console.log("Fetched posted recipes:", recipes);
+
+    // Respond with the fetched recipes
+    return res.status(200).json({ data: recipes });
+  } catch (error) {
+    return res.status(500).json({ error: "An error occurred while fetching user's posted recipes." });
   }
 }

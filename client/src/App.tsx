@@ -10,6 +10,7 @@ import SavedFavoriteRecipeList from "./components/recipes/SavedFavoriteRecipeLis
 import { AppProvider } from "./context/AppContext";
 import { FilterProvider } from "./context/FilterContext";
 import UserProfilePage from "./views/UserProfile/UserProfilePage";
+import UserPostedRecipesList from "./components/profilePage/UserPostedRecipesList";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="favorite" element={<SavedFavoriteRecipeList />} />
           </Route >
           <Route path="/profile" element={<UserProfilePage />} >
+            <Route index element={<UserPostedRecipesList />} />
           </Route>
         </Routes>
       </FilterProvider>

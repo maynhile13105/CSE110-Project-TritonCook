@@ -52,8 +52,8 @@ const LoginForm = () => {
 
 
       const profile = await fetchUserProfile(); // Fetch user profile
-      console.log("Fetched user profile in frontend:", profile);  // Log the recipes
-      console.log(`userProfile.nam: ${profile.name}`);
+      //console.log("Fetched user profile in frontend:", profile);  // Log the recipes
+      //console.log(`userProfile.name: ${profile.name}`);
       setUserProfile(profile);
 
     } catch (err) {
