@@ -44,7 +44,7 @@ const UserProfilePage = () => {
                 
           <div className="posts">
             {/* <span className="button-text">Posts</span> */}
-            <Link to="/home/profile" className="button-text">Posts</Link>
+            <Link to="/profile" className="button-text">Posts</Link>
             <img src="/images/post-icon.svg" style={{width:"30px"}}/>
           </div>
       
@@ -57,16 +57,15 @@ const UserProfilePage = () => {
 
         <div className='userProfilePage-content' >
           <div className="profilePage-header">
-
+            <div className="avatarImage-container">
+              <img className="avatar" src={avatar} alt="User Avatar" />
+            </div>
             <button className="avatar-edit">
               <img src="/images/camera-icon.svg" style={{width:"40px"}}/>
             </button>
 
-            <div className="avatarImage-container">
-              <img className="avatar" src={avatar} alt="User Avatar" />
-            </div>
             {/* Right Corner Edit Icon */}
-            <div className="name">
+            <div className="username">
               {userProfile.name}
             </div>
           </div>

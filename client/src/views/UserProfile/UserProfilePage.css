@@ -34,8 +34,23 @@
   transition: background-color 0.3s ease;
 }
 
+.button-text {
+  color: #000;
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: bold;
+  line-height: normal;
+  margin-bottom: 8px;
+  text-decoration: none;
+}
+
 .information{
   margin-top: 300px;
+}
+
+.information:hover, .posts:hover, .friends:hover, .avatar-edit:hover{
+  background-color: lightyellow;
 }
 
 .avatarImage-container {
@@ -52,7 +67,7 @@
 }
 
   
-.avatar, .no-avatar{
+.avatar{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,39 +83,18 @@
   z-index: 100;
 
 }
-
-  
-.name {
+.username {
   color: #000;
   font-family: Inter, sans-serif;
-  font-size: 30px;
+  font-size: 40px;
   font-style: normal;
   font-weight: bold;
   line-height: normal;
   line-height: 3;
   position: relative;
-
+  text-align: center;
 }
 
-  
-  
-  
-  
-  .button-text {
-    color: #000;
-    font-family: Inter;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: bold;
-    line-height: normal;
-    margin-bottom: 8px;
-    text-decoration: none;
-  }
-  
-  
-.information:hover, .posts:hover, .friends:hover {
-  background-color: lightyellow;
-}
 
 
 .userProfilePage-content {
@@ -149,12 +143,12 @@
   justify-content: center;
   align-items: center;
   display: flex;
-
   position: absolute; /* Enable overlap */
-  bottom: -15px; /* Move partially outside the profile-block */
-  right: -15px; /* Adjust as needed to control overlap */
-  background-color: white;
+  background-color: F7FFE2;
   border-radius: 40px;
+  margin-top: -50px;
+  margin-left: 160px;
+
 }
 
 .page-content-container{
