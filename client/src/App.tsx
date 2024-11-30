@@ -9,6 +9,7 @@ import SearchPage from "./components/searchpage/SearchPage";
 import SavedFavoriteRecipeList from "./components/recipes/SavedFavoriteRecipeList";
 import { AppProvider } from "./context/AppContext";
 import { FilterProvider } from "./context/FilterContext";
+import UserProfilePage from "./components/accountpage/UserProfilePage";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="search" element={<SearchPage />} />
             <Route path="favorite" element={<SavedFavoriteRecipeList />} />
           </Route >
+          <Route path="/profile" element={<UserProfilePage />} />
         </Routes>
       </FilterProvider>
     </AppProvider>

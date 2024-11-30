@@ -31,7 +31,7 @@ const Navbar = () => {
         </ul>
         <ul className='right'>
           <Logout date-testid='logout'/>
-          <Link to='/home'><li className='profile' data-testid='profile'>
+          <Link to='/profile'><li className='profile' data-testid='profile'>
             <UserIcon />
           </li></Link>
         </ul>
