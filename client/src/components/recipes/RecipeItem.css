@@ -62,7 +62,11 @@
     align-items: center;
     gap: 10px;
 }
-
+.recipe-owner {
+  text-decoration: none;
+  font-size: 25px;
+  color: black;
+}
 .fav-button, .like-button, #delete-button{
     outline: none;
     border: none;

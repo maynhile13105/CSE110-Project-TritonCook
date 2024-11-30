@@ -132,7 +132,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
       <div className="user-inf">
         <div className="close">
           <img src="/profile.svg" alt="Profile" />
-          {ownerUsername}
+          <Link to={`/profile/${ownerUsername}`} className="recipe-owner">{ownerUsername}</Link>
         </div>
         <ul>
           <button className={userProfile.name === ownerUsername ? 'visible' : "hidden"} id="delete-button" >
