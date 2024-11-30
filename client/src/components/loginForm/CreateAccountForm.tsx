@@ -1,43 +1,49 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./CreateAccountForm.css";
-
+import { useNavigate } from "react-router-dom";
 const CreateAccountForm = () => {
-  const [userName, setUserName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPass, setConfirmedPass] = useState("");
   const [email, setEmail] = useState("");
-  const [dob, setDob] = useState("");
   const navigate = useNavigate();
-  
-  // Example condition - we haven't built the dataset for validation yet.
-  const isEmailRegistered = email === "test@ucsd.edu";
-  const isPasswordMismatch = password && confirmedPass && password !== confirmedPass;
-  const isInvalidDob = dob && !/^\d{2}\/\d{2}\/\d{4}$/.test(dob);
 
-  // Check if the form is valid
-  const isFormValid = 
-    userName && 
-    password && 
-    confirmedPass && 
-    email && 
-    dob && 
-    !isPasswordMismatch && 
-    !isInvalidDob;
-
-  // Handle form submission
-  const handleSubmit = (e: React.FormEvent) => {
-    // Prevents the default form submission behavior (which would reload the page)
+  const handleCreateAccount = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    if (isFormValid) {
-      // Navigate to SuccessfulRegister page
-      navigate("/successful-register");
+    try {
+      if (confirmedPass !== password) {
+        throw new Error("Passwords don't match");
+      }
+
+      const isValidUCSDEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.endsWith('@ucsd.edu');
+      if (!isValidUCSDEmail) {
+        throw new Error("Not valid UCSD email")
+      }
+
+      const response = await fetch('http://localhost:8080/api/createAccount', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || 'Failed to create account');
+      }
+
+      navigate("/welcome");
+    } catch (err) {
+      console.error("Creating account failed.", err);
     }
   };
 
   return (
     <div className="create-account-box">
-      <form action="" method="post" className="CreateAccountForm" onSubmit={handleSubmit}>
+      <form onSubmit={handleCreateAccount} className="CreateAccountForm">
         <div>
           <label>Username</label>
         </div>
@@ -48,8 +54,8 @@ const CreateAccountForm = () => {
             id="username"
             placeholder="Enter Username"
             required
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
 

@@ -6,38 +6,28 @@ import CreateAccountPage from "./views/Login/CreateAccountPage";
 import Newsfeed from "./views/Newsfeed/Newsfeed";
 import RecipeList from "./components/recipes/RecipeList";
 import SearchPage from "./components/searchpage/SearchPage";
-import SuccessfulRegister from "./components/loginForm/SuccessfulRegister";
-import GuestAccount from "./components/accountpage/GuestAccount";
-import UserProfilePage from "./components/accountpage/UserProfilePage";
-import Newsfeed_NavBar from "./views/Newsfeed/Newsfeed_NavBar";
-import UserInfoPage from "./components/accountpage/UserInfoPage";
-import EditUserInfo from "./components/accountpage/EditUserInfo";
-import FriendProfilePage from "./components/accountpage/FriendProfilePage";
-import FriendInfo from "./components/accountpage/FriendInfo";
+import SavedFavoriteRecipeList from "./components/recipes/SavedFavoriteRecipeList";
+import { AppProvider } from "./context/AppContext";
+import { FilterProvider } from "./context/FilterContext";
+
 
 function App() {
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<LoginHomepage />} />
-        <Route path="/welcome" element={<WelcomePage />} />
-        <Route path="/reset-pass" element={<ResetPasswordPage />} />
-        <Route path="/create-account" element={<CreateAccountPage />} />
-        <Route path="/successful-register" element={<SuccessfulRegister />} />
-        <Route path="/guest-account" element={<GuestAccount />} />
-        <Route path="/home" element={<Newsfeed />} >
-          <Route index element={<RecipeList />} />
-          <Route path="search" element={<SearchPage />} />
-        </Route >
-          <Route path="/home" element={<Newsfeed_NavBar />} >
-          <Route path="profile" element={<UserProfilePage />} />
-          <Route path="info" element={<UserInfoPage />} />
-          <Route path="edit" element={<EditUserInfo />} />
-          <Route path="friends" element={<FriendProfilePage />} />
-          <Route path="friendinfo" element={<FriendInfo />} />
-        </Route>
-      </Routes>
-    </div>
+    <AppProvider>
+      <FilterProvider>
+        <Routes>
+          <Route path="/" element={<LoginHomepage />} />
+          <Route path="/welcome" element={<WelcomePage />} />
+          <Route path="/reset-pass" element={<ResetPasswordPage />} />
+          <Route path="/create-account" element={<CreateAccountPage />} />
+          <Route path="/home" element={<Newsfeed />} >
+            <Route index element={<RecipeList />} />
+            <Route path="search" element={<SearchPage />} />
+            <Route path="favorite" element={<SavedFavoriteRecipeList />} />
+          </Route >
+        </Routes>
+      </FilterProvider>
+    </AppProvider>
 
   );
 }

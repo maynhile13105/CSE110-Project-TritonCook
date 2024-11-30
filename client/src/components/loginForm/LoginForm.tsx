@@ -1,53 +1,64 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import "./LoginForm.css";
-import { Link } from "react-router-dom";
-import { GoogleCredentialResponse } from "../../types/types";
-
+import { Link, useNavigate } from "react-router-dom";
+import LoginButton from "../google/LoginButton";
+import { AppContext } from "../../context/AppContext";
+import { API_BASE_URL } from "../../constants/constants";
 
 const LoginForm = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const { token, setToken } = useContext(AppContext);
+  const navigate = useNavigate();
 
-  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+  const handleLogin = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    setLoading(true);
+    setLoginError("");
 
-  useEffect(() => {
-    /* global google */
-    google.accounts.id.initialize({
-      client_id: clientId,
-      callback: handleCredentialResponse,
-    });
-
-    google.accounts.id.renderButton(
-      document.getElementById('googleButton'),
-      { theme: 'filled_blue', size: 'large' } // Customize button options as needed
-    );
-
-    google.accounts.id.prompt();
-  }, []);
-
-  const handleCredentialResponse = async (response: GoogleCredentialResponse) => {
-    const token = response.credential;
-    console.log('Encoded JWT ID token:', token);
+    if (!username || !password) {
+      setLoginError("Username and password cannot be empty.");
+      setLoading(false);
+      return;
+    }
 
     try {
-      const res = await fetch('http://localhost:8080/api/google-signin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token }),
+      const response = await fetch(`${API_BASE_URL}/api/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
       });
 
-      const data = await res.json();
-      console.log('JWT from server:', data)
-    } catch (error) {
-      console.error('Failed to authenticate:', error);
+      if (!response.ok) {
+        throw new Error("Invalid credentials");
+      }
+
+      const data = await response.json();
+      
+      // Save the token to local storage or context
+      localStorage.setItem("token", data.token);
+
+      //Save the token to the app context
+      setToken(data.token);
+      console.log(token)
+
+      navigate("/home");
+    } catch (err) {
+      console.error("Login failed:", err);
+      setLoginError("Invalid username or password. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-
-
   return (
     <div className="login-box">
-      <form action="" method="post" className="loginForm">
+      <form onSubmit={handleLogin} className="loginForm">
+        {loginError && <div className="error-message">{loginError}</div>}
         <div>
           <label>Username</label>
         </div>
@@ -58,9 +69,12 @@ const LoginForm = () => {
             id="username"
             placeholder="Enter Username"
             required
-            value={userName}
-            data-testid="username-intput-field"
-            onChange={(e) => setUserName(e.target.value)}
+            value={username}
+            data-testid="username-input-field"
+            onChange={(e) => {
+              setUsername(e.target.value);
+              setLoginError("");
+            }}
           />
         </div>
         <div>
@@ -74,14 +88,17 @@ const LoginForm = () => {
             placeholder="Enter Password"
             required
             value={password}
-            data-testid="pass-intput-field"
-            onChange={(e) => setPassword(e.target.value)}
+            data-testid="pass-input-field"
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setLoginError("");
+            }}
           />
         </div>
 
         <div>
-          <button type="submit" className="sign-in-button">
-            Sign In
+          <button type="submit" className="sign-in-button" disabled={loading}>
+            {loading ? "Signing In..." : "Sign In"}
           </button>
         </div>
       </form>
@@ -93,7 +110,9 @@ const LoginForm = () => {
       </div>
 
       <div style={{ marginLeft: "10px", padding: "10px", width: "90%", borderBottom: "2px solid #439BBD" }} />
-      <div style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>New to TritonCook?</div>
+      <div style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>
+        New to TritonCook?
+      </div>
 
       <div className="CreateAccount">
         <div className="create-account-button">
@@ -101,13 +120,23 @@ const LoginForm = () => {
             <span>Create New Account</span>
           </Link>
         </div>
-        
       </div>
 
-      <div style={{ marginLeft: "45%", padding: "10px", fontSize: "35px" }}>Or</div>
+      <div style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>
+        Another way to login?
+      </div>
+      <LoginButton />
+      <div className="or-divider">
+        Or
+      </div>
 
-      <div id="googleButton" data-testid="googleButton"></div>
-
+      <div className="guest">
+        <div className="guest-account-button">
+          <Link to="/home" className="guest-account-link">
+            <span>Continue As Guest</span>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

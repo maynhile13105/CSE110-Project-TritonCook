@@ -88,12 +88,15 @@
 .dropdownsearch{
     border: none;
     height: 30px;
+    width: 98.2%;
 }
 
 .ingredientsmenu{
-    position: absolute;
-    right: -174px;
-    top: 360px;
+    position: fixed;
+    left: 200px;
+    top: 479px;
+    overflow-y: auto;
+    max-height: 250px
 }
 
 .ingredientspopup{
@@ -108,7 +111,7 @@
 .timemenu{
     position: absolute;
     right: -130px;
-    top: 391px;
+    top: 389px;
 }
 
 .timepopup{
@@ -121,9 +124,11 @@
 }
 
 .cuisinesmenu{
-    position: absolute;
-    right: -174px;
-    top: 422px;
+    position: fixed;
+    left: 200px;
+    top: 541px;
+    overflow-y: auto;
+    max-height: 250px
 }
 
 .cuisinepopup{
@@ -133,6 +138,29 @@
 
 .cuisinepopup:hover{
     background-color: #fff1c2;
+}
+
+.selectedingredient{
+    background-color: #fff1c2;
+    width: 122px;
+    height: 21px;
+    border-radius: 15px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    left: 60px;
+}
+
+.removeingredient{
+    background: none;
+    border: none;
+    font-size: 25px;
+    color: #667085;
+    position: relative;
+    top: -3px;
+    position: relative;
+    left: 20px;
 }
 
 .selectedtime{
@@ -147,7 +175,7 @@
     left: 60px;
 }
 
-.remove-time{
+.removetime{
     background: none;
     border: none;
     font-size: 25px;
@@ -155,3 +183,58 @@
     position: relative;
     top: -3px;
 }
+
+.selectedcuisine{
+    background-color: #fff1c2;
+    width: 101px;
+    height: 21px;
+    border-radius: 15px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    left: 60px;
+}
+
+.removecuisine{
+    background: none;
+    border: none;
+    font-size: 25px;
+    color: #667085;
+    position: relative;
+    top: -3px;
+}
+
+.insidefilterbutton{
+    background-color: #B0E0e2;
+    border-radius: 15px;
+    border-color: #7ab5c6;
+    width: 122px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 10px;
+    left: 40px;
+}
+
+.userprofile{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #000000;
+}
+
+.profile-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .profile-content span {
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+  }
