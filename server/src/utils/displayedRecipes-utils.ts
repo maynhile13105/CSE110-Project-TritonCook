@@ -23,14 +23,14 @@ export async function getDisplayedRecipes(req: Request, res: Response, db: Datab
 
 export async function getUserPostedRecipes(req: Request, res: Response, db: Database) {
 
-  console.log("Fetching posted recipes...");
+  //console.log("Fetching posted recipes...");
   const {userID} = req.params;
-  console.log("userID received in backend: ", [userID]);
+  //console.log("userID received in backend: ", [userID]);
   if(!userID) {
     return res.status(400).json({ error: 'Missing required fields: userID' });
   }
 
-  console.log("UserID in backend: ", userID);
+  //console.log("UserID in backend: ", userID);
 
   try {
     // Log to check the database connection
@@ -43,8 +43,8 @@ export async function getUserPostedRecipes(req: Request, res: Response, db: Data
       `, [userID]
     );
 
-     // Log the recipes fetched from the database
-    console.log("Fetched posted recipes:", recipes);
+    // Log the recipes fetched from the database
+    //console.log("Fetched posted recipes:", recipes);
 
     // Respond with the fetched recipes
     return res.status(200).json({ data: recipes });

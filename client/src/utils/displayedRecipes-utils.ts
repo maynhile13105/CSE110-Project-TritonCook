@@ -14,7 +14,6 @@ export const fetchDisplayedRecipes = async (): Promise<Recipe[]> => {
 }
 
 
-
 //Function to get all posted recipes of the user from the backend. Method: GET
 export const fetchUserPostedRecipes = async (userID: string): Promise<Recipe[]> => {
     console.log("userID before sending request: ", [userID]);

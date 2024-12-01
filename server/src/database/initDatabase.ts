@@ -30,7 +30,7 @@ const initDatabase = async () => {
       userID TEXT,
       title TEXT,
       ingredients TEXT,
-      estimate TEXT,
+      estimate NUMBER,
       cuisine TEXT,
       result_img TEXT,
       time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

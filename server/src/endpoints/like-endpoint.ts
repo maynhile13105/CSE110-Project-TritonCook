@@ -1,6 +1,6 @@
 import { Database } from "sqlite";
 import { Request, Response } from "express";
-import { loadNumberOfLikes, addLike, removeLike, fetchLikedRecipes } from "../utils/like-utils";
+import { loadNumberOfLikes, addLike, removeLike, fetchLikedRecipes, deleteAllLike } from "../utils/like-utils";
 
 export function createLikeEndpoints(app: any, db: Database){
 
@@ -23,6 +23,11 @@ export function createLikeEndpoints(app: any, db: Database){
     app.get("/like", (req: Request, res: Response) => {
         //console.log("Received request for displayed like recipes");
         fetchLikedRecipes(req, res, db);
+    });
+
+    app.delete("/delete-all-like/:recipeID",(req: Request, res: Response) => {
+        console.log("Received request for removing LIKE status ");
+        deleteAllLike(req, res, db);
     });
 
 }

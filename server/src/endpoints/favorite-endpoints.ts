@@ -1,5 +1,5 @@
 import { Database } from "sqlite";
-import { addFavoriteRecipe, deleteFavoriteRecipe, getFavoriteRecipes } from "../utils/favorite-utils";
+import { addFavoriteRecipe, deleteAllFavorite, deleteFavoriteRecipe, getFavoriteRecipes } from "../utils/favorite-utils";
 import { Request, Response } from "express";
 
 export function createFavoriteRecipesEndpoints(app: any, db: Database) {
@@ -27,5 +27,11 @@ export function createFavoriteRecipesEndpoints(app: any, db: Database) {
       console.log("Received request for CHECK FAVORITE STATUS");
       checkIsFavoriteRecipe(req, res, db);
     })*/
+
+  // Remove all favorite for the recipe
+  app.delete("/delete-all-favorite/:recipeID", (req: Request, res: Response) => {
+    console.log("Received request for deleting favorite recipes");
+    deleteAllFavorite(req, res, db);
+  });
 }
 

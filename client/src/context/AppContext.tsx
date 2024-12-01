@@ -1,5 +1,6 @@
 import { createContext, SetStateAction, useState } from "react";
 import { Profile, Recipe } from "../types/types";
+import Newsfeed from "../views/Newsfeed/Newsfeed";
 
 interface AppContextType {
     token: string;
@@ -13,6 +14,12 @@ interface AppContextType {
 
     likedRecipes: Recipe[];
     setLikedRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>;
+
+    postedRecipes: Recipe[];
+    setPostedRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>;
+
+    newsfeedRecipes: Recipe[];
+    setNewsfeedRecipes: React.Dispatch<React.SetStateAction<Recipe[]>>;
 }
 
 export const initialState: AppContextType = {
@@ -32,7 +39,13 @@ export const initialState: AppContextType = {
         picture: ""
     },
     setUserProfile: () => {},
-};
+
+    postedRecipes: [],
+    setPostedRecipes: () => {},
+
+    newsfeedRecipes: [],
+    setNewsfeedRecipes: () => {},
+}
 
 export const AppContext = createContext<AppContextType>(initialState);
 
@@ -41,6 +54,8 @@ export const AppProvider = (props: any) => {
     const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>(initialState.favoriteRecipes);
     const [likeRecipes, setLikeRecipes] = useState<Recipe[]>(initialState.likedRecipes);
     const [token, setToken] = useState<string>(initialState.token);
+    const [postedRecipes, setPostedRecipes] = useState<Recipe[]>(initialState.postedRecipes);
+    const [newsfeedRecipes, setNewsfeedRecipes] = useState<Recipe[]>(initialState.newsfeedRecipes);
     return (
         <AppContext.Provider
             value = {{
@@ -56,6 +71,12 @@ export const AppProvider = (props: any) => {
 
                 likedRecipes: likeRecipes,
                 setLikedRecipes: setLikeRecipes,
+
+                postedRecipes: postedRecipes,
+                setPostedRecipes: setPostedRecipes,
+
+                newsfeedRecipes: newsfeedRecipes,
+                setNewsfeedRecipes: setNewsfeedRecipes,
             }}
         >
             {props.children}

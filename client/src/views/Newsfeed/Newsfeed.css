@@ -28,6 +28,4 @@
   margin-left: 200px; /* Leave space for the sidebar */
   width: calc(100% - 200px); /* Make the content area take the rest of the space */
   height: 100vh; /* Full height */
-  margin-top: 94px; /* Optional: Add padding around content */
-
 }

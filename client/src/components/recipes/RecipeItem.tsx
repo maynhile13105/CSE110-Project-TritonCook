@@ -6,6 +6,7 @@ import { addFavoriteRecipe, deleteFavoriteRecipe } from "../../utils/favorite-ut
 import { AppContext } from "../../context/AppContext";
 import { fetchUsername } from "../../utils/userInfo-utils";
 import { addLike, fetchNumberOfLikes, removeLike } from "../../utils/like-utils";
+import { deleteRecipe } from "../../utils/post-utils";
 
 interface RecipeItemProps {
   currentRecipe: Recipe;
@@ -18,6 +19,11 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
   // State for favorite recipes list
   const { favoriteRecipes, setFavoriteRecipes } = useContext(AppContext);
 
+  //State for recipes list on news feed
+  const { newsfeedRecipes, setNewsfeedRecipes } = useContext(AppContext);
+
+  //State for recipes list that the user posted
+  const { postedRecipes, setPostedRecipes} = useContext(AppContext);
   // State for modal visibility
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -123,8 +129,37 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
     );
    }
   };
+  //Delete functionality
+  
+  
 
+  //visibility of the delete confirmation modal
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState<boolean>(false);
+  
+  //state stores which recipe is being considered for deletion
+  const [recipeToDelete, setRecipeToDelete] = useState<Recipe | null>(null);
+  const handleDeleteClick = (recipe:Recipe) => {
+    setRecipeToDelete(recipe); // Store the recipe to be deleted
+    setIsDeleteModalVisible(true); // Show the delete confirmation modal
+  };
 
+  //Delete Confirmation Modal
+  const handleDeleteConfirmation = async () => {
+    if (recipeToDelete) {
+      // Perform the delete operation (you can call an API to delete from the database)
+      await deleteRecipe(recipeToDelete.id); // Delete from the database
+      setPostedRecipes(prev => prev.filter(recipe => recipe.id !== recipeToDelete.id)); // Update local state
+      setFavoriteRecipes(prev => prev.filter(recipe => recipe.id !== recipeToDelete.id)); // Update local state
+      setNewsfeedRecipes(prev => prev.filter(recipe => recipe.id !== recipeToDelete.id)); // Update local state
+    }
+    setIsDeleteModalVisible(false); // Close the modal
+    setRecipeToDelete(null); // Clear the recipe to delete
+  };
+  
+  const handleDeleteCancel = () => {
+    setIsDeleteModalVisible(false); // Close the modal without doing anything
+    setRecipeToDelete(null); // Clear the recipe to delete
+  };
 
 
   return (
@@ -170,15 +205,21 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
         </div>
         <img src="/Comment.svg" alt="Comment" />
 
-        <button className={userProfile.name === ownerUsername ? 'visible' : "hidden"} id="delete-button" >
-            <img 
-              src={"/images/trashcan-icon.svg"}
-              alt="Delete Image"
-              style={{width: "30px"}}
-            />
-          </button>
+        <button className={userProfile.name === ownerUsername ? 'visible' : "hidden"} 
+          id="delete-button" 
+          onClick={() => handleDeleteClick(currentRecipe)}
+        >
+          <img 
+            src={"/images/trashcan-icon.svg"}
+            alt="Delete Image"
+            style={{width: "30px"}}
+          />
+        </button>
 
-          <button className={userProfile.name === ownerUsername ? 'hidden' : "visible"} id="report-button" >
+          <button 
+            className={userProfile.name === ownerUsername ? 'hidden' : "visible"} 
+            id="report-button" 
+          >
             <img 
               src="/Report.svg" 
               alt="Report"
@@ -197,6 +238,18 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
             <Link to="/">
               <button>Sign in</button>
             </Link>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {isDeleteModalVisible && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Are you sure you want to delete this recipe?</h2>
+            <p>This action cannot be undone.</p>
+            <button onClick={handleDeleteCancel}>Cancel</button>
+            <button onClick={handleDeleteConfirmation}>Yes, Delete</button>
           </div>
         </div>
       )}

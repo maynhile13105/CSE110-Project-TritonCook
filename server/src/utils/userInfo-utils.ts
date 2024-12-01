@@ -24,7 +24,7 @@ export async function loadUserProfile(req: Request, res: Response, db: Database)
   try {
     // Retrieve user information from the database
     const user = await db.get(`SELECT * FROM users WHERE id = ?`, [userID]);
-    console.log('Profile in backend:', JSON.stringify(user, null, 2));
+    //console.log('Profile in backend:', JSON.stringify(user, null, 2));
     if (!user) return res.status(404).json({ error: 'User not found' });
     return res.status(200).json({ user });
   } catch (error) {

@@ -8,7 +8,7 @@ import { AppContext } from "../../context/AppContext";
 import { useFilterContext } from "../../context/FilterContext";
 
 const RecipeList = () => {
-    const [displayedRecipes, setDisplayedRecipes] = useState<Recipe[]>([]);
+    const {newsfeedRecipes, setNewsfeedRecipes} = useContext(AppContext);
     const { appliedFilters } = useFilterContext();
     //const {favoriteRecipes} = useContext(AppContext);
     //const {likedRecipes} = useContext(AppContext);
@@ -27,13 +27,14 @@ const RecipeList = () => {
              
             
             // Check for existing recipes and update the state correctly
-            setDisplayedRecipes((prev) => {
-                if (prev.length !== recipesList.length) {
-                  //console.log("Updating recipe list...");
-                  return recipesList;
-                }
-                return prev;
+            setNewsfeedRecipes((prev) => {
+              if (prev.length !== recipesList.length) {
+                //console.log("Updating recipe list...");
+                return recipesList;
+              }
+              return prev;
             });
+
         } catch (error) {
             console.error("Error fetching recipes:", error);
         }
@@ -61,7 +62,7 @@ const RecipeList = () => {
         if (!appliedFilters.time) return true;
 
         const timeThreshold = parseInt(appliedFilters.time.replace(/\D/g, ""));
-        const recipeEstimate = parseInt(recipe.estimate.replace(/\D/g, ""));
+        const recipeEstimate = recipe.estimate;
 
         if (appliedFilters.time.includes("<")) {
           return recipeEstimate <= timeThreshold;
@@ -79,7 +80,7 @@ const RecipeList = () => {
     });
   };
 
-  const filteredRecipes = filterRecipes(displayedRecipes);
+  const filteredRecipes = filterRecipes(newsfeedRecipes);
 
   return (
     <div className="recipes-container">

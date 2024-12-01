@@ -7,7 +7,7 @@ export type Recipe = {
   userID: string;
   title: string;
   ingredients: string;
-  estimate: string;
+  estimate: number;
   cuisine: string;
   result_img: string;
   time: string //The time the recipe was posted

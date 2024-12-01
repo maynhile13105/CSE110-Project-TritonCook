@@ -87,14 +87,18 @@ const UserProfilePage = () => {
           </div>
           <div className={userProfile.name !== ownerAccountPage.name? "visible":"hidden" }
             id="relation-buttons" >
-              <div className="follow-button" role="button">
-                <img src="/images/follow-icon.svg" alt="follow-me-icon" />
-                Follow me
-              </div>
               <div className="friendship-button" role="button">
-                <img src="/images/add-friend-icon.svg" alt="add-friend-icon" />
+                <img src="/images/add-friend-icon.svg" alt="add-friend-icon" 
+                style={{width:'70px'}}/>
                 Add friend
               </div>
+
+              <div className="follow-button" role="button">
+                <img src="/images/follow-icon.svg" alt="follow-me-icon"
+                style={{width:'70px'}}/>
+                Follow me
+              </div>
+              
           </div>
           <div className='page-content-container'>
             <Outlet />

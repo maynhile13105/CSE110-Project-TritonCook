@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import RecipeItem from "../recipes/RecipeItem";
+import RecipeItem from "./RecipeItem";
 import { fetchUserPostedRecipes } from "../../utils/displayedRecipes-utils";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { Profile, Recipe } from "../../types/types";
-import { initialState } from "../../context/AppContext";
+import { AppContext, initialState } from "../../context/AppContext";
 import { fetchProfileUsingUsername } from "../../utils/userInfo-utils";
 
 const UserPostedRecipesList = () => {  
   const location = useLocation();
   const { username } = useParams();//Get username from the URL
-  const [postedRecipes, setPostedRecipes] = useState<Recipe[]>([]);
+  const {postedRecipes, setPostedRecipes} = useContext(AppContext);
   const [ownerAccountPage, setOwnerAccountPage] = useState<Profile>(initialState.userProfile);
 
 
@@ -64,7 +64,7 @@ const UserPostedRecipesList = () => {
       ) : (
         <div  className="Announcement">
             <h1 style={{ textAlign: "center", fontSize: "40px", fontWeight: "bold" }}>
-              No favorite recipes to display.
+              No posted recipes to display.
             </h1>
         </div>
         

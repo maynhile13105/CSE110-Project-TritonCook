@@ -1,6 +1,6 @@
 import { Database } from "sqlite";
 import { Request, Response } from "express";
-import { createPost, deletePost } from "../utils/createPost-utils";
+import { createPost, deletePost } from "../utils/post-utils";
 
 export function createPostEndpoints(app: any, db: Database, up: any) {
   // Create post
@@ -10,7 +10,7 @@ export function createPostEndpoints(app: any, db: Database, up: any) {
   });
 
   // Remove post
-  app.delete("/post", (req: Request, res: Response) => {
+  app.delete("/delete/:recipeID", (req: Request, res: Response) => {
     console.log("Received request for deleting post");
     deletePost(req, res, db);
   });

@@ -10,7 +10,7 @@ import SavedFavoriteRecipeList from "./components/recipes/SavedFavoriteRecipeLis
 import { AppProvider } from "./context/AppContext";
 import { FilterProvider } from "./context/FilterContext";
 import UserProfilePage from "./views/UserProfile/UserProfilePage";
-import UserPostedRecipesList from "./components/profilePage/UserPostedRecipesList";
+import UserPostedRecipesList from "./components/recipes/UserPostedRecipesList";
 
 
 function App() {

@@ -51,12 +51,17 @@ export async function deletePost(req: Request, res: Response, db: Database) {
   if (!userID) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
-    const { postId } = req.body;
+    console.log("Deleting post....")
+
+    const { recipeID } = req.params;
+
+    console.log("Received recipeID:", recipeID);
+
 
     // Ensure the user owns the recipe before deleting
     const recipe = await db.get(
       `SELECT * FROM recipes WHERE id = ? AND userID = ?`,
-      [postId, userID]
+      [recipeID, userID]
     );
 
     if (!recipe) {
@@ -65,13 +70,15 @@ export async function deletePost(req: Request, res: Response, db: Database) {
 
     // Delete the recipe
     await db.run(
-      `DELETE FROM recipes WHERE id = ?`,
-      [postId]
+      `DELETE FROM recipes WHERE id = ? AND userID = ?`,
+      [recipeID, userID]
     );
 
-    res.status(202).json({ message: 'Recipe successfully deleted from your favorite list.' });
+    console.log(`Deleted recipe with ID: ${recipeID}`);
+
+    res.status(202).json({ message: 'Recipe successfully deleted from your post list.' });
   } catch (error) {
     console.error('Error deleting favorite:', error);
-    res.status(500).json({ error: 'An error occurred while deleting the favorite recipe.' });
+    res.status(500).json({ error: 'An error occurred while deleting the post recipe.' });
   }
 }

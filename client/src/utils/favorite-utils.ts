@@ -50,3 +50,14 @@ export const fetchFavoriteRecipes = async (): Promise<Recipe[]> => {
 
     return favoriteRecipeList;
 };
+
+//Function to delete all favorites that the recipe has in the backend. Method: DELETE
+export const deleteAllFavorite = async (recipeID: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/delete-all-favorite/${recipeID}`, {
+        method: "DELETE",
+        
+    });
+    if(!response.ok){
+        throw new Error ("Failed to remove recipe out of your favorite list!");
+    }
+};
