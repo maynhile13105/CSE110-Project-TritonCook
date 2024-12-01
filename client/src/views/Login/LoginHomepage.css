@@ -1,12 +1,11 @@
 .login-homepage-container {
   display: flex;
   height: 100vh;
-  background-size: cover;
-  background-image: '/backgroundLogin.png';
-
+  /* background-size: cover;
+  background-image: '/login-background.png'; */
+  width: 100%;
 }
 
-/*adjust logo*/
 .logo {
   width: 50%;
   height: auto;
@@ -18,46 +17,43 @@
   align-items: center;
 }
 
+
 .logo-container {
-  margin-left: 35%
+  margin-left: 35%;
 }
 
-.left-section {
-  width: 50%;
+
+.left-section,
+.right-section {
+  flex: 1;
   justify-content: center;
   align-items: center;
-  padding: 25px;
 }
+
 
 .slogan {
   text-align: center;
   font-style: italic;
   font-size: 50px;
-
 }
+
 
 .app-name {
   font-size: 60px;
   font-weight: bold;
   text-align: center;
-
 }
+
 
 .slogan-container {
   margin-top: 20%;
 }
 
-.right-section {
-  width: 50%;
-  justify-content: center;
-  align-items: center;
-
-}
 
 .login-form-container {
   background-color: #F7FFE2;
-  width: 700px;
+  width: 90%;
   height: auto;
-  margin-top: 25%;
-  margin-left: 10%;
+  align-items: center;
+  margin: 20% auto 0;
 }
