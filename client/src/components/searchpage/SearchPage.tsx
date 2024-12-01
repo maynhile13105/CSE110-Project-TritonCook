@@ -61,7 +61,7 @@ const SearchPage: React.FC = () => {
   return (
     <div className="search-page">
       {/* Wrapper for content that should be blurred */}
-      <div className={isPopUpVisible ? 'blurred' : ''}>
+      <div className={isPopUpVisible ? 'blurred' : ''} id="wrapper">
         <div
           className={`search-bar ${
             isDropdownVisible && historyItems.length > 0 ? 'expanded' : ''

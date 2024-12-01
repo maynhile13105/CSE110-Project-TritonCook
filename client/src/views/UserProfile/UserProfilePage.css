@@ -21,7 +21,16 @@
   align-items: center;
 
 }
-.information, .posts, .friends {
+#relation-buttons{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.information, 
+.posts, 
+.friends, 
+.follow-button, 
+.friendship-button {
   display: inline-flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -36,7 +45,7 @@
   transition: background-color 0.3s ease;
 }
 
-.button-text {
+.button-text, .follow-button, .friendship-button{
   color: #000;
   font-family: Inter;
   font-size: 30px;
@@ -46,12 +55,16 @@
   margin-bottom: 8px;
   text-decoration: none;
 }
-
 .information{
   margin-top: 300px;
 }
 
-.information:hover, .posts:hover, .friends:hover, .avatar-edit:hover{
+.information:hover, 
+.posts:hover, 
+.friends:hover, 
+.avatar-edit:hover, 
+.follow-button:hover,
+.friendship-button:hover{
   background-color: lightyellow;
 }
 
@@ -161,9 +174,4 @@
   gap: 30px;
   position: relative;
   align-items: center;
-
-}
-
-.profilePage-header{
-  margin-top: 110px;
 }

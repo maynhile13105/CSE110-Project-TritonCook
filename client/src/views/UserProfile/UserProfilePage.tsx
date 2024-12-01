@@ -3,22 +3,22 @@ import { Link, Outlet, useParams } from "react-router-dom";
 import "./UserProfilePage.css";
 import Navbar from "../../components/navbar/Navbar";
 import { AppContext, initialState } from "../../context/AppContext";
-import { fetchProfileUsingUsername, } from "../../utils/userInfo-utils";
+import { fetchProfileUsingUsername, fetchUserProfile, } from "../../utils/userInfo-utils";
 import { Profile } from "../../types/types";
 
 
 const UserProfilePage = () => {
   const { username } = useParams(); //Get userID from the URL
-  //const {userProfile, setUserProfile} = useContext(AppContext); // the user's profile who is using the app.
+  const {userProfile, setUserProfile} = useContext(AppContext); // the user's profile who is using the app.
   const [ownerAccountPage, setOwnerAccountPage] = useState<Profile>(initialState.userProfile);
   const [avatar, setAvatar] = useState<string>("/images/no-image.jpg");
 
   useEffect(() => {
     if(username)
-    loadUserProfile(username);
+    loadOwnerProfilePage(username);
   },[username])
 
-  const loadUserProfile = async (username: string) => {
+  const loadOwnerProfilePage = async (username: string) => {
     try {
       const profile = await fetchProfileUsingUsername(username); 
       setOwnerAccountPage(profile);
@@ -26,7 +26,20 @@ const UserProfilePage = () => {
       console.error("Error fetching profile using username:", error);
     }
   };
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    if(token)
+    loadUserProfile();
+  },[token])
 
+  const loadUserProfile = async () => {
+    try {
+      const profile = await fetchUserProfile(); 
+      setUserProfile(profile);
+    } catch (error) {
+      console.error("Error fetching profile using username:", error);
+    }
+  };
   useEffect(() => {
     if (ownerAccountPage.picture) {
       setAvatar(ownerAccountPage.picture);
@@ -72,7 +85,17 @@ const UserProfilePage = () => {
               {ownerAccountPage.name}
             </div>
           </div>
-  
+          <div className={userProfile.name !== ownerAccountPage.name? "visible":"hidden" }
+            id="relation-buttons" >
+              <div className="follow-button" role="button">
+                <img src="/images/follow-icon.svg" alt="follow-me-icon" />
+                Follow me
+              </div>
+              <div className="friendship-button" role="button">
+                <img src="/images/add-friend-icon.svg" alt="add-friend-icon" />
+                Add friend
+              </div>
+          </div>
           <div className='page-content-container'>
             <Outlet />
           </div>
