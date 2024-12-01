@@ -2,6 +2,7 @@ body {
   background-image: linear-gradient(to top, #efe68c, #00bfff);
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   min-height: 50vh;
   margin: 0;
 }
