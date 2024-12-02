@@ -148,8 +148,8 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
     if (recipeToDelete) {
       // Perform the delete operation (you can call an API to delete from the database)
       // Delete from the database
-      await deleteAllFavorite(recipeToDelete.id);
-      await deleteAllLike(recipeToDelete.id);
+      // await deleteAllFavorite(recipeToDelete.id);
+      // await deleteAllLike(recipeToDelete.id);
       await deleteRecipe(recipeToDelete.id); 
       setPostedRecipes(prev => prev.filter(recipe => recipe.id !== recipeToDelete.id)); // Update local state
       setFavoriteRecipes(prev => prev.filter(recipe => recipe.id !== recipeToDelete.id)); // Update local state

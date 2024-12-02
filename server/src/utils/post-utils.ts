@@ -108,6 +108,8 @@ export async function deletePost(req: Request, res: Response, db: Database) {
     );
 
     await db.run("DELETE FROM recipe_instructions WHERE recipeID = ?", [recipeID]);
+    await db.run("DELETE FROM favorite_recipes WHERE recipeID = ?", [recipeID]);
+    await db.run("DELETE FROM likes WHERE recipeID = ?", [recipeID]);
 
     console.log(`Deleted recipe with ID: ${recipeID}`);
 
