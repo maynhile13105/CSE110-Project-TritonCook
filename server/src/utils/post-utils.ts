@@ -23,13 +23,20 @@ export async function createPost(req: Request, res: Response, db: Database, up: 
   if (!userID) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
-    const { title, ingredients, estimate, cuisine } = req.body;
+    const { title, ingredients, estimate, cuisine, instructions } = req.body;
     const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
     const postId = uuidv4();
 
-    if (!title || !ingredients || !estimate || !cuisine) {
+    if (!title || !ingredients || !estimate || !cuisine || !instructions) {
       return res.status(400).json({ error: 'Missing fields.' });
     }
+
+    const parsedInstructions = Array.isArray(instructions) ? instructions : JSON.parse(instructions);
+    if (!Array.isArray(parsedInstructions) || parsedInstructions.length === 0) {
+      return res.status(400).json({ error: "Instructions must be a non-empty array." });
+    }
+
+    await db.run("BEGIN");
 
     await db.run(
       `
@@ -38,6 +45,26 @@ export async function createPost(req: Request, res: Response, db: Database, up: 
       `,
       [postId, userID, title, ingredients, estimate, cuisine, imagePath]
     );
+
+    for (let i = 0; i < parsedInstructions.length; i++) {
+      const stepNumber = i + 1;
+      const { description, img } = parsedInstructions[i];
+
+      if (!description) {
+        throw new Error(`Instruction at step ${stepNumber} is missing a description.`);
+      }
+
+      const stepImagePath = img || null;
+      await db.run(
+        `
+        INSERT INTO recipe_instructions (recipeID, step, img, description)
+        VALUES (?, ?, ?, ?)
+        `,
+        [postId, stepNumber, stepImagePath, description]
+      );
+    }
+
+    await db.run("COMMIT");
 
     res.status(201).json({ postId, message: "Recipe successfully added." });
   } catch (error) {

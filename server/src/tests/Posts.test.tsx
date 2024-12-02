@@ -57,6 +57,16 @@ beforeAll(async () => {
 
 afterEach(async () => {
   await db.run(
+    `
+    DELETE FROM recipe_instructions
+    WHERE recipeID IN (
+      SELECT id FROM recipes WHERE userID = ?
+    );
+    `,
+    [userId]
+  );
+  
+  await db.run(
     'DELETE FROM recipes WHERE userID = ?;',
     [userId]
   );
@@ -81,6 +91,10 @@ describe("Posts", () => {
       ingredients: "Test Ingredient",
       estimate: "30 mins",
       cuisine: "Test Cuisine",
+      instructions: [
+        { description: "Step 1: Do something", img: null },
+        { description: "Step 2: Do something else", img: null },
+      ],
     };
 
     const response = await fetch("http://localhost:8080/post", {
@@ -105,6 +119,16 @@ describe("Posts", () => {
     expect(post.estimate).toBe(postData.estimate);
     expect(post.cuisine).toBe(postData.cuisine);
     expect(post.imagePath).toBeUndefined();
+
+    const instructions = await db.all(
+      "SELECT * FROM recipe_instructions WHERE recipeID = ? ORDER BY step",
+      [result.postId]
+    );
+    expect(instructions.length).toBe(postData.instructions.length);
+    for (let i = 0; i < instructions.length; i++) {
+      expect(instructions[i].description).toBe(postData.instructions[i].description);
+      expect(instructions[i].img).toBe(postData.instructions[i].img);
+    }
   });
 
   test("unauthorized create post", async () => {
