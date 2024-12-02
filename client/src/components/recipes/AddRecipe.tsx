@@ -124,6 +124,15 @@ const AddRecipe = () => {
     });
   };
 
+  //Handle remove instruction
+  const handleRemoveInstruction = (index: number) => {
+    const updatedInstructions = formData.instructions.filter((_, i) => i !== index);
+    setFormData({
+      ...formData,
+      instructions: updatedInstructions,
+    });
+  };
+
   return (
     <div className='outer'>
       <div className='formContainer'>
@@ -158,6 +167,7 @@ const AddRecipe = () => {
               placeholder='Amount'
               required
             />
+            <p className='time-unit'>minutes</p>
           </div>
           <div className="form-group">
             <label className='required'>Cuisine</label>
@@ -183,6 +193,13 @@ const AddRecipe = () => {
                     />
                   </div>
                 )}
+                <button
+                  type="button"
+                  onClick={() => handleRemoveInstruction(index)}
+                  className="remove-instruction-button"
+                >
+                  ❌
+                </button>
               </div>
             ))}
             <div className='instr-input'>
@@ -198,6 +215,7 @@ const AddRecipe = () => {
                 type="file"
                 name="instructionImage"
                 accept="image/*"
+                id="instructionImage"
                 onChange={handleInstructionFileChange}
               />
               <br /> <br />

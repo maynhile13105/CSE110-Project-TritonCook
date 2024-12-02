@@ -14,15 +14,29 @@
     font-style: normal;
     font-weight: 400;
 }
+.form-group{
+    justify-content: space-between;
+    width: 95%;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    height: 100px;
+}
 
-input {
+.form-group input, .instr-input input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    width: 100%;
+    width: 80%;
     height: 60px;
-    margin-right: 5%;
     font-size: 28px;
+    flex: 1; /* Make the input take up the remaining space */
+
+}
+#instructionImage{
+    margin-top: 10px;
+    border: none;
 }
 
 form {
@@ -34,25 +48,23 @@ form {
     border-radius: 8px;
 }
 
-.form-group {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
-    height: 100px;
-}
-
-label {
-    width: 27%;
+.form-group label, .instr-label {
+    width: fit-content;
     font-weight: bold;
     text-align: right;
     display: block;
+    min-width: 30%;
 }
 
-label.required::after {
+.form-group label.required::after, .instr-label::after {
     content: " *";
     color: red;
     font-size: 28px;
+}
+
+.time-unit{
+    font-weight: bold;
+    
 }
 
 .form-actions {
@@ -65,7 +77,7 @@ label.required::after {
 }
 
 #addRecipe-button {
-    padding: 20px 80px;
+    padding: 20px 50px;
     background: #B0E0E2;
     border: none;
     border-radius: 10px;
@@ -75,6 +87,21 @@ label.required::after {
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
 }
+
+
+.remove-instruction-button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  right: 20px;
+  font-size: 18px;
+}
+
+.remove-instruction-button:hover {
+  color: darkred;
+}
+
 
 .cancel {
     background-color: #D9D9D9;
@@ -123,15 +150,17 @@ label.required::after {
     align-items: center;
     gap: 15px;
     margin-left: 15%;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     height: 100px;
+    display: flex;
+    border-bottom: 1px solid #ccc; /* Optional: Add a separator for clarity */
+    justify-content: space-between; /* Push content and button apart */
+    width: 75%
 }
 
-.instr-label {
-    margin-left: -7.5%;
-}
 
 .instr-input {
+    margin-top: 20px;
     margin-left: 20.5%;
     margin-right: 7%;
 }
