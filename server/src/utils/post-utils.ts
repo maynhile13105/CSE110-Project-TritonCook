@@ -28,7 +28,7 @@ export async function createPost(req: Request, res: Response, db: Database) {
     const files = req.files as { [fieldname: string]: Express.Multer.File[] } | undefined;
     
     const imageFile = files?.["image"]?.[0];
-    const imagePath = imageFile ? `../../uploads/${imageFile.filename}` : null;
+    const imagePath = imageFile ? `./uploads/${imageFile.filename}` : null;
     const postId = uuidv4();
 
     if (!title || !ingredients || !estimate || !cuisine || !instructions) {
@@ -59,7 +59,7 @@ export async function createPost(req: Request, res: Response, db: Database) {
       }
 
       const instructionImage = files?.[`instructionImages`]?.[i];
-      const instructionImagePath = instructionImage ? `/uploads/${instructionImage.filename}` : null;
+      const instructionImagePath = instructionImage ? `./uploads/${instructionImage.filename}` : null;
 
       await db.run(
         `
