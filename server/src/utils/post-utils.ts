@@ -18,13 +18,17 @@ function verifyToken(req: Request): string | null {
   }
 }
 
-export async function createPost(req: Request, res: Response, db: Database, up: any) {
+export async function createPost(req: Request, res: Response, db: Database) {
   const userID = verifyToken(req);
   if (!userID) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
     const { title, ingredients, estimate, cuisine, instructions } = req.body;
-    const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] } | undefined;
+    
+    const imageFile = files?.["image"]?.[0];
+    const imagePath = imageFile ? `../../uploads/${imageFile.filename}` : null;
     const postId = uuidv4();
 
     if (!title || !ingredients || !estimate || !cuisine || !instructions) {
@@ -48,19 +52,21 @@ export async function createPost(req: Request, res: Response, db: Database, up: 
 
     for (let i = 0; i < parsedInstructions.length; i++) {
       const stepNumber = i + 1;
-      const { description, img } = parsedInstructions[i];
+      const { description } = parsedInstructions[i];
 
       if (!description) {
         throw new Error(`Instruction at step ${stepNumber} is missing a description.`);
       }
 
-      const stepImagePath = img || null;
+      const instructionImage = files?.[`instructionImages`]?.[i];
+      const instructionImagePath = instructionImage ? `/uploads/${instructionImage.filename}` : null;
+
       await db.run(
         `
         INSERT INTO recipe_instructions (recipeID, step, img, description)
         VALUES (?, ?, ?, ?)
         `,
-        [postId, stepNumber, stepImagePath, description]
+        [postId, stepNumber, instructionImagePath, description]
       );
     }
 
