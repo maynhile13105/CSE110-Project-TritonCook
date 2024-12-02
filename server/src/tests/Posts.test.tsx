@@ -57,6 +57,16 @@ beforeAll(async () => {
 
 afterEach(async () => {
   await db.run(
+    `
+    DELETE FROM recipe_instructions
+    WHERE recipeID IN (
+      SELECT id FROM recipes WHERE userID = ?
+    );
+    `,
+    [userId]
+  );
+
+  await db.run(
     'DELETE FROM recipes WHERE userID = ?;',
     [userId]
   );
@@ -81,6 +91,10 @@ describe("Posts", () => {
       ingredients: "Test Ingredient",
       estimate: "30 mins",
       cuisine: "Test Cuisine",
+      instructions: [
+        { description: "Step 1: Do something", img: null },
+        { description: "Step 2: Do something else", img: null },
+      ],
     };
 
     const response = await fetch("http://localhost:8080/post", {
@@ -105,6 +119,16 @@ describe("Posts", () => {
     expect(post.estimate).toBe(postData.estimate);
     expect(post.cuisine).toBe(postData.cuisine);
     expect(post.imagePath).toBeUndefined();
+
+    const instructions = await db.all(
+      "SELECT * FROM recipe_instructions WHERE recipeID = ? ORDER BY step",
+      [result.postId]
+    );
+    expect(instructions.length).toBe(postData.instructions.length);
+    for (let i = 0; i < instructions.length; i++) {
+      expect(instructions[i].description).toBe(postData.instructions[i].description);
+      expect(instructions[i].img).toBe(postData.instructions[i].img);
+    }
   });
 
   test("unauthorized create post", async () => {
@@ -158,33 +182,48 @@ describe("Posts", () => {
       [postId, userId, "Test Title", "Test Ingredients", "30 mins", "Test Cuisine", null]
     );
 
-    const response = await fetch("http://localhost:8080/post", {
+    const instructions = [
+      { step: 1, img: null, description: "Step 1: Do this" },
+      { step: 2, img: null, description: "Step 2: Do that" },
+    ];
+    for (const instruction of instructions) {
+      await db.run(
+        "INSERT INTO recipe_instructions (recipeID, step, img, description) VALUES (?, ?, ?, ?)",
+        [postId, instruction.step, instruction.img, instruction.description]
+      );
+    }
+
+    const response = await fetch("http://localhost:8080/delete/test-post-id", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ postId }),
     });
 
     const result = await response.json();
 
     expect(response.status).toBe(202);
-    expect(result.message).toBe("Recipe successfully deleted from your favorite list.");
+    expect(result.message).toBe("Recipe successfully deleted from your post list.");
 
     // Verify the post is removed from the database
     const post = await db.get("SELECT * FROM recipes WHERE id = ?", [postId]);
     expect(post).toBeUndefined();
+
+    const postInstructions = await db.all(
+      "SELECT * FROM recipe_instructions WHERE recipeID = ?",
+      [postId]
+    );
+    expect(postInstructions.length).toBe(0);
   });
 
   test("fail to delete non-existent post", async () => {
-    const response = await fetch("http://localhost:8080/post", {
+    const response = await fetch("http://localhost:8080/delete/non-existent-id", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ postId: "non-existent-id" }),
     });
 
     const result = await response.json();
