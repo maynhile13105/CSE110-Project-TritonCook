@@ -3,24 +3,238 @@
     z-index: 1000;
     width: 100%;
     height: 100vh;
-    font-size: 25px;
-    list-style: none;
+}
+.mainbuttons-container{
     display: flex;
     flex-direction: column;
     text-decoration: none;
-    
-}
-.sidebar-container div{
-    display: flex;
-    flex-direction: row;
-    text-decoration: none;
     margin: 25px;
-    font-size: 35px;
+    width: 100%;
+    height: 50px;
+    margin-left: 0px;
+    gap: 20px;
+}
+
+.mainbuttons-container a{
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+}
+
+.profilebutton, .favoritebutton, .friendsbutton, .filterbutton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
 #saved-icon, #friends-icon, #profile-icon, #filter-icon{
-    height: 80px;
-    font-weight: bold;
     margin-right: 10px;
 }
+
+#saved-icon{
+    width: 80px;
+    height: 80px;
+    vertical-align: middle;
+}
+
+#friends-icon{
+    height: 60px;
+    width: 60px;
+    vertical-align: middle;
+}
+
+#profile-icon{
+    width: 80px;
+    height: 80px;
+    vertical-align: middle;
+}
+
+#filter-icon{
+    width: 60px;
+    height: 60px;
+    vertical-align: middle;
+}
+
+.profilebutton:hover, .favoritebutton:hover, .friendsbutton:hover, .filterbutton:hover{
+    background-color: #fff1c2;
+}
+
+.dropdown-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown{
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    font-size: 25px;
+}
+
+.dropdown a{
+    text-decoration: none;
+    color: black;
+}
+
+#filterarrow{
+    margin-right: 14px;
+}
+
+.dropdown:hover{
+    background-color: #fff1c2;
+}
+
+.dropdownsearch{
+    border: none;
+    height: 30px;
+    width: 98.2%;
+}
+
+.ingredientsmenu{
+    position: fixed;
+    left: 200px;
+    top: 479px;
+    overflow-y: auto;
+    max-height: 250px
+}
+
+.ingredientspopup{
+    background-color: #F7FFE2;
+    padding: 10px;
+}
+
+.ingredientspopup:hover{
+    background-color: #fff1c2;
+}
+
+.timemenu{
+    position: absolute;
+    right: -130px;
+    top: 389px;
+}
+
+.timepopup{
+    background-color: #F7FFE2;
+    padding: 20px;
+}
+
+.timepopup:hover{
+    background-color: #fff1c2;
+}
+
+.cuisinesmenu{
+    position: fixed;
+    left: 200px;
+    top: 541px;
+    overflow-y: auto;
+    max-height: 250px
+}
+
+.cuisinepopup{
+    background-color: #F7FFE2;
+    padding: 10px;
+}
+
+.cuisinepopup:hover{
+    background-color: #fff1c2;
+}
+
+.selectedingredient{
+    background-color: #fff1c2;
+    width: 122px;
+    height: 21px;
+    border-radius: 15px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    left: 60px;
+}
+
+.removeingredient{
+    background: none;
+    border: none;
+    font-size: 25px;
+    color: #667085;
+    position: relative;
+    top: -3px;
+    position: relative;
+    left: 20px;
+}
+
+.selectedtime{
+    background-color: #fff1c2;
+    width: 122px;
+    height: 21px;
+    border-radius: 15px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    left: 60px;
+}
+
+.removetime{
+    background: none;
+    border: none;
+    font-size: 25px;
+    color: #667085;
+    position: relative;
+    top: -3px;
+}
+
+.selectedcuisine{
+    background-color: #fff1c2;
+    width: 101px;
+    height: 21px;
+    border-radius: 15px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    left: 60px;
+}
+
+.removecuisine{
+    background: none;
+    border: none;
+    font-size: 25px;
+    color: #667085;
+    position: relative;
+    top: -3px;
+}
+
+.insidefilterbutton{
+    background-color: #B0E0e2;
+    border-radius: 15px;
+    border-color: #7ab5c6;
+    width: 122px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 10px;
+    left: 40px;
+}
+
+.userprofile{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #000000;
+}
+
+.profile-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .profile-content span {
+    font-size: 16px;
+    color: black;
+    text-decoration: none;
+  }

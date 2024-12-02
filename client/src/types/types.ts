@@ -1,19 +1,16 @@
-export type Account = {
-  username: string;
-  password: string;
-};
-
 export type GoogleCredentialResponse = {
   credential: string;
 };
 
 export type Recipe = {
-  id: number;
+  id: string;
+  userID: string;
   title: string;
   ingredients: string;
   estimate: number;
   cuisine: string;
   result_img: string;
+  time: string //The time the recipe was posted
 };
 
 export type Profile = {

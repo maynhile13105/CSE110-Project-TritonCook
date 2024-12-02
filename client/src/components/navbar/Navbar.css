@@ -2,7 +2,6 @@ main{
   position: sticky; 
   top: 0;
   z-index: 1000;
-  width: 100vw;
   height: 94px;
   display: flex;
   justify-content: space-between;
@@ -69,4 +68,12 @@ img.postImage{
 
 .notif:hover, .post:hover, .home:hover, .search:hover, .logout:hover{
   background-color: #FFF1C2;
+}
+
+.userprofile{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #000000;
 }

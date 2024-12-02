@@ -4,4 +4,5 @@ body {
   background-repeat: no-repeat;
   min-height: 50vh;
   margin: 0;
+  background-attachment: fixed;
 }

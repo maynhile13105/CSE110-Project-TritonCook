@@ -6,25 +6,36 @@ import CreateAccountPage from "./views/Login/CreateAccountPage";
 import Newsfeed from "./views/Newsfeed/Newsfeed";
 import RecipeList from "./components/recipes/RecipeList";
 import SearchPage from "./components/searchpage/SearchPage";
+import SavedFavoriteRecipeList from "./components/recipes/SavedFavoriteRecipeList";
+import { AppProvider } from "./context/AppContext";
+import { FilterProvider } from "./context/FilterContext";
+import UserProfilePage from "./views/UserProfile/UserProfilePage";
+import UserPostedRecipesList from "./components/recipes/UserPostedRecipesList";
 import AddRecipe from "./components/recipes/AddRecipe";
 
 function App() {
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<LoginHomepage />} />
-        <Route path="/welcome" element={<WelcomePage />} />
-        <Route path="/reset-pass" element={<ResetPasswordPage />} />
-        <Route path="/create-account" element={<CreateAccountPage />} />
-        <Route path="/home" element={<Newsfeed />} >
-          <Route index element={<RecipeList />} />
-          <Route path="search" element={<SearchPage />} />
-          <Route path='add-recipe' element={<AddRecipe />} />
+    <AppProvider>
+      <FilterProvider>
+        <Routes>
+          <Route path="/" element={<LoginHomepage />} />
+          <Route path="/welcome" element={<WelcomePage />} />
+          <Route path="/reset-pass" element={<ResetPasswordPage />} />
+          <Route path="/create-account" element={<CreateAccountPage />} />
+          <Route path="/home" element={<Newsfeed />} >
+            <Route index element={<RecipeList />} />
+            <Route path="favorite" element={<SavedFavoriteRecipeList />} />
+            <Route path='add-recipe' element={<AddRecipe />} />
+            <Route path="search" element={<SearchPage />} />
         </Route >
-      </Routes>
-    </div>
-
+          <Route path="/profile/:username" element={<UserProfilePage />}>
+            <Route index element={<UserPostedRecipesList />} />
+          </Route>
+        </Routes>
+      </FilterProvider>
+    </AppProvider>
   );
 }
+
 
 export default App;
