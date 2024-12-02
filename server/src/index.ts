@@ -12,7 +12,6 @@ import { createPostEndpoints } from "./endpoints/createPost-endpoints";
 
 const express = require("express");
 const cors = require("cors");
-const multer = require('multer');
 
 const app = express();
 const port = 8080;
@@ -20,7 +19,6 @@ const port = 8080;
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
-const upload = multer({ dest: "uploads/" });
 
 const fs = require('fs');
 const uploadDir = './uploads';
@@ -58,7 +56,7 @@ if (require.main === module) {
   createFavoriteRecipesEndpoints(app, db);
   createUserInformationEndpoints(app, db);
   createLikeEndpoints(app, db);
-  createPostEndpoints(app, db, upload.single("result_img"));
+  createPostEndpoints(app, db);
 })();
 
 export default app;
