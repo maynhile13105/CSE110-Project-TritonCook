@@ -7,7 +7,7 @@ on:
    branches: [ main ] # the Github Action will activate "on" the event that you "push" to the repo
 
 jobs: # the things being executed
- tests: # the name of your status check, will become important when you do branch protection
+ test-frontend: # the name of your status check, will become important when you do branch protection
    runs-on: ubuntu-latest # which device on Github's server that you are running the Actions on
    env:
      JWT_SECRET: ${{ secrets.JWT_SECRET }} 
@@ -17,6 +17,12 @@ jobs: # the things being executed
        run: cd 'client' && npm install
      - name: Unit Test Client
        run: cd 'client' && npm test
+ test-backend: # the name of your status check, will become important when you do branch protection
+   runs-on: ubuntu-latest # which device on Github's server that you are running the Actions on
+   env:
+     JWT_SECRET: ${{ secrets.JWT_SECRET }} 
+   steps:
+     - uses: actions/checkout@v4 # using version 4 of Actions
      - name: Install Dependencies Server
        run: cd 'server' && npm install
      - name: Unit Test Server
