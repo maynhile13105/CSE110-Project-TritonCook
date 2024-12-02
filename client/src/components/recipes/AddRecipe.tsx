@@ -24,7 +24,7 @@ const AddRecipe = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     let errorMessage = "";
@@ -56,7 +56,21 @@ const AddRecipe = () => {
       setError([errorMessage, ...errorFields]);
     } else {
       setError("");  // Clear errors
-      console.log("Form submitted", formData);
+
+      const response = await fetch("http://localhost:8080/post", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if (!response.ok) {
+        console.error(response)
+        console.error("Failed to post!", formData);
+      } else {
+        console.log("Form submitted", formData);
+      }
       // Handle successful form submission, like sending data to the server
     }
   };
@@ -172,22 +186,22 @@ const AddRecipe = () => {
               </div>
             ))}
             <div className='instr-input'>
-            <input
-              type="text"
-              name="instructionText"
-              value={newInstruction.text}
-              onChange={handleInstructionTextChange}
-              placeholder="Add instruction step with image"
-            />
-            <br />
-            <input
-              type="file"
-              name="instructionImage"
-              accept="image/*"
-              onChange={handleInstructionFileChange}
-            />
-            <br /> <br />
-            <button type="button" onClick={handleAddInstruction}>Add Instruction</button>
+              <input
+                type="text"
+                name="instructionText"
+                value={newInstruction.text}
+                onChange={handleInstructionTextChange}
+                placeholder="Add instruction step with image"
+              />
+              <br />
+              <input
+                type="file"
+                name="instructionImage"
+                accept="image/*"
+                onChange={handleInstructionFileChange}
+              />
+              <br /> <br />
+              <button type="button" onClick={handleAddInstruction}>Add Instruction</button>
             </div>
           </div>
 
