@@ -20,3 +20,7 @@ export type Profile = {
   picture: string
 }
 
+export type Instruction = {
+  text: string;
+  image: File | null;
+}

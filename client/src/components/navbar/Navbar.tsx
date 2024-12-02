@@ -22,7 +22,7 @@ const Navbar = () => {
           </li></Link>
         </ul>
         <ul className='middle'>
-          <Link to='/home'><li className='post' data-testid='post'>
+          <Link to='/home/add-recipe'><li className='post' data-testid='post'>
             <img className='postImage' src='/images/addPost.svg' alt='post' />
           </li></Link>
           <Link to='/home'><li className='home' data-testid='home'>
