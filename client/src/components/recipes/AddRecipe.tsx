@@ -250,10 +250,11 @@ const AddRecipe = () => {
           </div>
 
           <div className="form-group">
-            <label className='required'>Final results image</label>
+            <label className='required' id='resultImage-label'>Final results image</label>
             <input
               type="file"
               name="image"
+              id = "resultImage-inpt"
               onChange={handleFileChange}
               required
             />
