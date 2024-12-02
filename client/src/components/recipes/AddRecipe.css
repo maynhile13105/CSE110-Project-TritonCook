@@ -32,8 +32,25 @@
     height: 60px;
     font-size: 28px;
     flex: 1; /* Make the input take up the remaining space */
+    align-items: center;
+}
+
+.form-group label, .instr-label {
+    width: fit-content;
+    font-weight: bold;
+    text-align: right;
+    display: block;
+    min-width: 250px;
 
 }
+
+.form-group label.required::after, .instr-label::after {
+    content: " *";
+    color: red;
+    font-size: 28px;
+}
+
+
 #instructionImage{
     margin-top: 10px;
     border: none;
@@ -46,20 +63,6 @@ form {
     margin: 0 auto;
     padding: 20px;
     border-radius: 8px;
-}
-
-.form-group label, .instr-label {
-    width: fit-content;
-    font-weight: bold;
-    text-align: right;
-    display: block;
-    min-width: 30%;
-}
-
-.form-group label.required::after, .instr-label::after {
-    content: " *";
-    color: red;
-    font-size: 28px;
 }
 
 .time-unit{
@@ -158,9 +161,16 @@ form {
     width: 75%
 }
 
-
 .instr-input {
     margin-top: 20px;
-    margin-left: 20.5%;
-    margin-right: 7%;
+    margin-left: 260px;
+}
+
+#resultImage-label{
+    width: 250px;
+}
+
+#resultImage-inpt{
+    border: none;
+    padding-top: 35px;
 }
