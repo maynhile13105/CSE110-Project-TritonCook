@@ -65,7 +65,6 @@ export async function loadUserProfileUsingUsername(req: Request, res: Response, 
     // Fetch user from the database
     const user = await db.get(`SELECT * FROM users WHERE name = ?`, [name]);
 
-
     // Check if the user exists
     if (!user) {
       console.warn(`User not found for ID: ${name}`);

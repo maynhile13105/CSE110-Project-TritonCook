@@ -2,9 +2,9 @@ import { API_BASE_URL } from "../constants/constants";
 import { Profile } from "../types/types";
 
 //Function to get the username of the user from the backend. Method: GET
-export const fetchProfile = async (id: string): Promise<Profile> => {
+export const fetchProfileUsingID = async (id: string): Promise<Profile> => {
     console.log("Sending request Profile...")
-    const response = await fetch(`${API_BASE_URL}/profile/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/profile/id/${id}`, {
         method: "GET",
     })
     if(!response.ok){
@@ -35,7 +35,7 @@ export const fetchUserProfile = async (): Promise<Profile> => {
 
     // Parse the JSON response
     const jsonResponse = await response.json();
-    console.log("Response from backend:", jsonResponse); // Add this log
+    //console.log("Response from backend:", jsonResponse); // Add this log
 
         
     // Return the data from the response
@@ -43,7 +43,9 @@ export const fetchUserProfile = async (): Promise<Profile> => {
 }
 
 export const fetchProfileUsingUsername = async (name: string): Promise<Profile> => {
-    const response = await fetch(`${API_BASE_URL}/userProfile/${name}`, {
+
+    console.log("Sending request for profile using username");
+    const response = await fetch(`${API_BASE_URL}/profile/username/${name}`, {
         method: "GET"
     })
 

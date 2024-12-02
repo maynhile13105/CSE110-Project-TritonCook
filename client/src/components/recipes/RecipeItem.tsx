@@ -4,7 +4,7 @@ import './RecipeItem.css';
 import { Link } from "react-router-dom";
 import { addFavoriteRecipe, deleteAllFavorite, deleteFavoriteRecipe } from "../../utils/favorite-utils";
 import { AppContext, initialState } from "../../context/AppContext";
-import { fetchProfile } from "../../utils/userInfo-utils";
+import { fetchProfileUsingID } from "../../utils/userInfo-utils";
 import { addLike, fetchNumberOfLikes, removeLike } from "../../utils/like-utils";
 import { deleteRecipe } from "../../utils/post-utils";
 
@@ -39,7 +39,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
 
   const loadOwnerProfile = async () => {
     try {
-        const ownerProfile = await fetchProfile(currentRecipe.userID); // Fetch displayed recipes from backend
+        const ownerProfile = await fetchProfileUsingID(currentRecipe.userID); // Fetch displayed recipes from backend
         console.log("Fetched recipe's owner username in frontend:", ownerProfile);  // Log the recipes
         setRecipeOwner(ownerProfile);
     } catch (error) {

@@ -9,12 +9,12 @@ export function createUserInformationEndpoints(app: any, db: Database){
         loadUserProfile(req, res, db);
     });
 
-    app.get("/profile/:id", (req: Request, res: Response) => {
-        console.log("Received request for profile using id");
+    app.get("/profile/id/:id", (req: Request, res: Response) => {
+        //console.log("Received request for profile using id");
         loadProfileUsingID(req, res, db);
     })
 
-    app.get("/profile/:name", (req: Request, res: Response) => {
+    app.get("/profile/username/:name", (req: Request, res: Response) => {
         //console.log("Received request for profile using username");
         loadUserProfileUsingUsername(req, res, db);
     })

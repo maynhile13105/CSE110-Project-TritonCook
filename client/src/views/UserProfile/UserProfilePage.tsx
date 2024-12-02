@@ -11,16 +11,17 @@ const UserProfilePage = () => {
   const { username } = useParams(); //Get userID from the URL
   const {userProfile, setUserProfile} = useContext(AppContext); // the user's profile who is using the app.
   const [ownerAccountPage, setOwnerAccountPage] = useState<Profile>(initialState.userProfile);
-  const [avatar, setAvatar] = useState<string>("/images/no-image.jpg");
-
+  const [avatar, setAvatar] = useState<string>("");
   useEffect(() => {
-    if(username)
-    loadOwnerProfilePage(username);
+    if(username){
+      loadOwnerProfilePage(username);
+    }
   },[username])
 
   const loadOwnerProfilePage = async (username: string) => {
     try {
       const profile = await fetchProfileUsingUsername(username); 
+      //console.log("Profile:", profile);
       setOwnerAccountPage(profile);
     } catch (error) {
       console.error("Error fetching profile using username:", error);
@@ -45,6 +46,9 @@ const UserProfilePage = () => {
       setAvatar(ownerAccountPage.picture);
     }
   }, [ownerAccountPage.picture]); // Depend on ownerAccountPage.picture to update avatar
+
+  //console.log("username from the path", [username])
+  //console.log(" owner username: ", [ownerAccountPage.name]);
   return (
     <div>
       <div className="topbar">
@@ -74,7 +78,11 @@ const UserProfilePage = () => {
         <div className='userProfilePage-content' >
           <div className="profilePage-header">
             <div className="avatarImage-container">
-              <img className="avatar" src={avatar} alt="User Avatar" />
+              {avatar? 
+                (<img className="avatar" src={avatar} alt="User Avatar" />)
+                :
+                (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" />)
+              }
             </div>
             <button className="avatar-edit">
               <img src="/images/camera-icon.svg" style={{width:"40px"}}/>
