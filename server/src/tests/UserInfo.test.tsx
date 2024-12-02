@@ -83,7 +83,7 @@ describe("User Info Endpoint", () => {
     expect(result_login.token).toBeDefined();
 
     // Step 3: Request user info with the token
-    const response_userInfo = await fetch("http://localhost:8080/userInfo", {
+    const response_userInfo = await fetch("http://localhost:8080/userProfile", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${result_login.token}`,
@@ -110,7 +110,7 @@ describe("User Info Endpoint", () => {
 
   test("Unauthorized access to user info", async () => {
     // Step 1: Attempt to access user info without a token
-    const response_userInfo = await fetch("http://localhost:8080/userInfo", {
+    const response_userInfo = await fetch("http://localhost:8080/userProfile", {
       method: "GET",
     });
 
@@ -128,7 +128,7 @@ describe("User Info Endpoint", () => {
     });
 
     // Step 2: Attempt to access user info with invalid token
-    const response_userInfo = await fetch("http://localhost:8080/userInfo", {
+    const response_userInfo = await fetch("http://localhost:8080/userProfile", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${invalidToken}`,

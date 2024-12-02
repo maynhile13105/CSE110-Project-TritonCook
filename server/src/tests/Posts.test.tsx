@@ -158,19 +158,18 @@ describe("Posts", () => {
       [postId, userId, "Test Title", "Test Ingredients", "30 mins", "Test Cuisine", null]
     );
 
-    const response = await fetch("http://localhost:8080/post", {
+    const response = await fetch("http://localhost:8080/delete/test-post-id", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ postId }),
     });
 
     const result = await response.json();
 
     expect(response.status).toBe(202);
-    expect(result.message).toBe("Recipe successfully deleted from your favorite list.");
+    expect(result.message).toBe("Recipe successfully deleted from your post list.");
 
     // Verify the post is removed from the database
     const post = await db.get("SELECT * FROM recipes WHERE id = ?", [postId]);
@@ -178,13 +177,12 @@ describe("Posts", () => {
   });
 
   test("fail to delete non-existent post", async () => {
-    const response = await fetch("http://localhost:8080/post", {
+    const response = await fetch("http://localhost:8080/delete/non-existent-id", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ postId: "non-existent-id" }),
     });
 
     const result = await response.json();
