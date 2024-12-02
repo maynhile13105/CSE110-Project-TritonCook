@@ -65,7 +65,7 @@ afterEach(async () => {
     `,
     [userId]
   );
-  
+
   await db.run(
     'DELETE FROM recipes WHERE userID = ?;',
     [userId]
@@ -182,6 +182,17 @@ describe("Posts", () => {
       [postId, userId, "Test Title", "Test Ingredients", "30 mins", "Test Cuisine", null]
     );
 
+    const instructions = [
+      { step: 1, img: null, description: "Step 1: Do this" },
+      { step: 2, img: null, description: "Step 2: Do that" },
+    ];
+    for (const instruction of instructions) {
+      await db.run(
+        "INSERT INTO recipe_instructions (recipeID, step, img, description) VALUES (?, ?, ?, ?)",
+        [postId, instruction.step, instruction.img, instruction.description]
+      );
+    }
+
     const response = await fetch("http://localhost:8080/delete/test-post-id", {
       method: "DELETE",
       headers: {
@@ -198,6 +209,12 @@ describe("Posts", () => {
     // Verify the post is removed from the database
     const post = await db.get("SELECT * FROM recipes WHERE id = ?", [postId]);
     expect(post).toBeUndefined();
+
+    const postInstructions = await db.all(
+      "SELECT * FROM recipe_instructions WHERE recipeID = ?",
+      [postId]
+    );
+    expect(postInstructions.length).toBe(0);
   });
 
   test("fail to delete non-existent post", async () => {

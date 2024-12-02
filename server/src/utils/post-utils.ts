@@ -101,6 +101,8 @@ export async function deletePost(req: Request, res: Response, db: Database) {
       [recipeID, userID]
     );
 
+    await db.run("DELETE FROM recipe_instructions WHERE recipeID = ?", [recipeID]);
+
     console.log(`Deleted recipe with ID: ${recipeID}`);
 
     res.status(202).json({ message: 'Recipe successfully deleted from your post list.' });
