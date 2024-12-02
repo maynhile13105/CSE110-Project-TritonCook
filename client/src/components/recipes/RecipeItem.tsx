@@ -202,9 +202,9 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
               src={isLiked ? "/images/colored-thumbs-up.svg" : "/images/uncolored-thumbs-up.svg"}
               alt={isLiked ? "Like button Image" : "Unlike button image"}
               style={{width : "40px"}}
-            ></img>
+            />
           </button>
-          <p style={{fontSize: "20px"}}>{numberOfLikes}</p>
+          <a style={{fontSize: "20px"}}>{numberOfLikes}</a>
         </div>
         <img src="/Comment.svg" alt="Comment" />
 

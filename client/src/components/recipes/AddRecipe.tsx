@@ -201,7 +201,7 @@ const AddRecipe = () => {
                 onChange={handleInstructionFileChange}
               />
               <br /> <br />
-              <button type="button" onClick={handleAddInstruction}>Add Instruction</button>
+              <button type="button" onClick={handleAddInstruction} id='addRecipe-button'>Add Instruction</button>
             </div>
           </div>
 
@@ -225,13 +225,13 @@ const AddRecipe = () => {
                   <p>{error}</p>
                 )}
               </div>
-              <button className="edit-button" onClick={closeErrorBox}>
+              <button className="edit-button" onClick={closeErrorBox} id='addRecipe-button'>
                 Edit
               </button>
             </div>)}
           <div className="form-actions">
-            <button type="button" className='cancel'>Cancel</button>
-            <button type="submit">Post</button>
+            <button type="button" className='cancel' id='addRecipe-button'>Cancel</button>
+            <button type="submit" id='addRecipe-button'>Post</button>
           </div>
         </form>
       </div>

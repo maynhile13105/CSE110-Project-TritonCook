@@ -64,7 +64,7 @@ label.required::after {
     margin-bottom: 2%;
 }
 
-button {
+#addRecipe-button {
     padding: 20px 80px;
     background: #B0E0E2;
     border: none;
