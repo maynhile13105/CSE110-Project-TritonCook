@@ -192,7 +192,11 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
         <Link to={`/home/recipe/${currentRecipe.id}`}>...See Details</Link>
       </div>
       <div>
-        <img src={currentRecipe.result_img} className="post-img" alt="Recipe" />
+        <img src={
+          currentRecipe.result_img.startsWith("./uploads/")
+            ? `http://localhost:8080${currentRecipe.result_img.slice(1)}`
+            : currentRecipe.result_img
+        } className="post-img" alt="Recipe" />
       </div>
       <div className="horizontal-line"></div>
       <div className="user-inf">
