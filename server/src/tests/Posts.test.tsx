@@ -89,7 +89,7 @@ describe("Posts", () => {
     const postData = {
       title: "Test Recipe",
       ingredients: "Test Ingredient",
-      estimate: "30 mins",
+      estimate: 30,
       cuisine: "Test Cuisine",
       instructions: [
         { description: "Step 1: Do something", img: null },
@@ -179,7 +179,7 @@ describe("Posts", () => {
     // Insert a sample post
     await db.run(
       "INSERT INTO recipes (id, userID, title, ingredients, estimate, cuisine, result_img) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [postId, userId, "Test Title", "Test Ingredients", "30 mins", "Test Cuisine", null]
+      [postId, userId, "Test Title", "Test Ingredients", 30, "Test Cuisine", null]
     );
 
     const instructions = [
