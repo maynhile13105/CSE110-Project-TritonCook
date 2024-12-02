@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Profile } from '../../types/types';
+import { AppContext } from '../../context/AppContext';
 import { error } from 'console';
 
 function UserIcon() {
@@ -70,7 +71,7 @@ function UserIcon() {
       {isImageLoaded ? (
         <img src={imageSrc} alt="userprofile" className="userprofile"/>
       ) : (
-        <img src="images/profile.svg" alt="defaultprofile" className="defaultprofile" />
+        <img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" />
       )}
     </div>
   );
