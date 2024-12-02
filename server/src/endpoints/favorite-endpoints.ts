@@ -29,7 +29,7 @@ export function createFavoriteRecipesEndpoints(app: any, db: Database) {
     })*/
 
   // Remove all favorite for the recipe
-  app.delete("/delete-all-favorite/:recipeID", (req: Request, res: Response) => {
+  app.delete("/delete-all-favorite/recipeID", (req: Request, res: Response) => {
     console.log("Received request for deleting favorite recipes");
     deleteAllFavorite(req, res, db);
   });

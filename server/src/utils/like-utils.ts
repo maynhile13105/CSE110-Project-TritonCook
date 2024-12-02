@@ -114,7 +114,6 @@ export async function removeLike(req: Request, res: Response, db: Database) {
 };
 
 export async function deleteAllLike(req: Request, res: Response, db: Database) {
-  //Authorize user
 
   const { recipeID } = req.params;
   if (!recipeID) {

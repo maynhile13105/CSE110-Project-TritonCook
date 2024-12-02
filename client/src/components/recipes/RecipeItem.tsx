@@ -2,9 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { Profile, Recipe } from "../../types/types";
 import './RecipeItem.css';
 import { Link } from "react-router-dom";
-import { addFavoriteRecipe, deleteFavoriteRecipe } from "../../utils/favorite-utils";
-import { AppContext } from "../../context/AppContext";
-import { fetchUsername } from "../../utils/userInfo-utils";
+import { addFavoriteRecipe, deleteAllFavorite, deleteFavoriteRecipe } from "../../utils/favorite-utils";
+import { AppContext, initialState } from "../../context/AppContext";
+import { fetchProfile } from "../../utils/userInfo-utils";
 import { addLike, fetchNumberOfLikes, removeLike } from "../../utils/like-utils";
 import { deleteRecipe } from "../../utils/post-utils";
 
@@ -20,10 +20,10 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
   const { favoriteRecipes, setFavoriteRecipes } = useContext(AppContext);
 
   //State for recipes list on news feed
-  const { newsfeedRecipes, setNewsfeedRecipes } = useContext(AppContext);
+  const { setNewsfeedRecipes } = useContext(AppContext);
 
   //State for recipes list that the user posted
-  const { postedRecipes, setPostedRecipes} = useContext(AppContext);
+  const { setPostedRecipes} = useContext(AppContext);
   // State for modal visibility
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -32,20 +32,22 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
 
 
   //Get recipe owner's username
-  const [ownerUsername, setownerUsername] = useState<string>(""); //state for handling recipe's owner username
+  const [recipeOwner, setRecipeOwner] = useState<Profile>(initialState.userProfile); //state for handling recipe's owner username - initial: null
   useEffect(()=>{
-    loadOwnerUsername();
+    loadOwnerProfile();
   }, [currentRecipe.userID]);
 
-  const loadOwnerUsername = async () => {
+  const loadOwnerProfile = async () => {
     try {
-        const ownername = await fetchUsername(currentRecipe.userID); // Fetch displayed recipes from backend
-        //console.log("Fetched recipe's owner username in frontend:", ownername);  // Log the recipes
-        setownerUsername(ownername);
+        const ownerProfile = await fetchProfile(currentRecipe.userID); // Fetch displayed recipes from backend
+        console.log("Fetched recipe's owner username in frontend:", ownerProfile);  // Log the recipes
+        setRecipeOwner(ownerProfile);
     } catch (error) {
         console.error("Error fetching recipes:", error);
     }
   };
+
+  //Get recipe owner's
 
   // State for handling favorite status
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
@@ -130,8 +132,6 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
    }
   };
   //Delete functionality
-  
-  
 
   //visibility of the delete confirmation modal
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState<boolean>(false);
@@ -147,7 +147,10 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
   const handleDeleteConfirmation = async () => {
     if (recipeToDelete) {
       // Perform the delete operation (you can call an API to delete from the database)
-      await deleteRecipe(recipeToDelete.id); // Delete from the database
+      // Delete from the database
+      await deleteAllFavorite(recipeToDelete.id);
+      await deleteAllLike(recipeToDelete.id);
+      await deleteRecipe(recipeToDelete.id); 
       setPostedRecipes(prev => prev.filter(recipe => recipe.id !== recipeToDelete.id)); // Update local state
       setFavoriteRecipes(prev => prev.filter(recipe => recipe.id !== recipeToDelete.id)); // Update local state
       setNewsfeedRecipes(prev => prev.filter(recipe => recipe.id !== recipeToDelete.id)); // Update local state
@@ -166,8 +169,8 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
     <div className="post-box">
       <div className="user-inf">
         <div className="close">
-          <img src="/profile.svg" alt="Profile" />
-          <Link to={`/profile/${ownerUsername}`} className="recipe-owner">{ownerUsername}</Link>
+          <img className = "avatar-on-recipe" src={recipeOwner.picture || "/images/no-image.jpg"} alt="owner-avatar" />
+          <Link to={`/profile/${recipeOwner.name}`} className="recipe-owner">{recipeOwner.name}</Link>
         </div>
         <button className="fav-button" onClick={handleFavoriteClick}>
           <img
@@ -205,7 +208,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
         </div>
         <img src="/Comment.svg" alt="Comment" />
 
-        <button className={userProfile.name === ownerUsername ? 'visible' : "hidden"} 
+        <button className={userProfile.name === recipeOwner.name ? 'visible' : "hidden"} 
           id="delete-button" 
           onClick={() => handleDeleteClick(currentRecipe)}
         >
@@ -217,7 +220,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
         </button>
 
           <button 
-            className={userProfile.name === ownerUsername ? 'hidden' : "visible"} 
+            className={userProfile.name === recipeOwner.name ? 'hidden' : "visible"} 
             id="report-button" 
           >
             <img 
@@ -258,3 +261,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
 };
 
 export default RecipeItem;
+function deleteAllLike(id: string) {
+  throw new Error("Function not implemented.");
+}
+

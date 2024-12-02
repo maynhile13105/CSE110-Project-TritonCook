@@ -1,6 +1,6 @@
 import { Database } from "sqlite";
 import { Request, Response } from "express";
-import { loadUserProfile, loadUsername, loadUserProfileUsingUsername} from "../utils/userInfo-utils";
+import { loadUserProfile, loadProfileUsingID, loadUserProfileUsingUsername} from "../utils/userInfo-utils";
 
 export function createUserInformationEndpoints(app: any, db: Database){
 
@@ -9,13 +9,13 @@ export function createUserInformationEndpoints(app: any, db: Database){
         loadUserProfile(req, res, db);
     });
 
-    app.get("/userInfo/:id", (req: Request, res: Response) => {
-        //console.log("Received request for username");
-        loadUsername(req, res, db);
+    app.get("/profile/:id", (req: Request, res: Response) => {
+        console.log("Received request for profile using id");
+        loadProfileUsingID(req, res, db);
     })
 
-    app.get("/userProfile/:name", (req: Request, res: Response) => {
-        //console.log("Received request for username");
+    app.get("/profile/:name", (req: Request, res: Response) => {
+        //console.log("Received request for profile using username");
         loadUserProfileUsingUsername(req, res, db);
     })
 

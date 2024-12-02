@@ -66,7 +66,7 @@ export const fetchLikedRecipes = async (): Promise<Recipe[]> => {
     return likedRecipes;
 }
 
-export const removeAllLike = async (recipeID: string) : Promise<void> => {
+export const deleteAllLike = async (recipeID: string) : Promise<void> => {
     const response = await fetch(`${API_BASE_URL}/delete-all-like/${recipeID}`, {
         method: "DELETE",
     });
