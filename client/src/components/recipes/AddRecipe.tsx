@@ -27,8 +27,6 @@ const AddRecipe = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    let errorMessage = "";
-
     let errorFields: string[] = [];
 
     // Check for missing fields and build the error message
@@ -53,25 +51,53 @@ const AddRecipe = () => {
 
     // If there are any missing fields, build the error message
     if (errorFields.length > 0) {
-      setError([errorMessage, ...errorFields]);
-    } else {
-      setError("");  // Clear errors
-
+      setError(errorFields);
+      return;
+    }
+    
+    try {
+      const formDataToSend = new FormData();
+  
+      // Append fields to `FormData`
+      formDataToSend.append("title", formData.title);
+      formDataToSend.append("ingredients", formData.ingredients);
+      formDataToSend.append("estimate", formData.time);
+      formDataToSend.append("cuisine", formData.cuisine);
+  
+      // Append the final image file
+      if (formData.image) {
+        formDataToSend.append("image", formData.image);
+      }
+  
+      // Append instruction steps, including images (if any)
+      formData.instructions.forEach((instruction, index) => {
+        formDataToSend.append(`instructions[${index}][description]`, instruction.text);
+        if (instruction.image) {
+          formDataToSend.append(`instructionImages`, instruction.image);
+        }
+      });
+  
       const response = await fetch("http://localhost:8080/post", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
+          // No "Content-Type" header; `fetch` will automatically set it for `FormData`.
         },
-        body: JSON.stringify(formData),
+        body: formDataToSend,
       });
+  
       if (!response.ok) {
-        console.error(response)
-        console.error("Failed to post!", formData);
+        const errorData = await response.json();
+        console.error("Failed to post!", errorData);
+        setError(["Failed to post the recipe. Please try again."]);
       } else {
-        console.log("Form submitted", formData);
+        const responseData = await response.json();
+        console.log("Form submitted successfully", responseData);
+        // Optionally, clear the form or navigate to another page
       }
-      // Handle successful form submission, like sending data to the server
+    } catch (err) {
+      console.error("Error submitting the form:", err);
+      setError(["An unexpected error occurred. Please try again later."]);
     }
   };
 
