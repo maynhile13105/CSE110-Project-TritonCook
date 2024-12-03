@@ -9,6 +9,8 @@ import { sampleRecipes, sampleUsers } from "./tests/utils/dummyList";
 import { createUserInformationEndpoints } from "./endpoints/userInfo-endpoint";
 import { createLikeEndpoints } from "./endpoints/like-endpoint";
 import { createPostEndpoints } from "./endpoints/createPost-endpoints";
+import path from 'path';
+
 
 const express = require("express");
 const cors = require("cors");
@@ -18,14 +20,37 @@ const port = 8080;
 
 app.use(cors());
 app.use(express.json());
-app.use('/uploads', express.static('uploads'));
 
 const fs = require('fs');
-const uploadDir = './uploads';
 
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
+
+// Define the directory path for the recipe's result images upload
+const resultImgDir = './uploads/recipes/results';
+// Check if the directory exists, and create it if it doesn't
+if (!fs.existsSync(resultImgDir)) {
+  fs.mkdirSync(resultImgDir, { recursive: true });
 }
+
+// Define the directory path for the recipe's result images upload
+const instructionImgDir = './uploads/recipes/instructions';
+// Check if the directory exists, and create it if it doesn't
+if (!fs.existsSync(instructionImgDir)) {
+  fs.mkdirSync(instructionImgDir, { recursive: true });
+}
+
+
+// Define the directory path for avatar upload
+const avatarDir = './uploads/avatar';
+// Check if the directory exists, and create it if it doesn't
+if (!fs.existsSync(avatarDir)) {
+  fs.mkdirSync(avatarDir, { recursive: true });
+}
+
+
+app.use('/uploads/recipes/results', express.static('uploads/recipes/results'));
+app.use('/uploads/recipes/instructions', express.static('uploads/recipes/rinstructions'));
+app.use('/uploads/avatar', express.static('uploads/avatar'));
+
 
 // Start the server
 if (require.main === module) {
@@ -33,6 +58,7 @@ if (require.main === module) {
     console.log(`Server running at http://localhost:${port}`);
   });
 }
+
 
 // Initialize the database and start the server
 (async () => {

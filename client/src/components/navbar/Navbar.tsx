@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Navbar.css';
-import UserIcon from '../google/UserIcon';
 import Logout from '../google/Logout';
 import { AppContext } from '../../context/AppContext';
+import { API_BASE_URL } from '../../constants/constants';
 
 const Navbar = () => {
   const {userProfile} = useContext(AppContext);
@@ -17,6 +17,20 @@ const Navbar = () => {
     }, 3000);
   };
   
+  const [avatar, setAvatar] = useState<string>("");
+  useEffect(() => {
+    //console.log("Pic: ", ownerAccountPage.picture);
+    if (userProfile.picture) {
+      if(userProfile.picture.startsWith("/uploads/avatar/")){
+        let path = `${API_BASE_URL}${userProfile.picture}`;
+        console.log(path);
+        setAvatar(path);
+      } else{
+        setAvatar(userProfile.picture);
+      };      
+    }
+  }, [userProfile]); // Depend on ownerAccountPage.picture to update avatar
+
   return (
     <div>
       <main className='navbar'>
@@ -45,7 +59,7 @@ const Navbar = () => {
           <Logout date-testid='logout'/>
           <Link to={`/profile/${userProfile.name}`} data-testid='profile'>
             {userProfile?.picture? 
-            (<img className='profile' src={userProfile.picture} alt="user-avatar"/>) 
+            (<img className='profile' src={avatar} alt="user-avatar"/>) 
             :(<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" />)}
           </Link>
         </ul>

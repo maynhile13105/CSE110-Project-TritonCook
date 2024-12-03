@@ -5,6 +5,7 @@ import Navbar from "../../components/navbar/Navbar";
 import { AppContext, initialState } from "../../context/AppContext";
 import { fetchProfileUsingUsername, fetchUserProfile, } from "../../utils/userInfo-utils";
 import { Profile } from "../../types/types";
+import { API_BASE_URL } from "../../constants/constants";
 
 
 const UserProfilePage = () => {
@@ -37,19 +38,23 @@ const UserProfilePage = () => {
     try {
       const profile = await fetchUserProfile(); 
       setUserProfile(profile);
+      //console.log("profile: ", profile);
     } catch (error) {
       console.error("Error fetching profile using username:", error);
     }
   };
   useEffect(() => {
+    //console.log("Pic: ", ownerAccountPage.picture);
     if (ownerAccountPage.picture) {
-      if(ownerAccountPage.picture.startsWith("./uploads/")){
-        setAvatar(`http://localhost:8080${ownerAccountPage.picture.slice(1)}`);
+      if(ownerAccountPage.picture.startsWith("/uploads/avatar/")){
+        let path = `${API_BASE_URL}${ownerAccountPage.picture}`;
+        console.log(path);
+        setAvatar(path);
       } else{
         setAvatar(ownerAccountPage.picture);
       };      
     }
-  }, [ownerAccountPage.picture]); // Depend on ownerAccountPage.picture to update avatar
+  }, [ownerAccountPage]); // Depend on ownerAccountPage.picture to update avatar
 
   //console.log("username from the path", [username])
   //console.log(" owner username: ", [ownerAccountPage.name]);

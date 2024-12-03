@@ -21,11 +21,13 @@
   align-items: center;
 
 }
-#relation-buttons{
+
+.visible{
   display: flex;
   flex-direction: row;
   gap: 20px;
 }
+
 .information, 
 .posts, 
 .friends, 
@@ -173,4 +175,8 @@
   gap: 30px;
   position: relative;
   align-items: center;
+}
+
+.hidden{
+  display: none;
 }

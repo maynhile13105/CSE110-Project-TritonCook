@@ -1,20 +1,19 @@
 import React from 'react';
-import { useContext, useState } from "react";
-import { RecipeContext } from '../../context/RecipeContext';
-import RecipeItem from './RecipeItem';
+import { useState } from "react";
 import './AddRecipe.css';
 import { Instruction } from '../../types/types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AddRecipe = () => {
-  const { recipes } = useContext(RecipeContext);
+  const navigate = useNavigate(); // Initialize useNavigate
+
   const [error, setError] = useState<string | string[]>("");
   const [newInstruction, setNewInstruction] = useState<Instruction>({ text: '', image: null });
   const [formData, setFormData] = useState({
     title: '',
     ingredients: '',
     time: '',
-    image: null,
+    result_img: null,
     instructions: [] as Instruction[],
     cuisine: '',
   });
@@ -43,7 +42,7 @@ const AddRecipe = () => {
     if (!formData.cuisine) {
       errorFields.push("Cuisine");
     }
-    if (!formData.image) {
+    if (!formData.result_img) {
       errorFields.push("Final results image");
     }
     if (!formData.instructions) {
@@ -66,15 +65,15 @@ const AddRecipe = () => {
       formDataToSend.append("cuisine", formData.cuisine);
   
       // Append the final image file
-      if (formData.image) {
-        formDataToSend.append("image", formData.image);
+      if (formData.result_img) {
+        formDataToSend.append("result_img", formData.result_img);
       }
   
       // Append instruction steps, including images (if any)
       formData.instructions.forEach((instruction, index) => {
         formDataToSend.append(`instructions[${index}][description]`, instruction.text);
         if (instruction.image) {
-          formDataToSend.append(`instructionImages`, instruction.image);
+          formDataToSend.append(`instructionImages[${index}]`, instruction.image);
         }
       });
   
@@ -94,12 +93,14 @@ const AddRecipe = () => {
       } else {
         const responseData = await response.json();
         console.log("Form submitted successfully", responseData);
-        // Optionally, clear the form or navigate to another page
+        // Navigate to home after successful submission
+        navigate('/home');
       }
     } catch (err) {
       console.error("Error submitting the form:", err);
       setError(["An unexpected error occurred. Please try again later."]);
     }
+
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,6 +136,7 @@ const AddRecipe = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
     if (files && files.length > 0) {
+      console.log("Selected file:", files[0]); // Add this line to check if the file is being selected
       setFormData({
         ...formData,
         [name]: files[0], // Store the selected file
@@ -254,7 +256,7 @@ const AddRecipe = () => {
             <label className='required' id='resultImage-label'>Final results image</label>
             <input
               type="file"
-              name="image"
+              name="result_img"
               id = "resultImage-inpt"
               onChange={handleFileChange}
               required

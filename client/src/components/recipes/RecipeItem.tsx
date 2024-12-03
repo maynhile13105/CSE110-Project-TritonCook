@@ -7,12 +7,28 @@ import { AppContext, initialState } from "../../context/AppContext";
 import { fetchProfileUsingID } from "../../utils/userInfo-utils";
 import { addLike, fetchNumberOfLikes, removeLike } from "../../utils/like-utils";
 import { deleteRecipe } from "../../utils/post-utils";
+import { API_BASE_URL } from "../../constants/constants";
 
 interface RecipeItemProps {
   currentRecipe: Recipe;
 };
 
 const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
+  console.log("Recipe: ", currentRecipe);
+
+  const [resultImg, setResultImg] = useState("");
+  useEffect(() => {
+    //load result image
+    if (currentRecipe.result_img) {
+      if(currentRecipe.result_img.startsWith("/uploads/recipes/result")){
+        let path = `${API_BASE_URL}${currentRecipe.result_img}`;
+        console.log("result img path:", path);
+        setResultImg(path);
+      } else{
+        setResultImg(currentRecipe.result_img);
+      };      
+    }
+  }, [])
   //State for user's profile
   const {userProfile} = useContext(AppContext);
 
@@ -47,8 +63,6 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
     }
   };
 
-  //Get recipe owner's
-
   // State for handling favorite status
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
@@ -62,13 +76,15 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
 
   useEffect(() => {
     if (recipeOwner.picture) {
-      if(recipeOwner.picture.startsWith("./uploads/")){
-        setAvatar(`http://localhost:8080${recipeOwner.picture.slice(1)}`);
+      if(recipeOwner.picture.startsWith("/uploads/avatar/")){
+        let path = `${API_BASE_URL}${recipeOwner.picture}`;
+        //console.log(path);
+        setAvatar(path);
       } else{
         setAvatar(recipeOwner.picture);
       };      
-    }
-  }, [recipeOwner.picture]); // Depend on ownerAccountPage.picture to update avatar
+    };      
+  }, [recipeOwner]); // Depend on recipeOwner.picture to update avatar
 
 
   //Handle Favorite Button Click
@@ -208,11 +224,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
         <Link to={`/home/recipe/${currentRecipe.id}`}>...See Details</Link>
       </div>
       <div>
-        <img src={
-          currentRecipe.result_img.startsWith("./uploads/")
-            ? `http://localhost:8080${currentRecipe.result_img.slice(1)}`
-            : currentRecipe.result_img
-        } className="post-img" alt="Recipe" />
+        <img src={resultImg} className="post-img" alt="Recipe" />
       </div>
       <div className="horizontal-line"></div>
       <div className="user-inf">

@@ -3,24 +3,29 @@ import { Request, Response } from "express";
 import { createPost, deletePost } from "../utils/post-utils";
 import multer from "multer";
 
+// Define storage 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, './uploads');
+    if (file.fieldname.startsWith('instructionImages')) {
+      cb(null, './uploads/recipes/instructions');
+    } else if (file.fieldname === 'result_img') {
+      cb(null, './uploads/recipes/results');
+    }
   },
   filename: (req, file, cb) => {
     const uniqueName = `${Date.now()}-${file.originalname}`;
     cb(null, uniqueName);
   },
 });
+// Set up multer 
+const upload = multer({ storage: storage });
 
-const upload = multer({ storage });
+
 export function createPostEndpoints(app: any, db: Database) {
   // Create post
-  app.post("/post",
-    upload.fields([
-      { name: "image", maxCount: 1 }, 
-      { name: "instructionImage", maxCount: 10 }, 
-    ]),
+  app.post(
+    "/post",
+    upload.any(),
     (req: Request, res: Response) => createPost(req, res, db)
   );
 

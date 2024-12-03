@@ -7,8 +7,10 @@ import ingredientsData from '../../data/ingredientsData.json'
 import cuisinesData from '../../data/cuisinesData.json'
 import { AppContext } from '../../context/AppContext';
 import { fetchUserProfile } from '../../utils/userInfo-utils';
+import { API_BASE_URL } from '../../constants/constants';
 
 const Sidebar = () => {
+
   const {
     selectedIngredients,setSelectedIngredients, 
     selectedTime, setSelectedTime,
@@ -97,6 +99,21 @@ const Sidebar = () => {
     loadUserProfile();
   }, []);
 
+  const [avatar, setAvatar] = useState<string>("");
+  useEffect(() => {
+    //console.log("Pic: ", ownerAccountPage.picture);
+    if (userProfile.picture) {
+      if(userProfile.picture.startsWith("/uploads/avatar/")){
+        let path = `${API_BASE_URL}${userProfile.picture}`;
+        console.log(path);
+        setAvatar(path);
+      } else{
+        setAvatar(userProfile.picture);
+      };      
+    }
+  }, [userProfile]); // Depend on ownerAccountPage.picture to update avatar
+
+
   const loadUserProfile = async () => {
     try {
       const profile = await fetchUserProfile(); // Fetch favorite recipes
@@ -117,7 +134,16 @@ const Sidebar = () => {
     <div>
       <div className='sidebar-container' role='button'>
         <div className='mainbuttons-container'>
-        <Link to={`/profile/${userProfile.name}`} data-testid='profileButton'><div className='profilebutton' data-testid='UserIcon'><div className="profile-content">{userProfile?.picture? (<img className='profile' src={userProfile.picture} alt="user-avatar"/>):(<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" />)}<span>Profile</span></div></div></Link>
+        <Link to={`/profile/${userProfile.name}`} data-testid='profileButton'>
+          <div className='profilebutton' data-testid='UserIcon'>
+            <div className="profile-content">{userProfile?.picture? 
+              (<img className='profile' src={avatar} alt="user-avatar"/>)
+              :
+              (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" />)}
+              <span>Profile</span>
+            </div>
+          </div>
+        </Link>
         <Link to="/home/favorite"><div className='favoritebutton' data-testid='FavoriteButton'><img id="saved-icon" src='/images/favorite.svg' alt='favoriteIcon'/>Favorites</div></Link>
         <div className='friendsbutton' onClick={handleFriendsClick}><img id="friends-icon" src='/images/friends.svg' alt='friendsIcon'/>Friends</div>
         <Link to="#"><div className='filterbutton' onClick={toggleDropdown} data-testid="filter-button"><img id="filter-icon" src='/images/filter.svg' alt='filterIcon'/>Filter</div></Link>

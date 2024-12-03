@@ -1,5 +1,8 @@
 import { Database } from "sqlite";
 import { Request, Response } from "express";
+import path from "path";
+import fs from "fs";
+
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
 
@@ -25,20 +28,22 @@ export async function createPost(req: Request, res: Response, db: Database) {
   try {
     const { title, ingredients, estimate, cuisine, instructions } = req.body;
 
-    const files = req.files as { [fieldname: string]: Express.Multer.File[] } | undefined;
+    const filesArray  = req.files as Express.Multer.File[];
     
-    const imageFile = files?.["image"]?.[0];
-    const imagePath = imageFile ? `./uploads/${imageFile.filename}` : null;
-    const postId = uuidv4();
+    const resultImgFile = filesArray.find((file) => file.fieldname === "result_img");
+
+    const  result_img = resultImgFile ? `/uploads/recipes/results/${resultImgFile.filename}` : null;
+
+    console.log("filesArray: ", filesArray );
+    console.log("resultImgFile: ", resultImgFile);
+    console.log("result_img: ", result_img);
+
 
     if (!title || !ingredients || !estimate || !cuisine || !instructions) {
       return res.status(400).json({ error: 'Missing fields.' });
     }
 
-    const parsedInstructions = Array.isArray(instructions) ? instructions : JSON.parse(instructions);
-    if (!Array.isArray(parsedInstructions) || parsedInstructions.length === 0) {
-      return res.status(400).json({ error: "Instructions must be a non-empty array." });
-    }
+    const postID = uuidv4();
 
     await db.run("BEGIN");
 
@@ -47,9 +52,18 @@ export async function createPost(req: Request, res: Response, db: Database) {
       INSERT INTO recipes (id, userID, title, ingredients, estimate, cuisine, result_img)
       VALUES (?, ?, ?, ?, ?, ?, ?)
       `,
-      [postId, userID, title, ingredients, estimate, cuisine, imagePath]
+      [postID, userID, title, ingredients, estimate, cuisine, result_img]
     );
 
+    const parsedInstructions = Array.isArray(instructions) ? instructions : JSON.parse(instructions);
+    
+    // Get `instructionImages` dynamically
+    const instructionImageFiles = filesArray.filter((file) =>
+      file.fieldname.startsWith("instructionImages")
+    );
+    if (!Array.isArray(parsedInstructions) || parsedInstructions.length === 0) {
+      return res.status(400).json({ error: "Instructions must be a non-empty array." });
+    }
     for (let i = 0; i < parsedInstructions.length; i++) {
       const stepNumber = i + 1;
       const { description } = parsedInstructions[i];
@@ -58,21 +72,22 @@ export async function createPost(req: Request, res: Response, db: Database) {
         throw new Error(`Instruction at step ${stepNumber} is missing a description.`);
       }
 
-      const instructionImage = files?.[`instructionImages`]?.[i];
-      const instructionImagePath = instructionImage ? `./uploads/${instructionImage.filename}` : null;
+      const instructionImageFile = instructionImageFiles[i];
 
+      const instructionImagePath = instructionImageFile? `/uploads/recipes/instructions/${instructionImageFile.filename}` : null;
+      console.log(`instruction ${stepNumber}, description: ${description}, img_path: ${instructionImagePath}`);
       await db.run(
         `
         INSERT INTO recipe_instructions (recipeID, step, img, description)
         VALUES (?, ?, ?, ?)
         `,
-        [postId, stepNumber, instructionImagePath, description]
+        [postID, stepNumber, instructionImagePath, description]
       );
     }
 
     await db.run("COMMIT");
 
-    res.status(201).json({ postId, message: "Recipe successfully added." });
+    res.status(201).json({ postID, message: "Recipe successfully added." });
   } catch (error) {
     console.error("Error adding recipe:", error);
     res.status(500).json({ error: "An error occurred while adding the recipe." });
