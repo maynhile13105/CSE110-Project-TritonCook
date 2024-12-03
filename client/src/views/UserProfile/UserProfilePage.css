@@ -75,14 +75,12 @@
   height: 250px;
   flex-shrink: 0;
   border-radius: 250px;
-  background-color: #F7FFE2;
   position: relative;
   overflow: visible; /* Ensures content isn't cut off */
 
 }
 
-  
-.avatar{
+#avatar{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -92,7 +90,8 @@
   border-radius: 200px;
   border: 1px solid be;
 }
-  
+    
+
 .avatar-edit{
   position: absolute; /*Enable overlap */
   z-index: 100;

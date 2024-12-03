@@ -25,9 +25,4 @@ export function createLikeEndpoints(app: any, db: Database){
         fetchLikedRecipes(req, res, db);
     });
 
-    app.delete("/delete-all-like/:recipeID",(req: Request, res: Response) => {
-        console.log("Received request for removing LIKE status ");
-        deleteAllLike(req, res, db);
-    });
-
 }

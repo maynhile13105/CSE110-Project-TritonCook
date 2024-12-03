@@ -112,21 +112,3 @@ export async function removeLike(req: Request, res: Response, db: Database) {
       res.status(500).json({ error: 'An error occurred while deleting the favorite recipe.' });
     }
 };
-
-export async function deleteAllLike(req: Request, res: Response, db: Database) {
-
-  const { recipeID } = req.params;
-  if (!recipeID) {
-    return res.status(400).json({ error: 'Missing required fields' });
-  }
-
-  try {
-    console.log("Removing like status...");
-    await db.run('DELETE FROM likes WHERE recipeID = ?;', [recipeID]);
-    console.log("Remove Like successfully!");
-    res.status(202).send();
-  } catch (error) {
-    console.error('Error deleting favorite:', error);
-    res.status(500).json({ error: 'An error occurred while deleting all favorite for the recipe.' });
-  }
-};

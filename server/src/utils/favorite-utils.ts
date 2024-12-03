@@ -89,24 +89,5 @@ export async function getFavoriteRecipes(req: Request, res: Response, db: Databa
   }
 }
 
-export async function deleteAllFavorite(req: Request, res: Response, db: Database) {
-  
-  const { recipeID } = req.params;
-  if (!recipeID) {
-    return res.status(400).json({ error: 'Missing required fields' });
-  }
-
-  try {
-
-    //console.log("DELETING FAVORTIE recipe ...");
-    await db.run('DELETE FROM favorite_recipes WHERE recipeID = ?;', [recipeID]);
-    console.log("Remove fav successfully!");
-
-    res.status(202).send();
-  } catch (error) {
-    console.error('Error deleting favorite:', error);
-    res.status(500).json({ error: 'An error occurred while deleting the favorites for the recipe.' });
-  }
-}
 
 

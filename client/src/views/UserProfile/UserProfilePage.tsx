@@ -43,7 +43,11 @@ const UserProfilePage = () => {
   };
   useEffect(() => {
     if (ownerAccountPage.picture) {
-      setAvatar(ownerAccountPage.picture);
+      if(ownerAccountPage.picture.startsWith("./uploads/")){
+        setAvatar(`http://localhost:8080${ownerAccountPage.picture.slice(1)}`);
+      } else{
+        setAvatar(ownerAccountPage.picture);
+      };      
     }
   }, [ownerAccountPage.picture]); // Depend on ownerAccountPage.picture to update avatar
 
@@ -79,9 +83,9 @@ const UserProfilePage = () => {
           <div className="profilePage-header">
             <div className="avatarImage-container">
               {avatar? 
-                (<img className="avatar" src={avatar} alt="User Avatar" />)
+                (<img id="avatar" src={avatar} alt="User Avatar" />)
                 :
-                (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" />)
+                (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" id="avatar" />)
               }
             </div>
             <button className="avatar-edit">

@@ -22,16 +22,11 @@ export function createFavoriteRecipesEndpoints(app: any, db: Database) {
     getFavoriteRecipes(req, res, db);
   });
   /*
-    //Check favorite
-    app.get("/favorite/check/:userID/:recipeID", (req: Request, res: Response) => {
-      console.log("Received request for CHECK FAVORITE STATUS");
-      checkIsFavoriteRecipe(req, res, db);
-    })*/
+  //Check favorite
+  app.get("/favorite/check/:userID/:recipeID", (req: Request, res: Response) => {
+    console.log("Received request for CHECK FAVORITE STATUS");
+    checkIsFavoriteRecipe(req, res, db);
+  })*/
 
-  // Remove all favorite for the recipe
-  app.delete("/delete-all-favorite/recipeID", (req: Request, res: Response) => {
-    console.log("Received request for deleting favorite recipes");
-    deleteAllFavorite(req, res, db);
-  });
 }
 

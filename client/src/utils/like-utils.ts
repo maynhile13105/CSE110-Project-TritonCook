@@ -65,12 +65,3 @@ export const fetchLikedRecipes = async (): Promise<Recipe[]> => {
     
     return likedRecipes;
 }
-
-export const deleteAllLike = async (recipeID: string) : Promise<void> => {
-    const response = await fetch(`${API_BASE_URL}/delete-all-like/${recipeID}`, {
-        method: "DELETE",
-    });
-    if(!response.ok){
-        throw new Error ("Failed to remove like status!");
-    }
-}

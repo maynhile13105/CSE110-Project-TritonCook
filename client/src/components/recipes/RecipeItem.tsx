@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Profile, Recipe } from "../../types/types";
 import './RecipeItem.css';
 import { Link } from "react-router-dom";
-import { addFavoriteRecipe, deleteAllFavorite, deleteFavoriteRecipe } from "../../utils/favorite-utils";
+import { addFavoriteRecipe, deleteFavoriteRecipe } from "../../utils/favorite-utils";
 import { AppContext, initialState } from "../../context/AppContext";
 import { fetchProfileUsingID } from "../../utils/userInfo-utils";
 import { addLike, fetchNumberOfLikes, removeLike } from "../../utils/like-utils";
@@ -56,6 +56,20 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
     const isFavoriteStatus = favoriteRecipes.some((fav) => fav.id === currentRecipe.id); //initial favorite status state
     setIsFavorite(isFavoriteStatus); //set initial status
   }, [favoriteRecipes, currentRecipe.id]);
+
+  //Fetching owner's avatar
+  const [avatar, setAvatar] = useState<string>("");
+
+  useEffect(() => {
+    if (recipeOwner.picture) {
+      if(recipeOwner.picture.startsWith("./uploads/")){
+        setAvatar(`http://localhost:8080${recipeOwner.picture.slice(1)}`);
+      } else{
+        setAvatar(recipeOwner.picture);
+      };      
+    }
+  }, [recipeOwner.picture]); // Depend on ownerAccountPage.picture to update avatar
+
 
   //Handle Favorite Button Click
   const handleFavoriteClick = () => {
@@ -148,8 +162,6 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
     if (recipeToDelete) {
       // Perform the delete operation (you can call an API to delete from the database)
       // Delete from the database
-      // await deleteAllFavorite(recipeToDelete.id);
-      // await deleteAllLike(recipeToDelete.id);
       await deleteRecipe(recipeToDelete.id); 
       setPostedRecipes(prev => prev.filter(recipe => recipe.id !== recipeToDelete.id)); // Update local state
       setFavoriteRecipes(prev => prev.filter(recipe => recipe.id !== recipeToDelete.id)); // Update local state
@@ -169,7 +181,11 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
     <div className="post-box">
       <div className="user-inf">
         <div className="close">
-          <img className = "avatar-on-recipe" src={recipeOwner.picture || "/images/no-image.jpg"} alt="owner-avatar" />
+          {avatar? 
+            (<img id="avatar-on-recipe" src={avatar} alt="owner-avatar" />)
+            :
+            (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" id="avatar-on-recipe" />)
+          }
           <Link to={`/profile/${recipeOwner.name}`} className="recipe-owner">{recipeOwner.name}</Link>
         </div>
         <button className="fav-button" onClick={handleFavoriteClick}>
@@ -265,7 +281,3 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
 };
 
 export default RecipeItem;
-function deleteAllLike(id: string) {
-  throw new Error("Function not implemented.");
-}
-
