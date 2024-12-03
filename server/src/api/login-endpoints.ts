@@ -6,6 +6,9 @@ import multer from 'multer';
 import { Database } from "sqlite";
 import { v4 as uuid } from 'uuid';
 import * as fs from 'fs';
+import path from 'path';
+import { promises as fsPromises } from 'fs';
+
 
 require('dotenv').config();
 
@@ -64,9 +67,9 @@ export function createLoginEndpoints(app: any, db: Database) {
     uploadAvatar.single('avatar'),
     async (req: Request, res: Response) => {
       const { username, email, password } = req.body;
-      const avatar = req.file ? `/uploads/avatar/${req.file.filename}` : null;
-
-      if (!username || !email || !password) {
+      const avatarFile = req.file;
+      
+      if (!username || !email || !password || !avatarFile) {
         if (req.file) fs.unlinkSync(req.file.path); // Clean up file if input invalid
         return res.status(400).json({ error: 'Username, email, and password are required.' });
       }
@@ -92,6 +95,20 @@ export function createLoginEndpoints(app: any, db: Database) {
 
         const hash = createHash('sha256').update(email).digest();
         const userId = uuid({ random: hash.slice(0, 16) });
+
+        let avatar = req.file ? `/uploads/avatar/${req.file.filename}` : null;
+      
+      if(avatarFile){
+        const ext = path.extname(avatarFile.originalname); // Get original file extension
+        const newFilename = `${userId}-Avatar${ext}`;
+  
+        const oldPath = avatarFile.path;
+        const newPath =  `./uploads/avatar/${newFilename}`;
+  
+        // Rename the result image file
+        await fsPromises.rename(oldPath, newPath);
+        avatar = `/uploads/avatar/${newFilename}`;
+      }
         
         const hashedPassword = await bcrypt.hash(password, 10);
 

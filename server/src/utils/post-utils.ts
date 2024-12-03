@@ -34,14 +34,11 @@ export async function createPost(req: Request, res: Response, db: Database) {
     
     const resultImgFile = filesArray.find((file) => file.fieldname === "result_img");
 
-    let resultImgPath = "";
-
     let  result_img = resultImgFile ? `/uploads/recipes/results/${resultImgFile.filename}` : null;
 
     if(resultImgFile){
       const ext = path.extname(resultImgFile.originalname); // Get original file extension
       const newFilename = `${postID}-Result${ext}`;
-      resultImgPath = `/uploads/recipes/results/${newFilename}` ;
 
       const oldPath = resultImgFile.path;
       const newPath =  `./uploads/recipes/results/${newFilename}`;
@@ -93,16 +90,19 @@ export async function createPost(req: Request, res: Response, db: Database) {
 
       const ext = path.extname(instructionImageFile.originalname); // Get original file extension
 
-      const newFilename = `${postID}-Step${stepNumber}${ext}`;
 
-      const instructionImagePath = instructionImageFile? `/uploads/recipes/instructions/${newFilename}` : null;
+      let instructionImagePath = instructionImageFile? `/uploads/recipes/instructions/${instructionImageFile.filename}` : null;
 
       if(instructionImageFile){
+        const newFilename = `${postID}-Step${stepNumber}${ext}`;
+
         const oldPath = instructionImageFile.path;
         const newPath =  `./uploads/recipes/instructions/${newFilename}`;
 
         //Rename the file
         await fsPromises.rename(oldPath, newPath);
+
+        instructionImagePath = `/uploads/recipes/instructions/${newFilename}`;
       }
       console.log(`instruction ${stepNumber}, description: ${description}, img_path: ${instructionImagePath}`);
       await db.run(
