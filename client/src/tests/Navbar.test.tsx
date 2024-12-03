@@ -3,12 +3,42 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import Navbar from '../components/navbar/Navbar';
 import userEvent from '@testing-library/user-event';
+import { AppContext } from '../context/AppContext';
+const mockUserProfile = {
+  id: '123',
+  name: 'testuser',
+  email: 'testuser@example.com',
+  picture: '/images/test-profile.png',
+};
+
+const mockContextValue = {
+  token: 'mock-token',
+  setToken: jest.fn(),
+
+  userProfile: mockUserProfile,
+  setUserProfile: jest.fn(),
+
+  favoriteRecipes: [],
+  setFavoriteRecipes: jest.fn(),
+
+  likedRecipes: [],
+  setLikedRecipes: jest.fn(),
+
+  postedRecipes: [],
+  setPostedRecipes: jest.fn(),
+
+  newsfeedRecipes: [],
+  setNewsfeedRecipes: jest.fn(),
+};
+
 describe('Navbar Component', () => {
   const renderNavbar = () =>
     render(
-      <BrowserRouter>
-        <Navbar />
-      </BrowserRouter>
+      <AppContext.Provider value={mockContextValue}>
+        <BrowserRouter>
+          <Navbar />
+        </BrowserRouter>
+      </AppContext.Provider>
     );
 
   it('renders all buttons with icons', () => {
@@ -38,5 +68,30 @@ describe('Navbar Component', () => {
 
     userEvent.click(screen.getByTestId('search'));
     expect(window.location.pathname).toBe('/home/search');
+  });
+
+  it('should navigate to /home/add-recipe when the add post button is clicked', () => {
+    renderNavbar();
+    userEvent.click(screen.getByTestId('post'));
+    expect(window.location.pathname).toBe('/home/add-recipe');
+  });
+
+  it('should log out when the logout button is clicked', () => {
+    renderNavbar();
+    userEvent.click(screen.getByAltText('logout'));
+    expect(mockContextValue.setToken).toHaveBeenCalledWith('');
+    expect(mockContextValue.setUserProfile).toHaveBeenCalledWith({
+      id: '',
+      name: '',
+      email: '',
+      picture: '',
+    });
+    expect(window.location.pathname).toBe('/');
+  });
+
+  it('should navigate to the user profile page when the profile button is clicked', () => {
+    renderNavbar();
+    userEvent.click(screen.getByTestId('profile'));
+    expect(window.location.pathname).toBe(`/profile/${mockUserProfile.name}`);
   });
 });
