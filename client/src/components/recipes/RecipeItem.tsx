@@ -20,7 +20,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
   useEffect(() => {
     //load result image
     if (currentRecipe.result_img) {
-      if(currentRecipe.result_img.startsWith("/uploads/recipes/result")){
+      if(currentRecipe.result_img.startsWith("/uploads/recipes/results")){
         let path = `${API_BASE_URL}${currentRecipe.result_img}`;
         console.log("result img path:", path);
         setResultImg(path);

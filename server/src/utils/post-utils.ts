@@ -1,7 +1,7 @@
 import { Database } from "sqlite";
 import { Request, Response } from "express";
 import path from "path";
-import fs from "fs";
+import { promises as fsPromises } from 'fs';
 
 const jwt = require('jsonwebtoken');
 const { v4: uuidv4 } = require('uuid');
@@ -26,13 +26,31 @@ export async function createPost(req: Request, res: Response, db: Database) {
   if (!userID) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
+    const postID = uuidv4();
+
     const { title, ingredients, estimate, cuisine, instructions } = req.body;
 
     const filesArray  = req.files as Express.Multer.File[];
     
     const resultImgFile = filesArray.find((file) => file.fieldname === "result_img");
 
-    const  result_img = resultImgFile ? `/uploads/recipes/results/${resultImgFile.filename}` : null;
+    let resultImgPath = "";
+
+    let  result_img = resultImgFile ? `/uploads/recipes/results/${resultImgFile.filename}` : null;
+
+    if(resultImgFile){
+      const ext = path.extname(resultImgFile.originalname); // Get original file extension
+      const newFilename = `${postID}-Result${ext}`;
+      resultImgPath = `/uploads/recipes/results/${newFilename}` ;
+
+      const oldPath = resultImgFile.path;
+      const newPath =  `./uploads/recipes/results/${newFilename}`;
+
+      // Rename the result image file
+      await fsPromises.rename(oldPath, newPath);
+      result_img = `/uploads/recipes/results/${newFilename}`;
+    }
+
 
     console.log("filesArray: ", filesArray );
     console.log("resultImgFile: ", resultImgFile);
@@ -43,7 +61,6 @@ export async function createPost(req: Request, res: Response, db: Database) {
       return res.status(400).json({ error: 'Missing fields.' });
     }
 
-    const postID = uuidv4();
 
     await db.run("BEGIN");
 
@@ -74,7 +91,19 @@ export async function createPost(req: Request, res: Response, db: Database) {
 
       const instructionImageFile = instructionImageFiles[i];
 
-      const instructionImagePath = instructionImageFile? `/uploads/recipes/instructions/${instructionImageFile.filename}` : null;
+      const ext = path.extname(instructionImageFile.originalname); // Get original file extension
+
+      const newFilename = `${postID}-Step${stepNumber}${ext}`;
+
+      const instructionImagePath = instructionImageFile? `/uploads/recipes/instructions/${newFilename}` : null;
+
+      if(instructionImageFile){
+        const oldPath = instructionImageFile.path;
+        const newPath =  `./uploads/recipes/instructions/${newFilename}`;
+
+        //Rename the file
+        await fsPromises.rename(oldPath, newPath);
+      }
       console.log(`instruction ${stepNumber}, description: ${description}, img_path: ${instructionImagePath}`);
       await db.run(
         `
