@@ -4,6 +4,7 @@ import { RecipeContext } from '../../context/RecipeContext';
 import RecipeItem from './RecipeItem';
 import './AddRecipe.css';
 import { Instruction } from '../../types/types';
+import { Link } from 'react-router-dom';
 
 const AddRecipe = () => {
   const { recipes } = useContext(RecipeContext);
@@ -275,7 +276,9 @@ const AddRecipe = () => {
               </button>
             </div>)}
           <div className="form-actions">
-            <button type="button" className='cancel' id='addRecipe-button'>Cancel</button>
+            <Link to='/home'>
+              <button type="button" className='cancel' id='addRecipe-button'>Cancel</button>
+            </Link>
             <button type="submit" id='addRecipe-button'>Post</button>
           </div>
         </form>
