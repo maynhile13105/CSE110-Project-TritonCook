@@ -128,11 +128,11 @@ export async function deletePost(req: Request, res: Response, db: Database) {
   if (!userID) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
-    console.log("Deleting post....")
+    //console.log("Deleting post....")
 
     const { recipeID } = req.params;
 
-    console.log("Received recipeID:", recipeID);
+    //console.log("Received recipeID:", recipeID);
 
 
     // Ensure the user owns the recipe before deleting
@@ -143,6 +143,32 @@ export async function deletePost(req: Request, res: Response, db: Database) {
 
     if (!recipe) {
       return res.status(404).json({ error: 'Recipe not found or you do not have permission to delete it.' });
+    }
+
+    // Get the instruction images associated with the recipe
+    const instructions = await db.all(
+      `SELECT * FROM recipe_instructions WHERE recipeID = ?`,
+      [recipeID]
+    );
+
+    // Get the file paths for the result image and instruction images
+    const resultImgPath = recipe.result_img;
+    // Delete the recipe instructions images (if any)
+    const instructionImgPaths = instructions.map(instruction => instruction.img).filter(Boolean);
+    
+    // Delete all related images from the filesystem
+    const filePathsToDelete = [resultImgPath, ...instructionImgPaths];
+    for (const filePath of filePathsToDelete) {
+      // Construct the full file path
+      const fullPath = filePath.replace('/uploads', 'uploads');
+      
+      try {
+        // Delete the file
+        await fsPromises.unlink(fullPath);
+        //console.log(`Deleted file: ${fullPath}`);
+      } catch (err) {
+        console.error(`Error deleting file: ${fullPath}`, err);
+      }
     }
 
     // Delete the recipe
