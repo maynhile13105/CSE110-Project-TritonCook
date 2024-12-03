@@ -65,9 +65,9 @@ const RecipeList = () => {
         const recipeEstimate = recipe.estimate;
 
         if (appliedFilters.time.includes("<")) {
-          return recipeEstimate <= timeThreshold;
+          return recipeEstimate < timeThreshold;
         } else if (appliedFilters.time.includes(">")) {
-          return recipeEstimate > timeThreshold;
+          return recipeEstimate >= timeThreshold;
         }
         return false;
       })();

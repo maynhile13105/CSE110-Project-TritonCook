@@ -94,7 +94,7 @@
 .ingredientsmenu{
     position: fixed;
     left: 200px;
-    top: 479px;
+    top: 403px;
     overflow-y: auto;
     max-height: 250px
 }
@@ -111,7 +111,7 @@
 .timemenu{
     position: absolute;
     right: -130px;
-    top: 389px;
+    top: 303px;
 }
 
 .timepopup{
@@ -126,7 +126,7 @@
 .cuisinesmenu{
     position: fixed;
     left: 200px;
-    top: 541px;
+    top: 465px;
     overflow-y: auto;
     max-height: 250px
 }
