@@ -54,7 +54,7 @@ const Navbar = () => {
       {/* Notification Popup */}
       {showNotifPopup && (
         <div className='notif-popup'>
-          Will be available soon
+          Will be available soon!
         </div>
       )}
     </div>
