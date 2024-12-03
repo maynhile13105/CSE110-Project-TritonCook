@@ -22,6 +22,7 @@ const Sidebar = () => {
   const[cuisineSearch, setCuisineSearch] = useState('');
   const [recentIngredients, setRecentIngredients] = useState<string[]>([]);
   const [recentCuisines, setRecentCuisines] = useState<string[]>([]);
+  const [showFriendsPopup, setShowFriendsPopup] = useState(false);
 
   const ingredientsList: string[] = ingredientsData;
   const cuisineList: string[] = cuisinesData;
@@ -104,6 +105,13 @@ const Sidebar = () => {
       console.error("Error fetching user profile:", error);
     }
   };
+
+  const handleFriendsClick = () => {
+    setShowFriendsPopup(true);
+    setTimeout(() => {
+      setShowFriendsPopup(false);
+    }, 3000); //popup will disappear after 3 seconds
+  };
   
   return (
     <div>
@@ -111,6 +119,7 @@ const Sidebar = () => {
         <div className='mainbuttons-container'>
         <Link to={`/profile/${userProfile.name}`} data-testid='profileButton'><div className='profilebutton' data-testid='UserIcon'><div className="profile-content">{userProfile?.picture? (<img className='profile' src={userProfile.picture} alt="user-avatar"/>):(<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" />)}<span>Profile</span></div></div></Link>
         <Link to="/home/favorite"><div className='favoritebutton' data-testid='FavoriteButton'><img id="saved-icon" src='/images/favorite.svg' alt='favoriteIcon'/>Favorites</div></Link>
+        <div className='friendsbutton' onClick={handleFriendsClick}><img id="friends-icon" src='/images/friends.svg' alt='friendsIcon'/>Friends</div>
         <Link to="#"><div className='filterbutton' onClick={toggleDropdown} data-testid="filter-button"><img id="filter-icon" src='/images/filter.svg' alt='filterIcon'/>Filter</div></Link>
         
         {dropdown && (
@@ -180,6 +189,12 @@ const Sidebar = () => {
           <button className='insidefilterbutton' onClick={handleApplyFilters}>Filter</button>
         </div>
     )}
+          {showFriendsPopup && (
+            <div className='friends-popup'>
+              Will be available soon!
+            </div>
+          )}
+
         </div>
       </div>
       

@@ -51,7 +51,8 @@ describe('Sidebar Component', () => {
     //Sidebar Tests
     it('renders all buttons with icons', () => {
         renderSidebar();
-        expect(screen.getByText('Profile')).toBeInTheDocument(); //fix User Icon later
+        expect(screen.getByText('Profile')).toBeInTheDocument();
+        expect(screen.getByTestId('UserIcon')).toBeInTheDocument();
 
         expect(screen.getByText('Favorites')).toBeInTheDocument();
         expect(screen.getByAltText('favoriteIcon')).toBeInTheDocument();
@@ -82,6 +83,13 @@ describe('Sidebar Component', () => {
       expect(window.location.pathname).toBe('/home/favorite')
       });
 
+      it('shows friends popup when the friends button is clicked', () => {
+        renderSidebar();
+        fireEvent.click(screen.getByText(/Friends/i));
+        expect(screen.getByText(/Will be available soon!/i)).toBeInTheDocument();
+      });
+
+      
     //Dropdown Tests
     it('shows dropdown container when filter button is clicked', () => {
         renderSidebar();

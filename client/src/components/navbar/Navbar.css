@@ -80,3 +80,29 @@ img.postImage{
 #no-image{
   background-color: ;
 }
+
+.notif-popup {
+  position: fixed;
+  top: 30px;
+  left: 200px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  z-index: 1000;
+  animation: fadein 0.3s ease-in-out;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

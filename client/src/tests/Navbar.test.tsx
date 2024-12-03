@@ -94,4 +94,10 @@ describe('Navbar Component', () => {
     userEvent.click(screen.getByTestId('profile'));
     expect(window.location.pathname).toBe(`/profile/${mockUserProfile.name}`);
   });
+
+  it('shows notification popup when the notification button is clicked', () => {
+    renderNavbar();
+    fireEvent.click(screen.getByTestId('notif'));
+    expect(screen.getByText(/Will be available soon/i)).toBeInTheDocument();
+  });
 });
