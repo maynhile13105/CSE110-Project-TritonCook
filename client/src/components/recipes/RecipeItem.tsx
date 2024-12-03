@@ -182,9 +182,9 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
       <div className="user-inf">
         <div className="close">
           {avatar? 
-            (<img id="avatar-on-recipe" src={avatar} alt="owner-avatar" />)
+            (<img className="avatar-on-recipe" src={avatar} alt="owner-avatar" />)
             :
-            (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" id="avatar-on-recipe" />)
+            (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile"  id="default-avatar-on-recipe" />)
           }
           <Link to={`/profile/${recipeOwner.name}`} className="recipe-owner">{recipeOwner.name}</Link>
         </div>
@@ -281,3 +281,5 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
 };
 
 export default RecipeItem;
+
+
