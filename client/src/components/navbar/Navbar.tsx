@@ -16,10 +16,6 @@ const Navbar = () => {
             <img src='/images/logo-round.svg'
               alt='logo' />
           </li></Link>
-          <Link to='/home'><li className='notif' data-testid='notif'>
-            <img className='notifImage' src='/images/notif-bell.svg'
-              alt='notif' />
-          </li></Link>
         </ul>
         <ul className='middle'>
           <Link to='/home/add-recipe'><li className='post' data-testid='post'>
