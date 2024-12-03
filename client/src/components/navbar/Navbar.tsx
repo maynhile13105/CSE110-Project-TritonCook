@@ -34,9 +34,9 @@ const Navbar = () => {
         </ul>
         <ul className='right'>
           <Logout date-testid='logout'/>
-          <Link to={`/profile/${userProfile.name}`}>
+          <Link to={`/profile/${userProfile.name}`} data-testid='profile'>
             {userProfile?.picture? 
-            (<img className='profile' data-testid='profile' src={userProfile.picture} alt="user-avatar"/>) 
+            (<img className='profile' src={userProfile.picture} alt="user-avatar"/>) 
             :(<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" />)}
           </Link>
         </ul>

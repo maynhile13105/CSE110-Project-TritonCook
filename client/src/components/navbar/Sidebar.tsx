@@ -87,6 +87,8 @@ const Sidebar = () => {
       time: selectedTime,
       cuisine: selectedCuisine,
     });
+
+    setActivePopup(null);
   }
 
   const {userProfile, setUserProfile} = useContext(AppContext);
@@ -107,7 +109,7 @@ const Sidebar = () => {
     <div>
       <div className='sidebar-container' role='button'>
         <div className='mainbuttons-container'>
-        <Link to={`/profile/${userProfile.name}`}><div className='profilebutton'><div className="profile-content"><UserIcon data-testid='UserIcon'/><span>Profile</span></div></div></Link>
+        <Link to={`/profile/${userProfile.name}`} data-testid='profileButton'><div className='profilebutton'><div className="profile-content"><UserIcon data-testid='UserIcon'/><span>Profile</span></div></div></Link>
         <Link to="/home/favorite"><div className='favoritebutton' data-testid='FavoriteButton'><img id="saved-icon" src='/images/favorite.svg' alt='favoriteIcon'/>Favorites</div></Link>
         <Link to="#"><div className='friendsbutton'><img id="friends-icon" src='/images/friends.svg' alt='friendsIcon'/>Friends</div></Link>
         <Link to="#"><div className='filterbutton' onClick={toggleDropdown} data-testid="filter-button"><img id="filter-icon" src='/images/filter.svg' alt='filterIcon'/>Filter</div></Link>
