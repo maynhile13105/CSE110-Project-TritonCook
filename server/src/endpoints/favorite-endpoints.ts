@@ -1,5 +1,5 @@
 import { Database } from "sqlite";
-import { addFavoriteRecipe, deleteAllFavorite, deleteFavoriteRecipe, getFavoriteRecipes } from "../utils/favorite-utils";
+import { addFavoriteRecipe, deleteFavoriteRecipe, getFavoriteRecipes } from "../utils/favorite-utils";
 import { Request, Response } from "express";
 
 export function createFavoriteRecipesEndpoints(app: any, db: Database) {

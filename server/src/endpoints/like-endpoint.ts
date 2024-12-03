@@ -1,6 +1,6 @@
 import { Database } from "sqlite";
 import { Request, Response } from "express";
-import { loadNumberOfLikes, addLike, removeLike, fetchLikedRecipes, deleteAllLike } from "../utils/like-utils";
+import { loadNumberOfLikes, addLike, removeLike, fetchLikedRecipes } from "../utils/like-utils";
 
 export function createLikeEndpoints(app: any, db: Database){
 
