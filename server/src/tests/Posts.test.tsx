@@ -196,25 +196,53 @@ describe("Posts", () => {
   });
 
   test("create and delete post successfully", async () => {
-    const postId = "test-post-id";
-    const instructions = [
-      { step: 1, img: "step1.jpg", description: "Do this" },
-      { step: 2, img: "step2.jpg", description: "Do that" },
-    ];
+    const postData = {
+      title: "Test Recipe",
+      ingredients: "Test Ingredient",
+      estimate: 30,
+      cuisine: "Test Cuisine",
+      instructions: JSON.stringify([
+        { description: "Step 1: Do something" },
+        { description: "Step 2: Do something else" },
+      ]),
 
-    // Insert a sample post
-    await db.run(
-      "INSERT INTO recipes (id, userID, title, ingredients, estimate, cuisine, result_img) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [postId, userId, "Test Title", "Test Ingredients", 30, "Test Cuisine", "test_result_img.png"]
-    );
-    for (const instruction of instructions) {
-      await db.run(
-        "INSERT INTO recipe_instructions (recipeID, step, img, description) VALUES (?, ?, ?, ?)",
-        [postId, instruction.step, instruction.img, instruction.description]
-      );
-    }
+    };
+    const resultImgFile = new File(["test-image"], "result.jpg", {
+      type: "image/jpeg",
+    });
+  
+    const instructionImgFile1 = new File(["test-image-1"], "step1.jpg", {
+      type: "image/jpeg",
+    });
+    const instructionImgFile2 = new File(["test-image-2"], "step2.jpg", {
+      type: "image/jpeg",
+    });
+    // Simulate file uploads (e.g., result image and instruction images)
+    const formData = new FormData();
+    formData.append("title", postData.title);
+    formData.append("ingredients", postData.ingredients);
+    formData.append("estimate", postData.estimate.toString());
+    formData.append("cuisine", postData.cuisine);
+    formData.append("instructions", postData.instructions);
+    formData.append("instructionImages", instructionImgFile1);
+    formData.append("instructionImages", instructionImgFile2);
+    formData.append("result_img", resultImgFile);
 
-    const response = await fetch("http://localhost:8080/delete/test-post-id", {
+  
+    const createPost_response = await fetch("http://localhost:8080/post", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+  
+    const postResult = await createPost_response.json();
+
+    const postID = postResult.postID;
+
+
+    const response = await fetch(`http://localhost:8080/delete/${postID}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -228,12 +256,12 @@ describe("Posts", () => {
     expect(result.message).toBe("Recipe successfully deleted from your post list.");
 
     // Verify the post is removed from the database
-    const post = await db.get("SELECT * FROM recipes WHERE id = ?", [postId]);
+    const post = await db.get("SELECT * FROM recipes WHERE id = ?", [postID]);
     expect(post).toBeUndefined();
 
     const postInstructions = await db.all(
       "SELECT * FROM recipe_instructions WHERE recipeID = ?",
-      [postId]
+      [postID]
     );
     expect(postInstructions.length).toBe(0);
   });
