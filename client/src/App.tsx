@@ -12,6 +12,7 @@ import { FilterProvider } from "./context/FilterContext";
 import UserProfilePage from "./views/UserProfile/UserProfilePage";
 import UserPostedRecipesList from "./components/recipes/UserPostedRecipesList";
 import AddRecipe from "./components/recipes/AddRecipe";
+import UserInfoPage from "./components/profilePage/UserInfoPage";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         </Route >
           <Route path="/profile/:username" element={<UserProfilePage />}>
             <Route index element={<UserPostedRecipesList />} />
+            <Route path = "information" element={<UserInfoPage />}></Route>
           </Route>
         </Routes>
       </FilterProvider>

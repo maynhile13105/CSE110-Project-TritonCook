@@ -27,7 +27,9 @@
   flex-direction: row;
   gap: 20px;
 }
-
+.accountPage-icon{
+  width: 55px;
+}
 .information, 
 .posts, 
 .friends, 
@@ -47,7 +49,7 @@
   transition: background-color 0.3s ease;
 }
 
-.button-text, .follow-button, .friendship-button{
+.accountPage-button-text, .follow-button, .friendship-button{
   color: #000;
   font-family: Inter;
   font-size: 30px;
@@ -90,15 +92,9 @@
   width: 250px;
   height: 250px;
   border-radius: 200px;
-  border: 1px solid be;
+  border: 1px solid black;
 }
     
-
-.avatar-edit{
-  position: absolute; /*Enable overlap */
-  z-index: 100;
-
-}
 .username {
   color: #000;
   font-family: Inter, sans-serif;
@@ -166,6 +162,10 @@
   border-radius: 40px;
   margin-top: -50px;
   margin-left: 160px;
+  position: absolute; /*Enable overlap */
+  z-index: 100;
+  background-color: #B0E0E2;
+
 
 }
 

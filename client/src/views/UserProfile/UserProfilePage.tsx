@@ -67,20 +67,20 @@ const UserProfilePage = () => {
         <div className='sidebar-profilePage'>
           <div className="information">
             {/* <span className="button-text">Information</span> */}
-            <Link to="/home/info" className="button-text">Information</Link>
-            <img src="/images/information-icon.svg" style={{width:"40px"}}/>
+            <Link to={`/profile/${ownerAccountPage.name}/information`} className="accountPage-button-text">Information</Link>
+            <img className="accountPage-icon" src="/images/information-icon.svg" />
           </div>
                 
           <div className="posts">
             {/* <span className="button-text">Posts</span> */}
-            <Link to={`/profile/${ownerAccountPage.name}`} className="button-text">Posts</Link>
-            <img src="/images/post-icon.svg" style={{width:"30px"}}/>
+            <Link to={`/profile/${ownerAccountPage.name}`} className="accountPage-button-text">Posts</Link>
+            <img className="accountPage-icon" src="/images/post-icon.svg"/>
           </div>
       
           <div className="friends">
             {/* <span className="button-text">Friends</span> */}
-            <Link to="/home/friends" className="button-text">Friends</Link>
-            <img src="/images/friends-icon.svg" style={{width:"40px"}}/>
+            <Link to="/home/friends" className="accountPage-button-text">Friends</Link>
+            <img className="accountPage-icon" src="/images/friends-icon.svg" />
           </div>
         </div>
 
