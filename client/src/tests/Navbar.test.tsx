@@ -85,6 +85,7 @@ describe('Navbar Component', () => {
       name: '',
       email: '',
       picture: '',
+      isGuest: true,
     });
     expect(window.location.pathname).toBe('/');
   });

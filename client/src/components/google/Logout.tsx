@@ -9,10 +9,18 @@ const Logout = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setUserProfile(initialState.userProfile);
-    setFavoriteRecipes(initialState.favoriteRecipes);
-    setLikedRecipes(initialState.likedRecipes);
-    setToken(initialState.token);
+
+    setUserProfile({
+      id: "",
+      name: "",
+      email: "",
+      picture: "",
+      isGuest: true,
+    });
+
+    setFavoriteRecipes([]);
+    setLikedRecipes([]);
+    setToken("");
   };
 
   return (

@@ -141,8 +141,17 @@ const LoginForm = () => {
 
       <div className="guest">
         <div className="guest-account-button">
-          <Link to="/home" className="guest-account-link">
-            <span>Continue As Guest</span>
+        <Link to="/home" className="guest-account-link" onClick={() => {
+          setUserProfile({
+            id: "",
+            name: "",
+            email: "",
+            picture: "",
+            isGuest: true,
+          });
+          navigate("/home");
+        }}>
+      <span>Continue As Guest</span>
           </Link>
         </div>
       </div>

@@ -36,7 +36,8 @@ export const initialState: AppContextType = {
         id: "",
         name: "",
         email: "",
-        picture: ""
+        picture: "",
+        isGuest: false,
     },
     setUserProfile: () => {},
 
@@ -50,7 +51,20 @@ export const initialState: AppContextType = {
 export const AppContext = createContext<AppContextType>(initialState);
 
 export const AppProvider = (props: any) => {
-    const [userProfile, setUserProfile] = useState<Profile>(initialState.userProfile);
+    const [userProfile, setUserProfile] = useState<Profile>(() => {
+        const storedToken = localStorage.getItem("token");
+        if (storedToken) {
+          const storedProfile = JSON.parse(localStorage.getItem("userProfile") || "{}");
+          return { ...storedProfile, isGuest: false }; // Set isGuest to false for logged-in users
+        }
+        return {
+          id: "",
+          name: "",
+          email: "",
+          picture: "",
+          isGuest: true,
+        };
+      });
     const [favoriteRecipes, setFavoriteRecipes] = useState<Recipe[]>(initialState.favoriteRecipes);
     const [likeRecipes, setLikeRecipes] = useState<Recipe[]>(initialState.likedRecipes);
     const [token, setToken] = useState<string>(initialState.token);

@@ -56,7 +56,13 @@ const Navbar = () => {
           </li></Link>
         </ul>
         <ul className='right'>
-          <Logout date-testid='logout'/>
+        {userProfile?.isGuest ? (
+          <Link to="/" data-testid="login">
+            <button className="login-button">Log in</button>
+          </Link>
+        ) : (
+          <Logout data-testid="logout" />
+        )}
           <Link to={`/profile/${userProfile.name}`} data-testid='profile'>
             {userProfile?.picture? 
             (<img className='profile' src={avatar} alt="user-avatar"/>) 
