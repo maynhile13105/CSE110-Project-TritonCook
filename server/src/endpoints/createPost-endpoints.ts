@@ -31,7 +31,7 @@ export function createPostEndpoints(app: any, db: Database) {
 
   // Remove post
   app.delete("/delete/:recipeID", (req: Request, res: Response) => {
-    console.log("Received request for deleting post");
+    //console.log("Received request for deleting post");
     deletePost(req, res, db);
   });
 }
