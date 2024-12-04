@@ -69,7 +69,7 @@ export function createLoginEndpoints(app: any, db: Database) {
       const { username, email, password } = req.body;
       const avatarFile = req.file;
       
-      if (!username || !email || !password || !avatarFile) {
+      if (!username || !email || !password) {
         if (req.file) fs.unlinkSync(req.file.path); // Clean up file if input invalid
         return res.status(400).json({ error: 'Username, email, and password are required.' });
       }
