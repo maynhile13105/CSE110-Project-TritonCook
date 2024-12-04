@@ -97,16 +97,7 @@ describe("Posts", () => {
       ]),
 
     };
-    const resultImgFile = new File(["test-image"], "result.jpg", {
-      type: "image/jpeg",
-    });
-  
-    const instructionImgFile1 = new File(["test-image-1"], "step1.jpg", {
-      type: "image/jpeg",
-    });
-    const instructionImgFile2 = new File(["test-image-2"], "step2.jpg", {
-      type: "image/jpeg",
-    });
+
     // Simulate file uploads (e.g., result image and instruction images)
     const formData = new FormData();
     formData.append("title", postData.title);
@@ -114,10 +105,10 @@ describe("Posts", () => {
     formData.append("estimate", postData.estimate.toString());
     formData.append("cuisine", postData.cuisine);
     formData.append("instructions", postData.instructions);
-    formData.append("instructionImages", instructionImgFile1);
-    formData.append("instructionImages", instructionImgFile2);
-    formData.append("result_img", resultImgFile);
-
+    formData.append("instructionImages", new Blob(["test-image-1"]), "step1.jpg");
+    formData.append("instructionImages", new Blob(["test-image-2"]), "step2.jpg");
+    formData.append("result_img", new Blob(["test-image"]), "result.jpg");
+  
   
     const response = await fetch("http://localhost:8080/post", {
       method: "POST",
@@ -207,16 +198,7 @@ describe("Posts", () => {
       ]),
 
     };
-    const resultImgFile = new File(["test-image"], "result.jpg", {
-      type: "image/jpeg",
-    });
-  
-    const instructionImgFile1 = new File(["test-image-1"], "step1.jpg", {
-      type: "image/jpeg",
-    });
-    const instructionImgFile2 = new File(["test-image-2"], "step2.jpg", {
-      type: "image/jpeg",
-    });
+
     // Simulate file uploads (e.g., result image and instruction images)
     const formData = new FormData();
     formData.append("title", postData.title);
@@ -224,10 +206,10 @@ describe("Posts", () => {
     formData.append("estimate", postData.estimate.toString());
     formData.append("cuisine", postData.cuisine);
     formData.append("instructions", postData.instructions);
-    formData.append("instructionImages", instructionImgFile1);
-    formData.append("instructionImages", instructionImgFile2);
-    formData.append("result_img", resultImgFile);
-
+    formData.append("instructionImages", new Blob(["test-image-1"]), "step1.jpg");
+    formData.append("instructionImages", new Blob(["test-image-2"]), "step2.jpg");
+    formData.append("result_img", new Blob(["test-image"]), "result.jpg");
+  
   
     const createPost_response = await fetch("http://localhost:8080/post", {
       method: "POST",
