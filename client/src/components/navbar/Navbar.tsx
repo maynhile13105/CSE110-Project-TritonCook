@@ -39,7 +39,7 @@ const Navbar = () => {
             <img src='/images/logo-round.svg'
               alt='logo' />
           </li></Link>
-          <Link to='/home'><li className='notif' data-testid='notif' onClick={handleNotifClick}>
+          <Link to='#'><li className='notif' data-testid='notif' onClick={handleNotifClick}>
             <img className='notifImage' src='/images/notif-bell.svg'
               alt='notif' />
           </li></Link>
@@ -74,7 +74,7 @@ const Navbar = () => {
       {/* Notification Popup */}
       {showNotifPopup && (
         <div className='notif-popup'>
-          Will be available soon!
+          Notification will be available soon!
         </div>
       )}
     </div>
