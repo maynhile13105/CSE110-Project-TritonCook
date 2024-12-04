@@ -30,7 +30,13 @@ export async function createPost(req: Request, res: Response, db: Database) {
 
     const { title, ingredients, estimate, cuisine, instructions } = req.body;
 
-    const filesArray  = req.files as Express.Multer.File[];
+    
+
+    const filesArray = (req.files as Express.Multer.File[]) || [];
+
+    if (!filesArray.length) {
+      return res.status(400).json({ error:  'Missing fields.'  });
+    }
     
     const resultImgFile = filesArray.find((file) => file.fieldname === "result_img");
 
@@ -124,8 +130,6 @@ export async function createPost(req: Request, res: Response, db: Database) {
 }
 
 export async function deletePost(req: Request, res: Response, db: Database) {
-  const userID = verifyToken(req);
-  if (!userID) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
     //console.log("Deleting post....")
@@ -137,8 +141,8 @@ export async function deletePost(req: Request, res: Response, db: Database) {
 
     // Ensure the user owns the recipe before deleting
     const recipe = await db.get(
-      `SELECT * FROM recipes WHERE id = ? AND userID = ?`,
-      [recipeID, userID]
+      `SELECT * FROM recipes WHERE id = ?`,
+      [recipeID]
     );
 
     if (!recipe) {
@@ -178,8 +182,8 @@ export async function deletePost(req: Request, res: Response, db: Database) {
     await db.run("DELETE FROM likes WHERE recipeID = ?", [recipeID]);
 
     await db.run(
-      `DELETE FROM recipes WHERE id = ? AND userID = ?`,
-      [recipeID, userID]
+      `DELETE FROM recipes WHERE id = ?`,
+      [recipeID]
     );
 
     console.log(`Deleted recipe with ID: ${recipeID}`);
