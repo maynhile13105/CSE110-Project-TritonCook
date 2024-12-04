@@ -46,6 +46,8 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
   //Get token from localStorage to check if user is logged in
   const token = localStorage.getItem("token");
 
+  const [showCommentOrReportPopup, setShowCommentOrReportPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState<string>("");
 
   //Get recipe owner's username
   const [recipeOwner, setRecipeOwner] = useState<Profile>(initialState.userProfile); //state for handling recipe's owner username - initial: null
@@ -192,7 +194,13 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
     setRecipeToDelete(null); // Clear the recipe to delete
   };
 
-
+  const handlePopup = (message: string) => {
+    setPopupMessage(message);
+    setShowCommentOrReportPopup(true);
+    setTimeout(() => {
+      setShowCommentOrReportPopup(false); // Hide after 3 seconds
+    }, 3000);
+  };
   return (
     <div className="post-box">
       <div className="user-inf">
@@ -238,7 +246,8 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
           </button>
           <a style={{fontSize: "20px"}}>{numberOfLikes}</a>
         </div>
-        <img src="/Comment.svg" alt="Comment" />
+        
+        <img src="/Comment.svg" alt="Comment" onClick={() => handlePopup("Comments will be available soon!")}/>
 
         <button className={userProfile.name === recipeOwner.name ? 'visible' : "hidden"} 
           id="delete-button" 
@@ -254,6 +263,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
           <button 
             className={userProfile.name === recipeOwner.name ? 'hidden' : "visible"} 
             id="report-button" 
+            onClick={() => handlePopup("Reports will be available soon!")}
           >
             <img 
               src="/Report.svg" 
@@ -262,6 +272,13 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
             />
           </button>
       </div>
+
+        {showCommentOrReportPopup && (
+          <div className="notif-popup">
+            {popupMessage}
+          </div>
+        )}
+
 
       {/* Modal for not logged in */}
       {isModalVisible && (

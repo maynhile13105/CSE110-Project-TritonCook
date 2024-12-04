@@ -217,7 +217,7 @@ const Sidebar = () => {
     )}
           {showFriendsPopup && (
             <div className='friends-popup'>
-              Will be available soon!
+              Friends will be available soon!
             </div>
           )}
 
