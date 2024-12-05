@@ -65,22 +65,28 @@ const UserProfilePage = () => {
       </div>
       <div className='under-navbar'>
         <div className='sidebar-profilePage'>
-          <div className="information">
+          <div >
             {/* <span className="button-text">Information</span> */}
-            <Link to={`/profile/${ownerAccountPage.name}/information`} className="accountPage-button-text">Information</Link>
-            <img className="accountPage-icon" src="/images/information-icon.svg" />
+            <Link to={`/profile/${ownerAccountPage.name}/information`} className="information" >
+              <div className="accountPage-button-text">Information</div>
+              <img className="accountPage-icon" src="/images/information-icon.svg" />
+            </Link>
           </div>
                 
-          <div className="posts">
+          <div >
             {/* <span className="button-text">Posts</span> */}
-            <Link to={`/profile/${ownerAccountPage.name}`} className="accountPage-button-text">Posts</Link>
-            <img className="accountPage-icon" src="/images/post-icon.svg"/>
+            <Link to={`/profile/${ownerAccountPage.name}` } className="posts">
+              <div className="accountPage-button-text">Posts</div>
+              <img className="accountPage-icon" src="/images/post-icon.svg"/>
+            </Link>
           </div>
       
-          <div className="friends">
+          <div>
             {/* <span className="button-text">Friends</span> */}
-            <Link to="/home/friends" className="accountPage-button-text">Friends</Link>
-            <img className="accountPage-icon" src="/images/friends-icon.svg" />
+            <Link to="/home/friends" className="friends">
+              <div className="accountPage-button-text">Friends</div>
+              <img className="accountPage-icon" src="/images/friends-icon.svg" />
+            </Link>
           </div>
         </div>
 

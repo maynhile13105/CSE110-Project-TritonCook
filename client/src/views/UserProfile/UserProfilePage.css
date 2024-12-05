@@ -47,6 +47,7 @@
   background: rgba(247, 255, 226, 0.00);
   cursor: pointer;
   transition: background-color 0.3s ease;
+  text-decoration: none;
 }
 
 .accountPage-button-text, .follow-button, .friendship-button{
