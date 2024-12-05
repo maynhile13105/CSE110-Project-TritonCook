@@ -86,7 +86,7 @@ describe('Sidebar Component', () => {
       it('shows friends popup when the friends button is clicked', () => {
         renderSidebar();
         fireEvent.click(screen.getByText(/Friends/i));
-        expect(screen.getByText(/Will be available soon!/i)).toBeInTheDocument();
+        expect(screen.getByText(/Friends will be available soon!/i)).toBeInTheDocument();
       });
 
       

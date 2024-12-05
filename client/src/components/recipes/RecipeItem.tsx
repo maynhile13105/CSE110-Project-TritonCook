@@ -274,7 +274,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
       </div>
 
         {showCommentOrReportPopup && (
-          <div className="notif-popup">
+          <div className="recipe-notif-popup">
             {popupMessage}
           </div>
         )}
