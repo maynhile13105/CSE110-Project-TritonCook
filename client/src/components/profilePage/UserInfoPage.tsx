@@ -58,11 +58,30 @@ const UserInfoPage = () => {
           </div>    
         </div>
 
+
+
+
         <div className="page-container">
-          <div className="blocks-container">                                       
+          <div className="blocks-container">
+            <div style={{display: isUserAccountPage? "flex" : "none"}} id="block" >
+              <div className="block-text-container">
+                <span className="block-text">Username</span>
+              </div>
+              <div className="block-info-container">
+                <span className="block-info">{ownerAccountPage.name || "N/A"}</span>
+              </div>
+            </div>
+
+            <div style={{display: isUserAccountPage? "flex" : "none"}} id="block" >
+              <div className="block-text-container">
+                <span className="block-text">Password</span>
+              </div>
+              <div className="block-info-container">
+                <span className="block-info">{"*".repeat(password.length) || "N/A"}</span>
+              </div>
+            </div>
+                                                   
             {[
-                { label: "Username", info: ownerAccountPage.name || "N/A" },
-                { label: "Password", info: "*".repeat(password.length) || "N/A" },
                 { label: "Email", info: ownerAccountPage.email || "N/A" },
                 { label: "D.O.B", info: ownerAccountPageInfo.dob || "N/A" },
                 { label: "Ethics", info: ownerAccountPageInfo.ethics || "N/A" },
