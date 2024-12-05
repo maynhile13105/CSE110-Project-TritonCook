@@ -1,4 +1,4 @@
-.recipes-container{
+.recipes-container-list {
   align-items: center;
   display: grid;
   grid-template-columns: repeat(3,1fr);
@@ -7,14 +7,3 @@
   width: auto;
   gap: 5%;
 }
-.post-item {
-  width: fit-content;    
-  margin: 5%;
-}
-  
-  @media (max-width: 575.98px) {
-    .post-item{
-      flex: 0 0 100%; /* Full width on extra-small screens */
-      max-width: 100%; /* Full width on extra-small screens */
-    }
-  }

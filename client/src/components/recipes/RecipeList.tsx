@@ -83,7 +83,7 @@ const RecipeList = () => {
   const filteredRecipes = filterRecipes(newsfeedRecipes);
 
   return (
-    <div className="recipes-container">
+    <div className="recipes-container-list">
       {filteredRecipes.length > 0 ? (
         filteredRecipes.map((recipe) => (
           <div className="post-item" key={recipe.id}>

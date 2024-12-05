@@ -27,7 +27,7 @@ const SavedFavoriteRecipeList = () => {
   return (
     <>
       {favoriteRecipes.length > 0 ? (
-        <div className="recipes-container">
+        <div className="recipes-container-saved">
           {favoriteRecipes.map((recipe) => (
             <div className="post-item" key={recipe.id}>
               <RecipeItem
