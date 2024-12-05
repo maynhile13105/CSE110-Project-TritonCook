@@ -1,12 +1,16 @@
-import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import './Sidebar.css'
 import UserIcon from '../google/UserIcon';
 import { useFilterContext } from '../../context/FilterContext';
 import ingredientsData from '../../data/ingredientsData.json'
 import cuisinesData from '../../data/cuisinesData.json'
+import { AppContext } from '../../context/AppContext';
+import { fetchUserProfile } from '../../utils/userInfo-utils';
+import { API_BASE_URL } from '../../constants/constants';
 
 const Sidebar = () => {
+
   const {
     selectedIngredients,setSelectedIngredients, 
     selectedTime, setSelectedTime,
@@ -20,9 +24,17 @@ const Sidebar = () => {
   const[cuisineSearch, setCuisineSearch] = useState('');
   const [recentIngredients, setRecentIngredients] = useState<string[]>([]);
   const [recentCuisines, setRecentCuisines] = useState<string[]>([]);
+  const [showFriendsPopup, setShowFriendsPopup] = useState(false);
 
   const ingredientsList: string[] = ingredientsData;
   const cuisineList: string[] = cuisinesData;
+  const location = useLocation();
+  
+  useEffect(() => {
+    if (location.state?.showDropdown) {
+      setDropdown(true); // Open dropdown if the state is set
+    }
+  }, [location.state?.showDropdown]);
 
   const toggleDropdown = () => {
     setDropdown(!dropdown);
@@ -72,6 +84,7 @@ const Sidebar = () => {
     setSelectedCuisine(null);
   }
 
+
   const handleApplyFilters = () => {
     console.log("Filters applied:", {
       selectedIngredients,
@@ -84,15 +97,62 @@ const Sidebar = () => {
       time: selectedTime,
       cuisine: selectedCuisine,
     });
+
+    setActivePopup(null);
   }
+
+  const {userProfile, setUserProfile} = useContext(AppContext);
+  useEffect(() => {
+    loadUserProfile();
+  }, []);
+
+  const [avatar, setAvatar] = useState<string>("");
+  useEffect(() => {
+    //console.log("Pic: ", ownerAccountPage.picture);
+    if (userProfile.picture) {
+      if(userProfile.picture.startsWith("/uploads/avatar/")){
+        let path = `${API_BASE_URL}${userProfile.picture}`;
+        console.log(path);
+        setAvatar(path);
+      } else{
+        setAvatar(userProfile.picture);
+      };      
+    }
+  }, [userProfile]); // Depend on ownerAccountPage.picture to update avatar
+
+
+  const loadUserProfile = async () => {
+    try {
+      const profile = await fetchUserProfile(); // Fetch favorite recipes
+      setUserProfile(profile);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  };
+
+  const handleFriendsClick = () => {
+    setShowFriendsPopup(true);
+    setTimeout(() => {
+      setShowFriendsPopup(false);
+    }, 3000); //popup will disappear after 3 seconds
+  };
   
   return (
     <div>
       <div className='sidebar-container' role='button'>
         <div className='mainbuttons-container'>
-        <Link to="#"><div className='profilebutton'><div className="profile-content"><UserIcon data-testid='UserIcon'/><span>Profile</span></div></div></Link>
+        <Link to={`/profile/${userProfile.name}`} data-testid='profileButton'>
+          <div className='profilebutton' data-testid='UserIcon'>
+            <div className="profile-content">{userProfile?.picture? 
+              (<img className='profile' src={avatar} alt="user-avatar"/>)
+              :
+              (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" />)}
+              <span>Profile</span>
+            </div>
+          </div>
+        </Link>
         <Link to="/home/favorite"><div className='favoritebutton' data-testid='FavoriteButton'><img id="saved-icon" src='/images/favorite.svg' alt='favoriteIcon'/>Favorites</div></Link>
-        <Link to="#"><div className='friendsbutton'><img id="friends-icon" src='/images/friends.svg' alt='friendsIcon'/>Friends</div></Link>
+        <div className='friendsbutton' onClick={handleFriendsClick}><img id="friends-icon" src='/images/friends.svg' alt='friendsIcon'/>Friends</div>
         <Link to="#"><div className='filterbutton' onClick={toggleDropdown} data-testid="filter-button"><img id="filter-icon" src='/images/filter.svg' alt='filterIcon'/>Filter</div></Link>
         
         {dropdown && (
@@ -124,7 +184,6 @@ const Sidebar = () => {
           )}  
           
           <div className='dropdown' onClick={() => togglePopup('time')}><Link to="#"><img id="filterarrow" src='/images/filterarrow.svg' />Estimated Time</Link></div>
-          
           {selectedTime && (
             <div className='selectedtime'>
               <span className='selectedtimetext'>{selectedTime}</span>
@@ -163,6 +222,12 @@ const Sidebar = () => {
           <button className='insidefilterbutton' onClick={handleApplyFilters}>Filter</button>
         </div>
     )}
+          {showFriendsPopup && (
+            <div className='friends-popup'>
+              Friends will be available soon!
+            </div>
+          )}
+
         </div>
       </div>
       
