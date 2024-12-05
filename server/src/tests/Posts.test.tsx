@@ -89,7 +89,7 @@ describe("Posts", () => {
     const postData = {
       title: "Test Recipe",
       ingredients: "Test Ingredient",
-      estimate: 30,
+      estimate: "30",
       cuisine: "Test Cuisine",
       instructions: JSON.stringify([
         { description: "Step 1: Do something" },
