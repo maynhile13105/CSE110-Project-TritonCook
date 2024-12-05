@@ -50,3 +50,4 @@ export const fetchFavoriteRecipes = async (): Promise<Recipe[]> => {
 
     return favoriteRecipeList;
 };
+

@@ -7,7 +7,7 @@ export type Recipe = {
   userID: string;
   title: string;
   ingredients: string;
-  estimate: string;
+  estimate: number;
   cuisine: string;
   result_img: string;
   time: string //The time the recipe was posted
@@ -18,5 +18,10 @@ export type Profile = {
   name: string;
   email: string;
   picture: string
+  isGuest?: boolean;
 }
 
+export type Instruction = {
+  text: string;
+  image: File | null;
+}

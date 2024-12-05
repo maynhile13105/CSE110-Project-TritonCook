@@ -6,21 +6,53 @@ import { FilterProvider } from '../context/FilterContext';
 import ingredientsData from '../data/ingredientsData.json'
 import cuisinesData from '../data/cuisinesData.json'
 import userEvent from '@testing-library/user-event';
+import { AppContext } from '../context/AppContext';
+
+const mockUserProfile = {
+  id: '123',
+  name: 'testuser',
+  email: 'testuser@example.com',
+  picture: '/images/test-profile.png',
+};
+
+const mockContextValue = {
+  token: 'mock-token',
+  setToken: jest.fn(),
+
+  userProfile: mockUserProfile,
+  setUserProfile: jest.fn(),
+
+  favoriteRecipes: [],
+  setFavoriteRecipes: jest.fn(),
+
+  likedRecipes: [],
+  setLikedRecipes: jest.fn(),
+
+  postedRecipes: [],
+  setPostedRecipes: jest.fn(),
+
+  newsfeedRecipes: [],
+  setNewsfeedRecipes: jest.fn(),
+};
+
 
 describe('Sidebar Component', () => {
   const renderSidebar = () =>
     render(
+      <AppContext.Provider value={mockContextValue}>
       <BrowserRouter>
       <FilterProvider>
         <Sidebar />
       </FilterProvider>
     </BrowserRouter>
+    </AppContext.Provider>
     );
 
     //Sidebar Tests
     it('renders all buttons with icons', () => {
         renderSidebar();
-        expect(screen.getByText('Profile')).toBeInTheDocument(); //fix User Icon later
+        expect(screen.getByText('Profile')).toBeInTheDocument();
+        expect(screen.getByTestId('UserIcon')).toBeInTheDocument();
 
         expect(screen.getByText('Favorites')).toBeInTheDocument();
         expect(screen.getByAltText('favoriteIcon')).toBeInTheDocument();
@@ -33,15 +65,31 @@ describe('Sidebar Component', () => {
       });
 
 
-    it('navigates to /home/favorite when the Favorites button is clicked', () => {
+    it('navigates to user profile page when the profile button is clicked', () => {
       renderSidebar();
     
-      expect(screen.getByTestId('FavoriteButton')).toBeInTheDocument();
+      expect(screen.getByTestId('profileButton')).toBeInTheDocument();
 
+      userEvent.click(screen.getByTestId('profileButton'));
+      expect(window.location.pathname).toBe(`/profile/${mockUserProfile.name}`)
+      });
+
+    it('should navigate to /home/favorite when the favorite button is clicked', () => {
+      renderSidebar();
+     
+      expect(screen.getByTestId('FavoriteButton')).toBeInTheDocument();
+  
       userEvent.click(screen.getByTestId('FavoriteButton'));
       expect(window.location.pathname).toBe('/home/favorite')
       });
 
+      it('shows friends popup when the friends button is clicked', () => {
+        renderSidebar();
+        fireEvent.click(screen.getByText(/Friends/i));
+        expect(screen.getByText(/Will be available soon!/i)).toBeInTheDocument();
+      });
+
+      
     //Dropdown Tests
     it('shows dropdown container when filter button is clicked', () => {
         renderSidebar();
