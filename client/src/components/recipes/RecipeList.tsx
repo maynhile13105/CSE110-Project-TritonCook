@@ -6,12 +6,14 @@ import { Recipe } from "../../types/types";
 import { useLocation } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import { useFilterContext } from "../../context/FilterContext";
+import { fetchNumberOfLikes } from "../../utils/like-utils";
 
 const RecipeList = () => {
-    const [displayedRecipes, setDisplayedRecipes] = useState<Recipe[]>([]);
+    const {newsfeedRecipes, setNewsfeedRecipes} = useContext(AppContext);
     const { appliedFilters } = useFilterContext();
     //const {favoriteRecipes} = useContext(AppContext);
     //const {likedRecipes} = useContext(AppContext);
+    const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
 
     const location = useLocation();
     
@@ -23,17 +25,18 @@ const RecipeList = () => {
     const loadRecipes = async () => {
         try {
             const recipesList = await fetchDisplayedRecipes(); // Fetch displayed recipes
-            console.log("Fetched recipes in frontend:", recipesList);  // Log the recipes
+            //console.log("Fetched recipes in frontend:", recipesList);  // Log the recipes
              
             
             // Check for existing recipes and update the state correctly
-            setDisplayedRecipes((prev) => {
-                if (prev.length !== recipesList.length) {
-                  console.log("Updating recipe list...");
-                  return recipesList;
-                }
-                return prev;
+            setNewsfeedRecipes((prev) => {
+              if (prev.length !== recipesList.length) {
+                //console.log("Updating recipe list...");
+                return recipesList;
+              }
+              return prev;
             });
+
         } catch (error) {
             console.error("Error fetching recipes:", error);
         }
@@ -47,7 +50,22 @@ const RecipeList = () => {
 
    //console.log("Fav recipes in Item List", favoriteRecipes);
    //console.log("Liked recipes in Item List", likedRecipes);
-    
+  
+  useEffect(() => {
+    const applyFiltersAndSorting = async () => {
+      // Filter recipes based on applied filters
+      const filtered = filterRecipes(newsfeedRecipes);
+
+      // If sortByLikes is true, sort the filtered recipes by likes
+      if (location.state?.sortByLikes) {
+        const sorted = await sortRecipesByLikes(filtered);
+        setFilteredRecipes(sorted);
+      } else {
+        setFilteredRecipes(filtered); // Only apply filtering
+      }
+    };
+    applyFiltersAndSorting();
+  }, [newsfeedRecipes, appliedFilters, location.state?.sortByLikes]);
 
   const filterRecipes = (recipes: Recipe[]): Recipe[] => {
     return recipes.filter((recipe) => {
@@ -61,7 +79,7 @@ const RecipeList = () => {
         if (!appliedFilters.time) return true;
 
         const timeThreshold = parseInt(appliedFilters.time.replace(/\D/g, ""));
-        const recipeEstimate = parseInt(recipe.estimate.replace(/\D/g, ""));
+        const recipeEstimate = recipe.estimate;
 
         if (appliedFilters.time.includes("<")) {
           return recipeEstimate <= timeThreshold;
@@ -79,7 +97,16 @@ const RecipeList = () => {
     });
   };
 
-  const filteredRecipes = filterRecipes(displayedRecipes);
+  const sortRecipesByLikes = async (recipes: Recipe[]): Promise<Recipe[]> => {
+    const recipesWithLikes = await Promise.all(
+      recipes.map(async (recipe) => {
+        const likes = await fetchNumberOfLikes(recipe.id); // Fetch likes dynamically
+        return { ...recipe, likes }; // Add likes to each recipe
+      })
+    );
+
+    return recipesWithLikes.sort((a, b) => b.likes - a.likes); // Sort by likes in descending order
+  };
 
   return (
     <div className="recipes-container">
