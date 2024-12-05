@@ -27,6 +27,15 @@ const UserInfoPage = () => {
         ethics: "",
         phone: ""
     })
+    const [showNotifPopup, setShowNotifPopup] = useState(false);
+
+    const handleNotifClick = () => {
+        setShowNotifPopup(true);
+        setTimeout(() => {
+        setShowNotifPopup(false);
+        }, 3000);
+    };
+
     useEffect(() => {
       if(username){
         loadOwnerProfilePage(username);
@@ -52,7 +61,7 @@ const UserInfoPage = () => {
       <div className="page_style">
         {/* Center Top Button */}
         <div className={isUserAccountPage? "visible":"hidden" } id="relation-buttons" >
-          <div className="edit-button" role="button">
+          <div className="edit-button" role="button" onClick={handleNotifClick}>
             <img className="edit-button-icon" src="/images/edit-icon.svg"/>
             Change Information
           </div>    
@@ -90,6 +99,13 @@ const UserInfoPage = () => {
             ))}
           </div>
       </div>
+        {/* Notification Popup */}
+        {showNotifPopup && (
+            <div className='info-notif-popup'>
+            Change Information will be available soon!
+            </div>
+        )}
+        
     </div>
     );
   };

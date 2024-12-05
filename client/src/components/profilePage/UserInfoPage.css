@@ -155,10 +155,10 @@
   display: block;
 }
 
-.user-notif-popup {
+.info-notif-popup {
   position: fixed;
-  top: 30px;
-  left: 200px;
+  top: 590px;
+  left: 783px;
   background-color: #fff;
   color: #000;
   border: 1px solid #ccc;

@@ -14,6 +14,17 @@ const UserProfilePage = () => {
   const [ownerAccountPage, setOwnerAccountPage] = useState<Profile>(initialState.userProfile);
   const [avatar, setAvatar] = useState<string>("");
 
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState<string>("");
+
+  const handlePopup = (message: string) => {
+    setPopupMessage(message);
+    setShowPopup(true);
+    setTimeout(() => {
+      setShowPopup(false); // Hide after 3 seconds
+    }, 3000);
+  };
+
   useEffect(() => {
     if(username){
       loadOwnerProfilePage(username);
@@ -91,9 +102,9 @@ const UserProfilePage = () => {
             </Link>
           </div>
       
-          <div>
+          <div onClick={() => handlePopup("Friends will be available soon!")}>
             {/* <span className="button-text">Friends</span> */}
-            <Link to="/home/friends" className="friends">
+            <Link to="#" className="friends">
               <div className="accountPage-button-text">Friends</div>
               <img className="accountPage-icon" src="/images/friends-icon.svg" />
             </Link>
@@ -114,6 +125,7 @@ const UserProfilePage = () => {
             <button
               style={{ display: isUser ? "block" : "none" }}
               id="avatar-edit"
+              onClick={() => handlePopup("Edit Avatar will be available soon!")}
             >
               <img src="/images/camera-icon.svg" style={{ width: "40px" }} />
             </button>
@@ -123,14 +135,14 @@ const UserProfilePage = () => {
             </div>
           </div>
           <div className={isUser? "hidden":"visible" }
-            id="relation-buttons" >
-              <div className="friendship-button" role="button">
+            id="relation-buttons">
+              <div className="friendship-button" role="button" onClick={() => handlePopup("Add Friends will be available soon!")}>
                 <img src="/images/add-friend-icon.svg" alt="add-friend-icon" 
                 style={{width:'70px'}}/>
                 Add friend
               </div>
 
-              <div className="follow-button" role="button">
+              <div className="follow-button" role="button" onClick={() => handlePopup("Follow will be available soon!")}>
                 <img src="/images/follow-icon.svg" alt="follow-me-icon"
                 style={{width:'70px'}}/>
                 Follow me
@@ -142,7 +154,12 @@ const UserProfilePage = () => {
           </div>
         </div>
       </div>  
-    </div>  
+      {showPopup && (
+          <div className="friends-notif-popup">
+            {popupMessage}
+          </div>
+        )}
+      </div>
     );
   };
   
