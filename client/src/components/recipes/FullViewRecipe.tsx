@@ -9,9 +9,11 @@ import { addLike, fetchNumberOfLikes, removeLike } from "../../utils/like-utils"
 import { deleteRecipe, fetchRecipeInfo, fetchRecipeInstructions } from "../../utils/post-utils";
 import { API_BASE_URL } from "../../constants/constants";
 
-const RecipeExpand = () => {
+const FullViewRecipe = () => {
 
   const { recipeID } = useParams(); //Get userID from the URL
+
+  console.log("RecipeID: ", recipeID);
   const [currentStep, setCurrentStep] = useState(0);
   
   const [recipeInfo, setRecipeInfo] = useState<Recipe>({
@@ -79,6 +81,7 @@ const RecipeExpand = () => {
 
   const loadOwnerProfile = async () => {
     try {
+        console.log("RecipeInfo: ", recipeInfo);
         const ownerProfile = await fetchProfileUsingID(recipeInfo.userID); // Fetch displayed recipes from backend
         //console.log("Fetched recipe's owner username in frontend:", ownerProfile);  // Log the recipes
         setRecipeOwner(ownerProfile);
@@ -228,31 +231,48 @@ const RecipeExpand = () => {
   const [resultImg, setResultImg] = useState("");
   useEffect(() => {
     //load result image
-    if (currentRecipe.result_img) {
-      if(currentRecipe.result_img.startsWith("/uploads/recipes/results")){
-        let path = `${API_BASE_URL}${currentRecipe.result_img}`;
+    if (recipeInfo.result_img) {
+      if(recipeInfo.result_img.startsWith("/uploads/recipes/results")){
+        let path = `${API_BASE_URL}${recipeInfo.result_img}`;
         console.log("result img path:", path);
         setResultImg(path);
       } else{
-        setResultImg(currentRecipe.result_img);
+        setResultImg(recipeInfo.result_img);
       };      
     }
   }, [])
-  */
 
   // Handlers for instruction navigation
+  const [instuctionImgPath, setInstructionImgPath] = useState<string>("/images/no-images.jpg");
+
+  useEffect(() => {
+    //load result image
+    if (currentStep < recipeInstructions.length) {
+      console.log("current Step: ", currentStep);
+      if(recipeInstructions[currentStep].img.startsWith("/uploads/recipes/instructions")){
+        console.log("imgPath: ", recipeInstructions[currentStep].img);
+        let path = `${API_BASE_URL}${recipeInstructions[currentStep].img}`;
+        console.log("path: ", path);
+        setInstructionImgPath(path);
+        console.log("setPath: ", instuctionImgPath);
+      } else{
+        setInstructionImgPath(recipeInstructions[currentStep].img);
+      };      
+    }
+  }, [currentStep])
+*/
+
   const goToNextStep = () => {
-    if (currentStep < recipeInstructions.length - 1) {
+    if (currentStep < recipeInstructions.length) {
       setCurrentStep(currentStep + 1);
     }
   };
-
   const goToPreviousStep = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1);
     }
   };
-
+ 
 
   return (
     <div className="post-box">
@@ -281,40 +301,44 @@ const RecipeExpand = () => {
         Ingredients: {recipeInfo.ingredients}
       </div>
       <div>
-        Instructions:
+        <div className="post-instructions">Instructions</div>
         <div className="instruction-step">
           <div className="instruction-content">
             <button onClick={goToPreviousStep} disabled={currentStep === 0} className="side-button right-button">
               &lt;
             </button>
-            {recipeInstructions[currentStep] && (
+            {currentStep < recipeInstructions.length && recipeInstructions[currentStep] ? (
               <div className="img-and-ins">
                 <div className="description">
-                  <p>Step {currentStep}: {recipeInstructions[currentStep].description}</p>
+                  <p>Step {currentStep + 1}: {recipeInstructions[currentStep]?.description || 'No description available'}</p>
                 </div>
 
                 <img
-                src={recipeInstructions[currentStep].img||"/images/no-images.jpg"}
-                className="post-img"
-                alt={`Step ${currentStep + 1}`}
+                  src={recipeInstructions[currentStep]?.img?.startsWith("/uploads/recipes/instructions")
+                    ? `${API_BASE_URL}${recipeInstructions[currentStep].img}`
+                    : '/images/no-picture.jpg'}
+                  className="post-img"
+                  alt={`Step ${currentStep + 1}`}
                 />
               </div>
-            )}
-            {currentStep===recipeInstructions.length && (
+            ) : (
               <div className="img-and-ins">
                 <div className="description">
                   <p>Result</p>
                 </div>
 
                 <img
-                src={recipeInfo.result_img||"/images/no-images.jpg"}
-                className="post-img"
-                alt={`Result Image`}
+                  src={recipeInfo.result_img?.startsWith("/uploads/recipes/results")
+                    ? `${API_BASE_URL}${recipeInfo.result_img}`
+                    : '/images/no-picture.jpg'}
+                  className="post-img"
+                  alt={`Result Image`}
                 />
               </div>
             )}
 
-            <button onClick={goToNextStep} disabled={currentStep === recipeInstructions.length - 1}
+
+            <button onClick={goToNextStep} disabled={currentStep === recipeInstructions.length}
               className="side-button right-button">
               &gt;
             </button>
@@ -322,13 +346,6 @@ const RecipeExpand = () => {
         </div>
       </div>
       
-      <br />
-        <div className="horizontal-line"></div>
-            <div className="user-inf">
-                <img src='/Like.svg' />
-                <img src='/Comment.svg' />
-                <img src='/Report.svg' />
-            </div>
       <div className="horizontal-line"></div>
       <div className="user-inf">
         <div className="like-container">
@@ -404,6 +421,6 @@ const RecipeExpand = () => {
   );
 };
 
-export default RecipeExpand;
+export default FullViewRecipe;
 
 

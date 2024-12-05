@@ -197,13 +197,13 @@ const AddRecipe = () => {
   };
 
   //Handle remove instruction
-  // const handleRemoveInstruction = (index: number) => {
-  //   const updatedInstructions = formData.instructions.filter((_, i) => i !== index);
-  //   setFormData({
-  //     ...formData,
-  //     instructions: updatedInstructions,
-  //   });
-  // };
+  const handleRemoveInstruction = (index: number) => {
+    const updatedInstructions = formData.instructions.filter((_, i) => i !== index);
+     setFormData({
+       ...formData,
+       instructions: updatedInstructions,
+     });
+  };
 
   return (
     <div className='outer'>
@@ -246,7 +246,7 @@ const AddRecipe = () => {
               )}
               {/* Green hint below the input */}
               <div style={{ color: 'green', fontSize: '14px', marginTop: '5px' }}>
-                Please use "," for separating multiple ingredients.
+                Tips: Use "," for separating multiple ingredients.
               </div>
             </div>
           </div>
@@ -307,13 +307,13 @@ const AddRecipe = () => {
                   onChange={handleInstructionTextChange}
                   placeholder="Add instruction step"
                 />
-                {/* <button
+                <button
                   type="button"
                   onClick={() => handleRemoveInstruction(index)}
                   className="remove-instruction-button"
                 >
                   ❌
-                </button> */}
+                </button>
               </div>
             ))}
 

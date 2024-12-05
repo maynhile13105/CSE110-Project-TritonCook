@@ -8,7 +8,7 @@ import { addRecipesToDatabase, addUsersToDatabase } from "./tests/utils/addTestR
 import { sampleRecipes, sampleUsers } from "./tests/utils/dummyList";
 import { createUserInformationEndpoints } from "./endpoints/userInfo-endpoint";
 import { createLikeEndpoints } from "./endpoints/like-endpoint";
-import { createPostEndpoints } from "./endpoints/createPost-endpoints";
+import { createPostEndpoints } from "./endpoints/post-endpoints";
 import path from 'path';
 
 

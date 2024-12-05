@@ -32,7 +32,7 @@ function App() {
             <Route path='add-recipe' element={<AddRecipe />} />
             <Route path="search" element={<SearchPage />} />
             <Route path="friends" element={<FriendsPage />} />
-            <Route path="recipe/:id" element={<FullViewRecipe />} />
+            <Route path="recipe/:recipeID" element={<FullViewRecipe />} />
         </Route >
           <Route path="/profile/:username" element={<UserProfilePage />}>
             <Route index element={<UserPostedRecipesList />} />

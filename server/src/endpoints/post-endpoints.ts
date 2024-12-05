@@ -1,6 +1,6 @@
 import { Database } from "sqlite";
 import { Request, Response } from "express";
-import { createPost, deletePost } from "../utils/post-utils";
+import { createPost, deletePost, getRecipeInfo, getRecipeInstructions } from "../utils/post-utils";
 import multer from "multer";
 
 // Define storage 
@@ -33,6 +33,19 @@ export function createPostEndpoints(app: any, db: Database) {
   app.delete("/delete/:recipeID", (req: Request, res: Response) => {
     //console.log("Received request for deleting post");
     deletePost(req, res, db);
+  });
+
+  // Fetch Recipe information
+  app.get("/recipe-information/:recipeID", (req: Request, res: Response) => {
+    console.log("Received request for fetching recipe information");
+    getRecipeInfo(req, res, db);
+  });
+
+  
+  // Fetch Recipe's instructions
+  app.get("/recipe-instructions/:recipeID", (req: Request, res: Response) => {
+    console.log("Received request for fetching recipe's instructions");
+    getRecipeInstructions(req, res, db);
   });
 }
 

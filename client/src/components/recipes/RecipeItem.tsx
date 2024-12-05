@@ -80,7 +80,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
     if (recipeOwner.picture) {
       if(recipeOwner.picture.startsWith("/uploads/avatar/")){
         let path = `${API_BASE_URL}${recipeOwner.picture}`;
-        //console.log(path);
+        console.log("Result: ", path);
         setAvatar(path);
       } else{
         setAvatar(recipeOwner.picture);

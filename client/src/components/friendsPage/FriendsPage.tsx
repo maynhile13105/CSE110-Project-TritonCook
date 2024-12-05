@@ -23,7 +23,7 @@ const FriendsPage = () => {
   
     return (
       <div className="user-list-container">
-        <div className="section">
+        <div id="section">
           <div className="section-title">Friends</div>
           <div className="list">
             {friends.map((friend) => (
@@ -36,7 +36,7 @@ const FriendsPage = () => {
           <p className="see-more">... See more</p>
         </div>
   
-        <div className="section">
+        <div id="section">
           <div className="section-title">Followers</div>
           <div className="list">
             {followers.map((follower) => (
@@ -49,7 +49,7 @@ const FriendsPage = () => {
           <p className="see-more">... See more</p>
         </div>
   
-        <div className="section">
+        <div id="section">
           <div className="section-title">Following</div>
           <div className="list">
             {following.map((following) => (

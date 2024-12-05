@@ -194,3 +194,63 @@ export async function deletePost(req: Request, res: Response, db: Database) {
     res.status(500).json({ error: 'An error occurred while deleting the post recipe.' });
   }
 }
+
+export async function getRecipeInfo(req: Request, res: Response, db: Database) {
+
+  //console.log("Fetching posted recipes...");
+  const { recipeID } = req.params;
+  //console.log("userID received in backend: ", [userID]);
+  if (!recipeID) {
+    return res.status(400).json({ error: 'Missing required fields: recipeID' });
+  }
+
+  try {
+    // Fetch the recipe details
+    const recipe = await db.get(
+      `
+      SELECT *
+      FROM recipes
+      WHERE id = ?
+      `,
+      [recipeID]
+    );
+
+    if (!recipe) {
+      return res.status(404).json({ error: 'Recipe not found' });
+    }
+
+    return res.status(200).json({ data: recipe });
+  } catch (error) {
+    console.error("Error fetching recipe:", error);
+    return res.status(500).json({ error: "An error occurred while fetching the requested recipe." });
+  }
+}
+
+export async function getRecipeInstructions(req: Request, res: Response, db: Database) {
+
+  //console.log("Fetching posted recipes...");
+  const { recipeID } = req.params;
+  //console.log("userID received in backend: ", [userID]);
+  if (!recipeID) {
+    return res.status(400).json({ error: 'Missing required fields: recipeID' });
+  }
+
+  try {
+    // Fetch the recipe instructions
+    const instructions = await db.all(
+      `
+      SELECT img, description
+      FROM recipe_instructions
+      WHERE recipeID = ?
+      ORDER BY step ASC
+      `,
+      [recipeID]
+    );
+
+    // Combine recipe and instructions in the response
+    return res.status(200).json({ data : instructions });
+  } catch (error) {
+    console.error("Error fetching recipe:", error);
+    return res.status(500).json({ error: "An error occurred while fetching the requested recipe." });
+  }
+}
