@@ -105,7 +105,7 @@ const LoginForm = () => {
           />
         </div>
 
-        <div>
+        <div className="sign-in-button-div">
           <button type="submit" className="sign-in-button" disabled={loading}>
             {loading ? "Signing In..." : "Sign In"}
           </button>
@@ -134,7 +134,9 @@ const LoginForm = () => {
       <div style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>
         Another way to login?
       </div>
+      <div className="google-button">
       <LoginButton />
+      </div>
       <div className="or-divider">
         Or
       </div>

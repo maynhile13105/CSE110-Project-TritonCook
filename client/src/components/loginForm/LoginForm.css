@@ -110,3 +110,20 @@
   margin-left: 10px;
   margin-right: 5%;
 }
+
+.create-account-button,
+.guest-account-button,
+.sign-in-button
+.google-button {
+  margin: 15px auto;
+  padding: 10px;
+  width: 90%;
+  font-size: 30px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: #1a73e8;
+  border: 2px solid #00aeff;
+  text-align: center;
+  color: white;
+}
