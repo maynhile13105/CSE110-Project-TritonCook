@@ -3,36 +3,63 @@ import { Profile, Recipe } from "../../types/types";
 import './RecipeItem.css';
 import { Link } from "react-router-dom";
 import { addFavoriteRecipe, deleteFavoriteRecipe } from "../../utils/favorite-utils";
-import { AppContext } from "../../context/AppContext";
-import { fetchUsername } from "../../utils/userInfo-utils";
+import { AppContext, initialState } from "../../context/AppContext";
+import { fetchProfileUsingID } from "../../utils/userInfo-utils";
 import { addLike, fetchNumberOfLikes, removeLike } from "../../utils/like-utils";
+import { deleteRecipe } from "../../utils/post-utils";
+import { API_BASE_URL } from "../../constants/constants";
 
 interface RecipeItemProps {
   currentRecipe: Recipe;
 };
 
 const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
+  console.log("Recipe: ", currentRecipe);
+
+  const [resultImg, setResultImg] = useState("");
+  useEffect(() => {
+    //load result image
+    if (currentRecipe.result_img) {
+      if(currentRecipe.result_img.startsWith("/uploads/recipes/results")){
+        let path = `${API_BASE_URL}${currentRecipe.result_img}`;
+        console.log("result img path:", path);
+        setResultImg(path);
+      } else{
+        setResultImg(currentRecipe.result_img);
+      };      
+    }
+  }, [])
+  //State for user's profile
+  const {userProfile} = useContext(AppContext);
+
   // State for favorite recipes list
   const { favoriteRecipes, setFavoriteRecipes } = useContext(AppContext);
 
+  //State for recipes list on news feed
+  const { setNewsfeedRecipes } = useContext(AppContext);
+
+  //State for recipes list that the user posted
+  const { setPostedRecipes} = useContext(AppContext);
   // State for modal visibility
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   //Get token from localStorage to check if user is logged in
   const token = localStorage.getItem("token");
 
+  const [showCommentOrReportPopup, setShowCommentOrReportPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState<string>("");
 
   //Get recipe owner's username
-  const [ownerUsername, setownerUsername] = useState<string>(""); //state for handling recipe's owner username
+  const [recipeOwner, setRecipeOwner] = useState<Profile>(initialState.userProfile); //state for handling recipe's owner username - initial: null
   useEffect(()=>{
-    loadOwnerUsername();
+    loadOwnerProfile();
   }, [currentRecipe.userID]);
 
-  const loadOwnerUsername = async () => {
+  const loadOwnerProfile = async () => {
     try {
-        const ownername = await fetchUsername(currentRecipe.userID); // Fetch displayed recipes from backend
-        //console.log("Fetched recipe's owner username in frontend:", ownername);  // Log the recipes
-        setownerUsername(ownername);
+        const ownerProfile = await fetchProfileUsingID(currentRecipe.userID); // Fetch displayed recipes from backend
+        console.log("Fetched recipe's owner username in frontend:", ownerProfile);  // Log the recipes
+        setRecipeOwner(ownerProfile);
     } catch (error) {
         console.error("Error fetching recipes:", error);
     }
@@ -45,6 +72,22 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
     const isFavoriteStatus = favoriteRecipes.some((fav) => fav.id === currentRecipe.id); //initial favorite status state
     setIsFavorite(isFavoriteStatus); //set initial status
   }, [favoriteRecipes, currentRecipe.id]);
+
+  //Fetching owner's avatar
+  const [avatar, setAvatar] = useState<string>("");
+
+  useEffect(() => {
+    if (recipeOwner.picture) {
+      if(recipeOwner.picture.startsWith("/uploads/avatar/")){
+        let path = `${API_BASE_URL}${recipeOwner.picture}`;
+        //console.log(path);
+        setAvatar(path);
+      } else{
+        setAvatar(recipeOwner.picture);
+      };      
+    };      
+  }, [recipeOwner]); // Depend on recipeOwner.picture to update avatar
+
 
   //Handle Favorite Button Click
   const handleFavoriteClick = () => {
@@ -78,7 +121,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
   useEffect(() => {
    loadNumberOfLikes(); 
   }, [currentRecipe.id]);
-  console.log(`Liked Recipes in Recipe Item: ${likedRecipes}`);
+  //console.log(`Liked Recipes in Recipe Item: ${likedRecipes}`);
   useEffect(() => {
     const isLikeStatus = likedRecipes.some((recipe) => recipe.id === currentRecipe.id);
     //console.log(`${currentRecipe.id}: ${isLikeStatus}`);
@@ -120,22 +163,60 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
     );
    }
   };
+  //Delete functionality
 
+  //visibility of the delete confirmation modal
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState<boolean>(false);
+  
+  //state stores which recipe is being considered for deletion
+  const [recipeToDelete, setRecipeToDelete] = useState<Recipe | null>(null);
+  const handleDeleteClick = (recipe:Recipe) => {
+    setRecipeToDelete(recipe); // Store the recipe to be deleted
+    setIsDeleteModalVisible(true); // Show the delete confirmation modal
+  };
 
+  //Delete Confirmation Modal
+  const handleDeleteConfirmation = async () => {
+    if (recipeToDelete) {
+      // Perform the delete operation (you can call an API to delete from the database)
+      // Delete from the database
+      await deleteRecipe(recipeToDelete.id); 
+      setPostedRecipes(prev => prev.filter(recipe => recipe.id !== recipeToDelete.id)); // Update local state
+      setFavoriteRecipes(prev => prev.filter(recipe => recipe.id !== recipeToDelete.id)); // Update local state
+      setNewsfeedRecipes(prev => prev.filter(recipe => recipe.id !== recipeToDelete.id)); // Update local state
+    }
+    setIsDeleteModalVisible(false); // Close the modal
+    setRecipeToDelete(null); // Clear the recipe to delete
+  };
+  
+  const handleDeleteCancel = () => {
+    setIsDeleteModalVisible(false); // Close the modal without doing anything
+    setRecipeToDelete(null); // Clear the recipe to delete
+  };
 
-
+  const handlePopup = (message: string) => {
+    setPopupMessage(message);
+    setShowCommentOrReportPopup(true);
+    setTimeout(() => {
+      setShowCommentOrReportPopup(false); // Hide after 3 seconds
+    }, 3000);
+  };
   return (
     <div className="post-box">
       <div className="user-inf">
         <div className="close">
-          <img src="/profile.svg" alt="Profile" />
-          {ownerUsername}
+          {avatar? 
+            (<img className="avatar-on-recipe" src={avatar} alt="owner-avatar" />)
+            :
+            (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile"  id="default-avatar-on-recipe" />)
+          }
+          <Link to={`/profile/${recipeOwner.name}`} className="recipe-owner">{recipeOwner.name}</Link>
         </div>
         <button className="fav-button" onClick={handleFavoriteClick}>
           <img
             src={isFavorite ? "/images/Heart.svg" : "/images/unfavorite.svg"}
             alt="Button Image"
-          ></img>
+          />
         </button>
       </div>
       <br />
@@ -151,7 +232,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
         <Link to={`/home/recipe/${currentRecipe.id}`}>...See Details</Link>
       </div>
       <div>
-        <img src={currentRecipe.result_img} className="post-img" alt="Recipe" />
+        <img src={resultImg} className="post-img" alt="Recipe" />
       </div>
       <div className="horizontal-line"></div>
       <div className="user-inf">
@@ -161,13 +242,43 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
               src={isLiked ? "/images/colored-thumbs-up.svg" : "/images/uncolored-thumbs-up.svg"}
               alt={isLiked ? "Like button Image" : "Unlike button image"}
               style={{width : "40px"}}
-            ></img>
+            />
           </button>
-          <p style={{fontSize: "20px"}}>{numberOfLikes} {numberOfLikes>0? "likes" : "like"}</p>
+          <a style={{fontSize: "20px"}}>{numberOfLikes}</a>
         </div>
-        <img src="/Comment.svg" alt="Comment" />
-        <img src="/Report.svg" alt="Report" />
+        
+        <img src="/Comment.svg" alt="Comment" onClick={() => handlePopup("Comments will be available soon!")}/>
+
+        <button className={userProfile.name === recipeOwner.name ? 'visible' : "hidden"} 
+          id="delete-button" 
+          onClick={() => handleDeleteClick(currentRecipe)}
+        >
+          <img 
+            src={"/images/trashcan-icon.svg"}
+            alt="Delete Image"
+            style={{width: "30px"}}
+          />
+        </button>
+
+          <button 
+            className={userProfile.name === recipeOwner.name ? 'hidden' : "visible"} 
+            id="report-button" 
+            onClick={() => handlePopup("Reports will be available soon!")}
+          >
+            <img 
+              src="/Report.svg" 
+              alt="Report"
+              style={{width: "30px"}}
+            />
+          </button>
       </div>
+
+        {showCommentOrReportPopup && (
+          <div className="notif-popup">
+            {popupMessage}
+          </div>
+        )}
+
 
       {/* Modal for not logged in */}
       {isModalVisible && (
@@ -182,8 +293,22 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Modal */}
+      {isDeleteModalVisible && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Are you sure you want to delete this recipe?</h2>
+            <p>This action cannot be undone.</p>
+            <button onClick={handleDeleteCancel}>Cancel</button>
+            <button onClick={handleDeleteConfirmation}>Yes, Delete</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default RecipeItem;
+
+

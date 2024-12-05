@@ -6,6 +6,7 @@
   padding-right: 6%;
   width: auto;
   gap: 5%;
+  overflow: hidden;
 }
 
 .post-item {

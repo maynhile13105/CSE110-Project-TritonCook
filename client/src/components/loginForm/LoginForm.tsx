@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./LoginForm.css";
 import { Link, useNavigate } from "react-router-dom";
 import LoginButton from "../google/LoginButton";
 import { AppContext } from "../../context/AppContext";
 import { API_BASE_URL } from "../../constants/constants";
+import { fetchUserProfile } from "../../utils/userInfo-utils";
 
 const LoginForm = () => {
   const [username, setUsername] = useState("");
@@ -11,6 +12,7 @@ const LoginForm = () => {
   const [loginError, setLoginError] = useState("");
   const [loading, setLoading] = useState(false);
   const { token, setToken } = useContext(AppContext);
+  const {setUserProfile} = useContext(AppContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e: { preventDefault: () => void }) => {
@@ -47,6 +49,13 @@ const LoginForm = () => {
       console.log(token)
 
       navigate("/home");
+
+
+      const profile = await fetchUserProfile(); // Fetch user profile
+      //console.log("Fetched user profile in frontend:", profile);  // Log the recipes
+      //console.log(`userProfile.name: ${profile.name}`);
+      setUserProfile(profile);
+
     } catch (err) {
       console.error("Login failed:", err);
       setLoginError("Invalid username or password. Please try again.");
@@ -132,8 +141,17 @@ const LoginForm = () => {
 
       <div className="guest">
         <div className="guest-account-button">
-          <Link to="/home" className="guest-account-link">
-            <span>Continue As Guest</span>
+        <Link to="/home" className="guest-account-link" onClick={() => {
+          setUserProfile({
+            id: "",
+            name: "",
+            email: "",
+            picture: "",
+            isGuest: true,
+          });
+          navigate("/home");
+        }}>
+      <span>Continue As Guest</span>
           </Link>
         </div>
       </div>

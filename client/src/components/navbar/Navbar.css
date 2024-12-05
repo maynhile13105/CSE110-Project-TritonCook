@@ -2,7 +2,6 @@ main{
   position: sticky; 
   top: 0;
   z-index: 1000;
-  width: 100vw;
   height: 94px;
   display: flex;
   justify-content: space-between;
@@ -71,10 +70,61 @@ img.postImage{
   background-color: #FFF1C2;
 }
 
-.userprofile{
+.profile{
   width: 70px;
   height: 70px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #000000;
+}
+#no-image{
+  background-color: ;
+}
+
+.notif-popup {
+  position: fixed;
+  top: 30px;
+  left: 200px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  z-index: 1000;
+  animation: fadein 0.3s ease-in-out;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-button {
+  font-size: 24px;
+  font-weight: bold;
+  color: #000;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  width: 100px;
+  height: 95px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.login-button:hover {
+  background-color: #fff1c2;
+  color: #000;
 }
