@@ -48,7 +48,6 @@ const UserInfoPage = () => {
     };
 
     
-    
     return (
       <div className="page_style">
         {/* Center Top Button */}
@@ -61,63 +60,26 @@ const UserInfoPage = () => {
 
         <div className="page-container">
           <div className="blocks-container">                                       
-            <div className={isUserAccountPage? "visible":"hidden" } id="block" >
-              <div className="block-text-container">
-                <span className="block-text">Username</span>
-              </div>
-              <div className="block-info-container">
-                <span className="block-info">{ownerAccountPage.name}</span>
-              </div>
-            </div>
-
-            <div className={isUserAccountPage? "visible":"hidden" } id="block" >
-              <div className="block-text-container">
-                <span className="block-text">Password</span>
-              </div>
-              <div className="block-info-container">
-                <span className="block-info">{password||"N/A"}</span>
-              </div>
-            </div>
-
-            <div className={isUserAccountPage? "visible":"hidden" } id="block" >
-              <div className="block-text-container">
-                <span className="block-text">Email</span>
-              </div>
-              <div className="block-info-container">
-                <span className="block-info">{ownerAccountPage.email}</span>
-              </div>
-            </div>
-
-            <div className={isUserAccountPage? "visible":"hidden" } id="block" >
-              <div className="block-text-container">
-                <span className="block-text">D.O.B</span>
-              </div>
-              <div className="block-info-container">
-                <span className="block-info">N/A</span>
-              </div>
-            </div>
-
-            <div className={isUserAccountPage? "visible":"hidden" } id="block" >
-              <div className="block-text-container">
-                <span className="block-text">Ethics</span>
-              </div>
-              <div className="block-info-container">
-                <span className="block-info">{ownerAccountPageInfo.ethics||"N/A"}</span>
-              </div>
-            </div>
-
-            <div className={isUserAccountPage? "visible":"hidden" } id="block" >
-              <div className="block-text-container">
-                <span className="block-text">Phone</span>
-              </div>
-              <div className="block-info-container">
-                <span className="block-info">{ownerAccountPageInfo.phone||"N/A"}</span>
-              </div>
-            </div>
+            {[
+                { label: "Username", info: ownerAccountPage.name || "N/A" },
+                { label: "Password", info: "*".repeat(password.length) || "N/A" },
+                { label: "Email", info: ownerAccountPage.email || "N/A" },
+                { label: "D.O.B", info: ownerAccountPageInfo.dob || "N/A" },
+                { label: "Ethics", info: ownerAccountPageInfo.ethics || "N/A" },
+                { label: "Phone", info: ownerAccountPageInfo.phone || "N/A" }
+            ].map(({ label, info }, index) => (
+                <div key={index} id='block' className={isUserAccountPage ? "visible-block" : "hidden-block"}>
+                  <div className="block-text-container">
+                    <span className="block-text">{label}</span>
+                  </div>
+                  <div className="block-info-container">
+                    <span className="block-info">{info}</span>
+                  </div>
+                </div>
+            ))}
           </div>
-
-        </div>
       </div>
+    </div>
     );
   };
   

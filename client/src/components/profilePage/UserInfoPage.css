@@ -147,10 +147,10 @@
   position: relative;
 }
 
-.hidden {
+.hidden-block {
   display: none;
 }
 
-.visible {
+.visible-block {
   display: block;
 }
