@@ -75,6 +75,14 @@
     cursor: pointer;
 }
 
+.like-button {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
 .horizontal-line {
     border-top: 1px solid #030000;
     margin: 20px 0;
@@ -149,10 +157,7 @@
     height:110px;
   }
 
-  .notif-popup {
-    position: fixed;
-    top: 30px;
-    left: 200px;
+  .recipe-notif-popup {
     background-color: #fff;
     color: #000;
     border: 1px solid #ccc;

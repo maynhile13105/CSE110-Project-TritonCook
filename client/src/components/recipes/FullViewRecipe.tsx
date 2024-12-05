@@ -1,34 +1,32 @@
 import { useContext, useEffect, useState } from "react";
-import { Profile, Recipe } from "../../types/types";
+import { Profile, Recipe, recipeInstruction } from "../../types/types";
 import './RecipeItem.css';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { addFavoriteRecipe, deleteFavoriteRecipe } from "../../utils/favorite-utils";
 import { AppContext, initialState } from "../../context/AppContext";
 import { fetchProfileUsingID } from "../../utils/userInfo-utils";
 import { addLike, fetchNumberOfLikes, removeLike } from "../../utils/like-utils";
-import { deleteRecipe } from "../../utils/post-utils";
+import { deleteRecipe, fetchRecipeInfo, fetchRecipeInstructions } from "../../utils/post-utils";
 import { API_BASE_URL } from "../../constants/constants";
 
-interface RecipeItemProps {
-  currentRecipe: Recipe;
-};
+const FullViewRecipe = () => {
 
-const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
-  console.log("Recipe: ", currentRecipe);
+  const { recipeID } = useParams(); //Get userID from the URL
 
-  const [resultImg, setResultImg] = useState("");
-  useEffect(() => {
-    //load result image
-    if (currentRecipe.result_img) {
-      if(currentRecipe.result_img.startsWith("/uploads/recipes/results")){
-        let path = `${API_BASE_URL}${currentRecipe.result_img}`;
-        console.log("result img path:", path);
-        setResultImg(path);
-      } else{
-        setResultImg(currentRecipe.result_img);
-      };      
-    }
-  }, [])
+  console.log("RecipeID: ", recipeID);
+  const [currentStep, setCurrentStep] = useState(0);
+  
+  const [recipeInfo, setRecipeInfo] = useState<Recipe>({
+    id: "",
+    userID: "",
+    title: "",
+    ingredients: "",
+    estimate: 0, // Default number
+    cuisine: "",
+    result_img: "",
+    time: "",
+  });
+  const [recipeInstructions, setRecipeInstructions] = useState<recipeInstruction[]>([]);
   //State for user's profile
   const {userProfile} = useContext(AppContext);
 
@@ -48,20 +46,47 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
 
   const [showCommentOrReportPopup, setShowCommentOrReportPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState<string>("");
+  //Get recipe information
+  useEffect(()=>{
+    if(recipeID){
+        loadRecipeInfo(recipeID);
+        loadRecipeInstructions(recipeID);
+    }
+  }, [recipeID])
+  
+  const loadRecipeInfo = async (recipeID: string) => {
+    try{
+        const info = await fetchRecipeInfo(recipeID); //Fetch recipe from backend
+        console.log("Fetched recipe informations: ", info);
+        setRecipeInfo(info);
+    } catch (error) {
+      console.error("Error fetching recipes:", error);
+    }
+  };
+  const loadRecipeInstructions = async (recipeID: string) => {
+    try{
+        const instructions = await fetchRecipeInstructions(recipeID); //Fetch recipe from backend
+        console.log("Fetched recipe instructions: ", instructions);
+        setRecipeInstructions(instructions);
+    } catch (error) {
+      console.error("Error fetching recipe's instructions:", error);
+    }
+  };
 
   //Get recipe owner's username
   const [recipeOwner, setRecipeOwner] = useState<Profile>(initialState.userProfile); //state for handling recipe's owner username - initial: null
   useEffect(()=>{
     loadOwnerProfile();
-  }, [currentRecipe.userID]);
+  }, [recipeInfo.userID]);
 
   const loadOwnerProfile = async () => {
     try {
-        const ownerProfile = await fetchProfileUsingID(currentRecipe.userID); // Fetch displayed recipes from backend
-        console.log("Fetched recipe's owner username in frontend:", ownerProfile);  // Log the recipes
+        console.log("RecipeInfo: ", recipeInfo);
+        const ownerProfile = await fetchProfileUsingID(recipeInfo.userID); // Fetch displayed recipes from backend
+        //console.log("Fetched recipe's owner username in frontend:", ownerProfile);  // Log the recipes
         setRecipeOwner(ownerProfile);
     } catch (error) {
-        console.error("Error fetching recipes:", error);
+        console.error("Error fetching owner reicpes's profile:", error);
     }
   };
 
@@ -69,9 +94,9 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
   useEffect(() => {
-    const isFavoriteStatus = favoriteRecipes.some((fav) => fav.id === currentRecipe.id); //initial favorite status state
+    const isFavoriteStatus = favoriteRecipes.some((fav) => fav.id === recipeInfo.id); //initial favorite status state
     setIsFavorite(isFavoriteStatus); //set initial status
-  }, [favoriteRecipes, currentRecipe.id]);
+  }, [favoriteRecipes, recipeInfo.id]);
 
   //Fetching owner's avatar
   const [avatar, setAvatar] = useState<string>("");
@@ -80,7 +105,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
     if (recipeOwner.picture) {
       if(recipeOwner.picture.startsWith("/uploads/avatar/")){
         let path = `${API_BASE_URL}${recipeOwner.picture}`;
-        console.log("Result: ", path);
+        //console.log(path);
         setAvatar(path);
       } else{
         setAvatar(recipeOwner.picture);
@@ -103,12 +128,12 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
     //if new favorite status state is true, add this recipe to the user's list of favorite recipes and also add data to database
     //else remove this recipe out of the user's list of favorite recipes and remove data out of database
     if (newFavoriteStatus) {
-      addFavoriteRecipe(currentRecipe.id); //add into database
-      setFavoriteRecipes((prev) => [currentRecipe, ...prev]); //add to the list
+      addFavoriteRecipe(recipeInfo.id); //add into database
+      setFavoriteRecipes((prev) => [recipeInfo, ...prev]); //add to the list
     } else {
-      deleteFavoriteRecipe(currentRecipe.id); // remove out of database
+      deleteFavoriteRecipe(recipeInfo.id); // remove out of database
       setFavoriteRecipes((prevFavorites) =>
-        prevFavorites.filter((recipe) => recipe.id !== currentRecipe.id)
+        prevFavorites.filter((recipe) => recipe.id !== recipeInfo.id)
       );//remove out of list
     }
   };
@@ -120,18 +145,18 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
 
   useEffect(() => {
    loadNumberOfLikes(); 
-  }, [currentRecipe.id]);
+  }, [recipeInfo.id]);
   //console.log(`Liked Recipes in Recipe Item: ${likedRecipes}`);
   useEffect(() => {
-    const isLikeStatus = likedRecipes.some((recipe) => recipe.id === currentRecipe.id);
+    const isLikeStatus = likedRecipes.some((recipe) => recipe.id === recipeInfo.id);
     //console.log(`${currentRecipe.id}: ${isLikeStatus}`);
     setIsLiked(isLikeStatus);
-  }, [likedRecipes, currentRecipe.id]);
+  }, [likedRecipes, recipeInfo.id]);
 
 
   const loadNumberOfLikes = async () => {
    try {
-     const count = await fetchNumberOfLikes(currentRecipe.id); // Fetch number of likes
+     const count = await fetchNumberOfLikes(recipeInfo.id); // Fetch number of likes
      setNumberOfLikes(count);
    } catch (error) {
      console.error("Error fetching number of likes:", error);
@@ -150,16 +175,16 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
     let newNumberOfLikes = numberOfLikes;
    
     if (newLikeStatus) {
-      addLike(currentRecipe.id);
+      addLike(recipeInfo.id);
       newNumberOfLikes += 1;
       setNumberOfLikes(newNumberOfLikes);
-      setLikedRecipes((prev) => [currentRecipe, ...prev]);
+      setLikedRecipes((prev) => [recipeInfo, ...prev]);
     } else {
-      removeLike(currentRecipe.id);
+      removeLike(recipeInfo.id);
       newNumberOfLikes -= 1;
       setNumberOfLikes(newNumberOfLikes);
       setLikedRecipes((prev) =>
-      prev.filter((recipe) => recipe.id !== currentRecipe.id)
+      prev.filter((recipe) => recipe.id !== recipeInfo.id)
     );
    }
   };
@@ -201,6 +226,54 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
       setShowCommentOrReportPopup(false); // Hide after 3 seconds
     }, 3000);
   };
+
+  /*
+  const [resultImg, setResultImg] = useState("");
+  useEffect(() => {
+    //load result image
+    if (recipeInfo.result_img) {
+      if(recipeInfo.result_img.startsWith("/uploads/recipes/results")){
+        let path = `${API_BASE_URL}${recipeInfo.result_img}`;
+        console.log("result img path:", path);
+        setResultImg(path);
+      } else{
+        setResultImg(recipeInfo.result_img);
+      };      
+    }
+  }, [])
+
+  // Handlers for instruction navigation
+  const [instuctionImgPath, setInstructionImgPath] = useState<string>("/images/no-images.jpg");
+
+  useEffect(() => {
+    //load result image
+    if (currentStep < recipeInstructions.length) {
+      console.log("current Step: ", currentStep);
+      if(recipeInstructions[currentStep].img.startsWith("/uploads/recipes/instructions")){
+        console.log("imgPath: ", recipeInstructions[currentStep].img);
+        let path = `${API_BASE_URL}${recipeInstructions[currentStep].img}`;
+        console.log("path: ", path);
+        setInstructionImgPath(path);
+        console.log("setPath: ", instuctionImgPath);
+      } else{
+        setInstructionImgPath(recipeInstructions[currentStep].img);
+      };      
+    }
+  }, [currentStep])
+*/
+
+  const goToNextStep = () => {
+    if (currentStep < recipeInstructions.length) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+  const goToPreviousStep = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+ 
+
   return (
     <div className="post-box">
       <div className="user-inf">
@@ -220,20 +293,59 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
         </button>
       </div>
       <br />
-      <div className="post-name">{currentRecipe.title}</div>
+      <div className="post-name">{recipeInfo.title}</div>
       <br />
       <div className="post-est-ingr">
-        Estimate: {currentRecipe.estimate} minutes
+        Estimate: {recipeInfo.estimate} minutes
         <br />
-        Ingredients: {currentRecipe.ingredients}
-      </div>
-
-      <div className="post-see-details">
-        <Link to={`/home/recipe/${currentRecipe.id}`}>...See Details</Link>
+        Ingredients: {recipeInfo.ingredients}
       </div>
       <div>
-        <img src={resultImg} className="post-img" alt="Recipe" />
+        <div className="post-instructions">Instructions</div>
+        <div className="instruction-step">
+          <div className="instruction-content">
+            <button onClick={goToPreviousStep} disabled={currentStep === 0} className="side-button right-button">
+              &lt;
+            </button>
+            {currentStep < recipeInstructions.length && recipeInstructions[currentStep] ? (
+              <div className="img-and-ins">
+                <div className="description">
+                  <p>Step {currentStep + 1}: {recipeInstructions[currentStep]?.description || 'No description available'}</p>
+                </div>
+
+                <img
+                  src={recipeInstructions[currentStep]?.img?.startsWith("/uploads/recipes/instructions")
+                    ? `${API_BASE_URL}${recipeInstructions[currentStep].img}`
+                    : '/images/no-picture.jpg'}
+                  className="post-img"
+                  alt={`Step ${currentStep + 1}`}
+                />
+              </div>
+            ) : (
+              <div className="img-and-ins">
+                <div className="description">
+                  <p>Result</p>
+                </div>
+
+                <img
+                  src={recipeInfo.result_img?.startsWith("/uploads/recipes/results")
+                    ? `${API_BASE_URL}${recipeInfo.result_img}`
+                    : '/images/no-picture.jpg'}
+                  className="post-img"
+                  alt={`Result Image`}
+                />
+              </div>
+            )}
+
+
+            <button onClick={goToNextStep} disabled={currentStep === recipeInstructions.length}
+              className="side-button right-button">
+              &gt;
+            </button>
+          </div>
+        </div>
       </div>
+      
       <div className="horizontal-line"></div>
       <div className="user-inf">
         <div className="like-container">
@@ -251,7 +363,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
 
         <button className={userProfile.name === recipeOwner.name ? 'visible' : "hidden"} 
           id="delete-button" 
-          onClick={() => handleDeleteClick(currentRecipe)}
+          onClick={() => handleDeleteClick(recipeInfo)}
         >
           <img 
             src={"/images/trashcan-icon.svg"}
@@ -274,7 +386,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
       </div>
 
         {showCommentOrReportPopup && (
-          <div className="recipe-notif-popup">
+          <div className="notif-popup">
             {popupMessage}
           </div>
         )}
@@ -309,6 +421,6 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
   );
 };
 
-export default RecipeItem;
+export default FullViewRecipe;
 
 

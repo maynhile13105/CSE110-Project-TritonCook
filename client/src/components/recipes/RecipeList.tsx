@@ -50,7 +50,7 @@ const RecipeList = () => {
 
    //console.log("Fav recipes in Item List", favoriteRecipes);
    //console.log("Liked recipes in Item List", likedRecipes);
-  
+    
   useEffect(() => {
     const applyFiltersAndSorting = async () => {
       // Filter recipes based on applied filters
@@ -109,7 +109,7 @@ const RecipeList = () => {
   };
 
   return (
-    <div className="recipes-container">
+    <div className="recipes-container-list">
       {filteredRecipes.length > 0 ? (
         filteredRecipes.map((recipe) => (
           <div className="post-item" key={recipe.id}>

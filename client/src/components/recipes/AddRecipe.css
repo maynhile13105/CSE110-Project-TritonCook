@@ -65,10 +65,11 @@ form {
     border-radius: 8px;
 }
 
-.time-unit{
-    font-weight: bold;
-    
-}
+.time-unit {
+    font-size: 20px; /* Adjust to your preferred size */
+    font-weight: 600;
+    margin-top: 0;
+  }
 
 .form-actions {
     display: flex;

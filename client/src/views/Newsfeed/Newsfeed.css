@@ -24,7 +24,7 @@
 }
 
 .page-content {
-  overflow-y: scroll; /* Enable scrolling in the main content area */
+  overflow-y: auto;
   margin-left: 200px; /* Leave space for the sidebar */
   width: calc(100% - 200px); /* Make the content area take the rest of the space */
   height: 100vh; /* Full height */

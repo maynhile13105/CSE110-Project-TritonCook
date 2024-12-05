@@ -13,6 +13,18 @@ const UserProfilePage = () => {
   const {userProfile, setUserProfile} = useContext(AppContext); // the user's profile who is using the app.
   const [ownerAccountPage, setOwnerAccountPage] = useState<Profile>(initialState.userProfile);
   const [avatar, setAvatar] = useState<string>("");
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupMessage, setPopupMessage] = useState<string>("");
+
+  const handlePopup = (message: string) => {
+    setPopupMessage(message);
+    setShowPopup(true);
+    setTimeout(() => {
+      setShowPopup(false); // Hide after 3 seconds
+    }, 3000);
+  };
+
   useEffect(() => {
     if(username){
       loadOwnerProfilePage(username);
@@ -58,6 +70,15 @@ const UserProfilePage = () => {
 
   //console.log("username from the path", [username])
   //console.log(" owner username: ", [ownerAccountPage.name]);
+
+  const [isUser, setIsUser] = useState(false);
+  useEffect(() => {
+    if (userProfile && ownerAccountPage) {
+      const isCurrentUser = userProfile.name === ownerAccountPage.name;
+      setIsUser(isCurrentUser);
+      console.log("isUser:", isCurrentUser);
+    }
+  }, [userProfile, ownerAccountPage]);
   return (
     <div>
       <div className="topbar">
@@ -65,22 +86,28 @@ const UserProfilePage = () => {
       </div>
       <div className='under-navbar'>
         <div className='sidebar-profilePage'>
-          <div className="information">
+          <div >
             {/* <span className="button-text">Information</span> */}
-            <Link to={`/profile/${ownerAccountPage.name}/information`} className="accountPage-button-text">Information</Link>
-            <img className="accountPage-icon" src="/images/information-icon.svg" />
+            <Link to={`/profile/${ownerAccountPage.name}/information`} className="information" >
+              <div className="accountPage-button-text">Information</div>
+              <img className="accountPage-icon" src="/images/information-icon.svg" />
+            </Link>
           </div>
                 
-          <div className="posts">
+          <div >
             {/* <span className="button-text">Posts</span> */}
-            <Link to={`/profile/${ownerAccountPage.name}`} className="accountPage-button-text">Posts</Link>
-            <img className="accountPage-icon" src="/images/post-icon.svg"/>
+            <Link to={`/profile/${ownerAccountPage.name}` } className="posts">
+              <div className="accountPage-button-text">Posts</div>
+              <img className="accountPage-icon" src="/images/post-icon.svg"/>
+            </Link>
           </div>
       
-          <div className="friends">
+          <div onClick={() => handlePopup("Friends will be available soon!")}>
             {/* <span className="button-text">Friends</span> */}
-            <Link to="/home/friends" className="accountPage-button-text">Friends</Link>
-            <img className="accountPage-icon" src="/images/friends-icon.svg" />
+            <Link to="#" className="friends">
+              <div className="accountPage-button-text">Friends</div>
+              <img className="accountPage-icon" src="/images/friends-icon.svg" />
+            </Link>
           </div>
         </div>
 
@@ -93,24 +120,29 @@ const UserProfilePage = () => {
                 (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" id="avatar" />)
               }
             </div>
-            <button className="avatar-edit">
-              <img src="/images/camera-icon.svg" style={{width:"40px"}}/>
-            </button>
 
             {/* Right Corner Edit Icon */}
+            <button
+              style={{ display: isUser ? "block" : "none" }}
+              id="avatar-edit"
+              onClick={() => handlePopup("Edit Avatar will be available soon!")}
+            >
+              <img src="/images/camera-icon.svg" style={{ width: "40px" }} />
+            </button>
+
             <div className="username">
               {ownerAccountPage.name}
             </div>
           </div>
-          <div className={userProfile.name !== ownerAccountPage.name? "visible":"hidden" }
-            id="relation-buttons" >
-              <div className="friendship-button" role="button">
+          <div className={isUser? "hidden":"visible" }
+            id="relation-buttons">
+              <div className="friendship-button" role="button" onClick={() => handlePopup("Add Friends will be available soon!")}>
                 <img src="/images/add-friend-icon.svg" alt="add-friend-icon" 
                 style={{width:'70px'}}/>
                 Add friend
               </div>
 
-              <div className="follow-button" role="button">
+              <div className="follow-button" role="button" onClick={() => handlePopup("Follow will be available soon!")}>
                 <img src="/images/follow-icon.svg" alt="follow-me-icon"
                 style={{width:'70px'}}/>
                 Follow me
@@ -122,7 +154,12 @@ const UserProfilePage = () => {
           </div>
         </div>
       </div>  
-    </div>  
+      {showPopup && (
+          <div className="friends-notif-popup">
+            {popupMessage}
+          </div>
+        )}
+      </div>
     );
   };
   

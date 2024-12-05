@@ -99,6 +99,6 @@ describe('Navbar Component', () => {
   it('shows notification popup when the notification button is clicked', () => {
     renderNavbar();
     fireEvent.click(screen.getByTestId('notif'));
-    expect(screen.getByText(/Will be available soon!/i)).toBeInTheDocument();
+    expect(screen.getByText(/Notification will be available soon!/i)).toBeInTheDocument();
   });
 });

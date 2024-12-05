@@ -29,7 +29,7 @@ const Sidebar = () => {
   const ingredientsList: string[] = ingredientsData;
   const cuisineList: string[] = cuisinesData;
   const location = useLocation();
-  
+
   useEffect(() => {
     if (location.state?.showDropdown) {
       setDropdown(true); // Open dropdown if the state is set
@@ -152,7 +152,7 @@ const Sidebar = () => {
           </div>
         </Link>
         <Link to="/home/favorite"><div className='favoritebutton' data-testid='FavoriteButton'><img id="saved-icon" src='/images/favorite.svg' alt='favoriteIcon'/>Favorites</div></Link>
-        <div className='friendsbutton' onClick={handleFriendsClick}><img id="friends-icon" src='/images/friends.svg' alt='friendsIcon'/>Friends</div>
+        <Link to = "/home/friends"><div className='friendsbutton' onClick={handleFriendsClick}><img id="friends-icon" src='/images/friends.svg' alt='friendsIcon'/>Friends</div></Link>
         <Link to="#"><div className='filterbutton' onClick={toggleDropdown} data-testid="filter-button"><img id="filter-icon" src='/images/filter.svg' alt='filterIcon'/>Filter</div></Link>
         
         {dropdown && (
