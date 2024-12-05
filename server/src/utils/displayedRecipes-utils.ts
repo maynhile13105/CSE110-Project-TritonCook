@@ -80,7 +80,7 @@ export async function getRecipe(req: Request, res: Response, db: Database) {
     // Fetch the recipe instructions
     const instructions = await db.all(
       `
-      SELECT step, img, description
+      SELECT img, description
       FROM recipe_instructions
       WHERE recipeID = ?
       ORDER BY step ASC
@@ -93,7 +93,6 @@ export async function getRecipe(req: Request, res: Response, db: Database) {
       recipe: {
         ...recipe,
         instructions: instructions.map((instruction) => ({
-          step: instruction.step,
           img: instruction.img,
           description: instruction.description,
         })),
