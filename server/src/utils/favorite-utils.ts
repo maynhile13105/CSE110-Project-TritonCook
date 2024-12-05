@@ -25,7 +25,7 @@ export async function addFavoriteRecipe(req: Request, res: Response, db: Databas
 
   try {
     // Log to check the database connection
-    console.log("Adding recipe to the favorite list...");
+    //console.log("Adding recipe to the favorite list...");
     const { recipeID } = req.params;
     if (!recipeID) {
       return res.status(400).json({ error: 'Missing required fields' });
@@ -50,7 +50,7 @@ export async function deleteFavoriteRecipe(req: Request, res: Response, db: Data
 
   try {
 
-    console.log("DELETING FAVORTIE recipe ...");
+    //console.log("DELETING FAVORTIE recipe ...");
 
     const recipe = await db.get('SELECT * FROM favorite_recipes WHERE userID = ? AND recipeID = ?;', [userID, recipeID]);
     if (!recipe) {
@@ -81,11 +81,13 @@ export async function getFavoriteRecipes(req: Request, res: Response, db: Databa
       [userID]
     );
 
-    console.log('Fetched favorite recipes:', favoriteRecipesList);
+    //console.log('Fetched favorite recipes:', favoriteRecipesList);
     res.status(200).json({ data: favoriteRecipesList });
   } catch (error) {
     console.error('Error fetching favorite recipes:', error);
     res.status(500).json({ error: 'An error occurred while fetching favorite recipes.' });
   }
 }
+
+
 

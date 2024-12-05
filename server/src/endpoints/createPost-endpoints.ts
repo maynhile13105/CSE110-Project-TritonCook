@@ -1,17 +1,37 @@
 import { Database } from "sqlite";
 import { Request, Response } from "express";
-import { createPost, deletePost } from "../utils/createPost-utils";
+import { createPost, deletePost } from "../utils/post-utils";
+import multer from "multer";
 
-export function createPostEndpoints(app: any, db: Database, up: any) {
+// Define storage 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    if (file.fieldname.startsWith('instructionImages')) {
+      cb(null, './uploads/recipes/instructions');
+    } else if (file.fieldname === 'result_img') {
+      cb(null, './uploads/recipes/results');
+    }
+  },
+  filename: (req, file, cb) => {
+    const uniqueName = `${Date.now()}-${file.originalname}`;
+    cb(null, uniqueName);
+  },
+});
+// Set up multer 
+const upload = multer({ storage: storage });
+
+
+export function createPostEndpoints(app: any, db: Database) {
   // Create post
-  app.post("/post", (req: Request, res: Response) => {
-    console.log("Received request for adding post");
-    createPost(req, res, db, up);
-  });
+  app.post(
+    "/post",
+    upload.any(),
+    (req: Request, res: Response) => createPost(req, res, db)
+  );
 
   // Remove post
-  app.delete("/post", (req: Request, res: Response) => {
-    console.log("Received request for deleting post");
+  app.delete("/delete/:recipeID", (req: Request, res: Response) => {
+    //console.log("Received request for deleting post");
     deletePost(req, res, db);
   });
 }

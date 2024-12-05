@@ -57,6 +57,16 @@ beforeAll(async () => {
 
 afterEach(async () => {
   await db.run(
+    `
+    DELETE FROM recipe_instructions
+    WHERE recipeID IN (
+      SELECT id FROM recipes WHERE userID = ?
+    );
+    `,
+    [userId]
+  );
+
+  await db.run(
     'DELETE FROM recipes WHERE userID = ?;',
     [userId]
   );
@@ -79,34 +89,61 @@ describe("Posts", () => {
     const postData = {
       title: "Test Recipe",
       ingredients: "Test Ingredient",
-      estimate: "30 mins",
+      estimate: 30,
       cuisine: "Test Cuisine",
+      instructions: JSON.stringify([
+        { description: "Step 1: Do something" },
+        { description: "Step 2: Do something else" },
+      ]),
+
     };
 
+    // Simulate file uploads (e.g., result image and instruction images)
+    const formData = new FormData();
+    formData.append("title", postData.title);
+    formData.append("ingredients", postData.ingredients);
+    formData.append("estimate", postData.estimate.toString());
+    formData.append("cuisine", postData.cuisine);
+    formData.append("instructions", postData.instructions);
+    formData.append("instructionImages", new Blob(["test-image-1"]), "step1.jpg");
+    formData.append("instructionImages", new Blob(["test-image-2"]), "step2.jpg");
+    formData.append("result_img", new Blob(["test-image"]), "result.jpg");
+  
+  
     const response = await fetch("http://localhost:8080/post", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
       },
-      body: JSON.stringify(postData),
+      body: formData,
     });
+  
     const result = await response.json();
-
+  
     expect(response.status).toBe(201);
-    expect(result.postId).toBeDefined();
+    expect(result.postID).toBeDefined();
     expect(result.message).toBe("Recipe successfully added.");
-
+  
     // Verify the post is in the database
-    const post = await db.get("SELECT * FROM recipes WHERE id = ?", [result.postId]);
+    const post = await db.get("SELECT * FROM recipes WHERE id = ?", [result.postID]);
     expect(post).toBeDefined();
     expect(post.title).toBe(postData.title);
     expect(post.ingredients).toBe(postData.ingredients);
     expect(post.estimate).toBe(postData.estimate);
     expect(post.cuisine).toBe(postData.cuisine);
-    expect(post.imagePath).toBeUndefined();
+  
+    const instructions = await db.all(
+      "SELECT * FROM recipe_instructions WHERE recipeID = ? ORDER BY step",
+      [result.postID]
+    );
+    expect(instructions.length).toBe(2);
+    for (let i = 0; i < instructions.length; i++) {
+      expect(instructions[i].description).toBe(
+        JSON.parse(postData.instructions)[i].description
+      );
+    }
   });
-
+  
   test("unauthorized create post", async () => {
     const postData = {
       title: "Test Recipe",
@@ -150,41 +187,74 @@ describe("Posts", () => {
   });
 
   test("create and delete post successfully", async () => {
-    const postId = "test-post-id";
+    const postData = {
+      title: "Test Recipe",
+      ingredients: "Test Ingredient",
+      estimate: 30,
+      cuisine: "Test Cuisine",
+      instructions: JSON.stringify([
+        { description: "Step 1: Do something" },
+        { description: "Step 2: Do something else" },
+      ]),
 
-    // Insert a sample post
-    await db.run(
-      "INSERT INTO recipes (id, userID, title, ingredients, estimate, cuisine, result_img) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [postId, userId, "Test Title", "Test Ingredients", "30 mins", "Test Cuisine", null]
-    );
+    };
 
-    const response = await fetch("http://localhost:8080/post", {
+    // Simulate file uploads (e.g., result image and instruction images)
+    const formData = new FormData();
+    formData.append("title", postData.title);
+    formData.append("ingredients", postData.ingredients);
+    formData.append("estimate", postData.estimate.toString());
+    formData.append("cuisine", postData.cuisine);
+    formData.append("instructions", postData.instructions);
+    formData.append("instructionImages", new Blob(["test-image-1"]), "step1.jpg");
+    formData.append("instructionImages", new Blob(["test-image-2"]), "step2.jpg");
+    formData.append("result_img", new Blob(["test-image"]), "result.jpg");
+  
+  
+    const createPost_response = await fetch("http://localhost:8080/post", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData,
+    });
+  
+    const postResult = await createPost_response.json();
+
+    const postID = postResult.postID;
+
+
+    const response = await fetch(`http://localhost:8080/delete/${postID}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ postId }),
     });
 
     const result = await response.json();
 
     expect(response.status).toBe(202);
-    expect(result.message).toBe("Recipe successfully deleted from your favorite list.");
+    expect(result.message).toBe("Recipe successfully deleted from your post list.");
 
     // Verify the post is removed from the database
-    const post = await db.get("SELECT * FROM recipes WHERE id = ?", [postId]);
+    const post = await db.get("SELECT * FROM recipes WHERE id = ?", [postID]);
     expect(post).toBeUndefined();
+
+    const postInstructions = await db.all(
+      "SELECT * FROM recipe_instructions WHERE recipeID = ?",
+      [postID]
+    );
+    expect(postInstructions.length).toBe(0);
   });
 
   test("fail to delete non-existent post", async () => {
-    const response = await fetch("http://localhost:8080/post", {
+    const response = await fetch("http://localhost:8080/delete/non-existent-id", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ postId: "non-existent-id" }),
     });
 
     const result = await response.json();
