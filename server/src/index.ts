@@ -48,7 +48,7 @@ if (!fs.existsSync(avatarDir)) {
 
 
 app.use('/uploads/recipes/results', express.static('uploads/recipes/results'));
-app.use('/uploads/recipes/instructions', express.static('uploads/recipes/rinstructions'));
+app.use('/uploads/recipes/instructions', express.static('uploads/recipes/instructions'));
 app.use('/uploads/avatar', express.static('uploads/avatar'));
 
 
