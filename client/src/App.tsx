@@ -13,6 +13,7 @@ import UserProfilePage from "./views/UserProfile/UserProfilePage";
 import UserPostedRecipesList from "./components/recipes/UserPostedRecipesList";
 import AddRecipe from "./components/recipes/AddRecipe";
 import UserInfoPage from "./components/profilePage/UserInfoPage";
+import RecipeExpand from "./components/recipes/RecipeExpand";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="favorite" element={<SavedFavoriteRecipeList />} />
             <Route path='add-recipe' element={<AddRecipe />} />
             <Route path="search" element={<SearchPage />} />
+            <Route path="/recipe/:id" element={<RecipeExpand />} />
         </Route >
           <Route path="/profile/:username" element={<UserProfilePage />}>
             <Route index element={<UserPostedRecipesList />} />
