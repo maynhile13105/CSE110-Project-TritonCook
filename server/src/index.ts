@@ -8,7 +8,7 @@ import { addRecipesToDatabase, addUsersToDatabase } from "./tests/utils/addTestR
 import { sampleRecipes, sampleUsers } from "./tests/utils/dummyList";
 import { createUserInformationEndpoints } from "./endpoints/userInfo-endpoint";
 import { createLikeEndpoints } from "./endpoints/like-endpoint";
-import { createPostEndpoints } from "./endpoints/createPost-endpoints";
+import { createPostEndpoints } from "./endpoints/post-endpoints";
 import path from 'path';
 
 
@@ -48,7 +48,7 @@ if (!fs.existsSync(avatarDir)) {
 
 
 app.use('/uploads/recipes/results', express.static('uploads/recipes/results'));
-app.use('/uploads/recipes/instructions', express.static('uploads/recipes/rinstructions'));
+app.use('/uploads/recipes/instructions', express.static('uploads/recipes/instructions'));
 app.use('/uploads/avatar', express.static('uploads/avatar'));
 
 
