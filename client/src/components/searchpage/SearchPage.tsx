@@ -179,16 +179,18 @@ const SearchPage: React.FC = () => {
     }
   };
 
-  const handleExploreButtonClick = () => {
-    setSelectedTime("<30 minutes"); // Set the selected time to "< 30 minutes"
+  const handleExploreButtonClick = async () => {
+    // Update the filter states
+    setSelectedTime("<30 minutes");
     setAppliedFilters({
       ingredients: [],
       time: "<30 minutes",
       cuisine: null,
-    }); // Update applied filters
-    navigate("/home"); // Navigate to the homepage
-  };
+    });
   
+    // Navigate to /home with instructions to trigger UI behavior
+    navigate("/home", { state: { sortByLikes: true, showDropdown: true } });
+  };
 
   // Calculate dynamic dropdown height
   const dropdownHeight = `${searchInput ? 
