@@ -13,6 +13,7 @@ const UserProfilePage = () => {
   const {userProfile, setUserProfile} = useContext(AppContext); // the user's profile who is using the app.
   const [ownerAccountPage, setOwnerAccountPage] = useState<Profile>(initialState.userProfile);
   const [avatar, setAvatar] = useState<string>("");
+
   useEffect(() => {
     if(username){
       loadOwnerProfilePage(username);
@@ -58,6 +59,15 @@ const UserProfilePage = () => {
 
   //console.log("username from the path", [username])
   //console.log(" owner username: ", [ownerAccountPage.name]);
+
+  const [isUser, setIsUser] = useState(false);
+  useEffect(() => {
+    if (userProfile && ownerAccountPage) {
+      const isCurrentUser = userProfile.name === ownerAccountPage.name;
+      setIsUser(isCurrentUser);
+      console.log("isUser:", isCurrentUser);
+    }
+  }, [userProfile, ownerAccountPage]);
   return (
     <div>
       <div className="topbar">
@@ -99,16 +109,20 @@ const UserProfilePage = () => {
                 (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" id="avatar" />)
               }
             </div>
-            <button className="avatar-edit">
-              <img src="/images/camera-icon.svg" style={{width:"40px"}}/>
-            </button>
 
             {/* Right Corner Edit Icon */}
+            <button
+              style={{ display: isUser ? "block" : "none" }}
+              id="avatar-edit"
+            >
+              <img src="/images/camera-icon.svg" style={{ width: "40px" }} />
+            </button>
+
             <div className="username">
               {ownerAccountPage.name}
             </div>
           </div>
-          <div className={userProfile.name !== ownerAccountPage.name? "visible":"hidden" }
+          <div className={isUser? "hidden":"visible" }
             id="relation-buttons" >
               <div className="friendship-button" role="button">
                 <img src="/images/add-friend-icon.svg" alt="add-friend-icon" 

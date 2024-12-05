@@ -67,7 +67,7 @@
 .information:hover, 
 .posts:hover, 
 .friends:hover, 
-.avatar-edit:hover, 
+#avatar-edit:hover, 
 .follow-button:hover,
 .friendship-button:hover{
   background-color: lightyellow;
@@ -151,7 +151,7 @@
   line-height: normal;
 }
 
-.avatar-edit {
+#avatar-edit {
   width: 70px;
   height: 70px;
   flex-shrink: 0;
