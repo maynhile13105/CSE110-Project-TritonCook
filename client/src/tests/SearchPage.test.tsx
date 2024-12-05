@@ -174,7 +174,7 @@ describe('SearchPage Component', () => {
     expect(input).toHaveValue('');
   
     // Assert that the dropdown becomes visible
-    const dropdown = screen.getByRole('list'); // Adjust if a different role is used
+    const dropdown = screen.getByTestId('history-items'); // Adjust if a different role is used
     expect(dropdown).toBeVisible();
   });
   

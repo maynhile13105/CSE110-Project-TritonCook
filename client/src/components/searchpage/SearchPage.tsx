@@ -89,13 +89,13 @@ const SearchPage: React.FC = () => {
           {/* Delete Icon - appears only when input is not empty */}
           {searchInput && (
             <div className="delete-icon" onClick={handleClearInput}>
-              <img src="/images/closeIcon.svg" alt="Clear Input" />
+              <img data-testid="delete-icon" src="/images/closeIcon.svg" alt="Clear Input" />
             </div>
           )}
   
           {/* Dropdown Menu for History Items */}
           {isDropdownVisible && (
-            <div className="history-items">
+            <div data-testid="history-items" className="history-items">
               {historyItems.map((item, index) => (
                 <div key={index} className="history-item">
                   <div onClick={() => handleDropdownItemClick(item)} className="history-item-content">
