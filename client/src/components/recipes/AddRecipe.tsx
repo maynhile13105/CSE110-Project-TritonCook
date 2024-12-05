@@ -18,6 +18,11 @@ const AddRecipe = () => {
     cuisine: '',
   });
 
+  const [isTitleRmpty, setIsTitleRmpty] = useState(false);
+  const [isIngredientsEmpty, setIsIngredientsEmpty] = useState(false);
+  const [isTimeEmpty, setIsTimeEmpty] = useState(false);
+  const [isCuisineEmpty, setIsCuisineEmpty] = useState(false);
+
   // Function to close the error box
   const closeErrorBox = () => {
     setError("");
@@ -30,22 +35,47 @@ const AddRecipe = () => {
     let errorFields: string[] = [];
 
     // Check for missing fields and build the error message
-    if (!formData.title) {
-      errorFields.push("Title");
+    // if (!formData.title) {
+    //   errorFields.push("Title");
+    // }
+    if (!formData.title.trim()) {
+      setIsTitleRmpty(true);
+    } else {
+      setIsTitleRmpty(false);
     }
-    if (!formData.ingredients) {
-      errorFields.push("Ingredients");
+
+    // if (!formData.ingredients) {
+    //   errorFields.push("Ingredients");
+    // }
+    if (!formData.ingredients.trim()) {
+      setIsIngredientsEmpty(true);
+    } else {
+      setIsIngredientsEmpty(false);
     }
-    if (!formData.time) {
-      errorFields.push("Estimated time");
+
+    // if (!formData.time) {
+    //   errorFields.push("Estimated time");
+    // }
+    if (!formData.time.trim()) {
+      setIsTimeEmpty(true);
+    } else {
+      setIsTimeEmpty(false);
     }
-    if (!formData.cuisine) {
-      errorFields.push("Cuisine");
+    
+    // if (!formData.cuisine) {
+    //   errorFields.push("Cuisine");
+    // }
+    if (!formData.cuisine.trim()) {
+      setIsCuisineEmpty(true);
+    } else {
+      setIsCuisineEmpty(false);
     }
+
     if (!formData.result_img) {
       errorFields.push("Final results image");
     }
-    if (!formData.instructions) {
+
+    if (formData.instructions.length === 0 && !newInstruction.text) {
       errorFields.push("Instructions");
     }
 
@@ -105,6 +135,19 @@ const AddRecipe = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    if (name === 'title') {
+      setIsTitleRmpty(!value.trim());
+    }
+
+    if (name === 'ingredients') {
+      setIsIngredientsEmpty(!value.trim());
+    }
+
+    if (name === 'cuisine' && value.trim()) {
+      setIsCuisineEmpty(false);
+    }
+
     setFormData({
       ...formData,
       [name]: value
@@ -154,13 +197,13 @@ const AddRecipe = () => {
   };
 
   //Handle remove instruction
-  const handleRemoveInstruction = (index: number) => {
-    const updatedInstructions = formData.instructions.filter((_, i) => i !== index);
-    setFormData({
-      ...formData,
-      instructions: updatedInstructions,
-    });
-  };
+  // const handleRemoveInstruction = (index: number) => {
+  //   const updatedInstructions = formData.instructions.filter((_, i) => i !== index);
+  //   setFormData({
+  //     ...formData,
+  //     instructions: updatedInstructions,
+  //   });
+  // };
 
   return (
     <div className='outer'>
@@ -168,27 +211,48 @@ const AddRecipe = () => {
         <form onSubmit={handleSubmit} noValidate>
           <div className="form-group">
             <label className='required'>Title</label>
-            <input
-              type="text"
-              name='title'
-              value={formData.title}
-              onChange={handleChange}
-              placeholder='What do you have in mind?'
-              required
-            />
+            <div>
+              <input
+                type="text"
+                name='title'
+                value={formData.title}
+                onChange={handleChange}
+                placeholder='What do you have in mind?'
+                required
+              />
+              {isTitleRmpty && (
+                <div className="alert">
+                  <img src="/images/warning.svg" alt="Warning" className="alert-icon"/>
+                  Title is missing!
+                </div>
+              )}
+            </div>
           </div>
           <div className="form-group">
             <label className='required'>Ingredients</label>
-            <input
-              value={formData.ingredients}
-              name="ingredients"
-              onChange={handleChange}
-              placeholder="Use a comma to separate ingredients"
-              required
-            />
+            <div>
+              <input
+                value={formData.ingredients}
+                name="ingredients"
+                onChange={handleChange}
+                placeholder="Use a comma to separate ingredients"
+                required
+              />
+              {isIngredientsEmpty && (
+                <div className="alert">
+                  <img src="/images/warning.svg" alt="Warning" className="alert-icon"/>
+                  Ingredients cannot be empty!
+                </div>
+              )}
+              {/* Green hint below the input */}
+              <div style={{ color: 'green', fontSize: '14px', marginTop: '5px' }}>
+                Please use "," for separating multiple ingredients.
+              </div>
+            </div>
           </div>
           <div className="form-group">
             <label className='required'>Estimated Time</label>
+            <div>
             <input
               value={formData.time}
               name="time"
@@ -197,16 +261,31 @@ const AddRecipe = () => {
               required
             />
             <p className='time-unit'>minutes</p>
+            {isTimeEmpty && (
+              <div className="alert">
+                <img src="/images/warning.svg" alt="Warning" className="alert-icon" />
+                Estimated Time is missing!
+              </div>
+            )}
+            </div>
           </div>
           <div className="form-group">
             <label className='required'>Cuisine</label>
-            <input
-              value={formData.cuisine}
-              name="cuisine"
-              onChange={handleChange}
-              placeholder='Type a Cuisine (e.g., Italian, Chinese)'
-              required
-            />
+            <div>
+              <input
+                value={formData.cuisine}
+                name="cuisine"
+                onChange={handleChange}
+                placeholder='Type a Cuisine (e.g., Italian, Chinese)'
+                required
+              />
+              {isCuisineEmpty && (
+                <div className="alert">
+                  <img src="/images/warning.svg" alt="Warning" className="alert-icon" />
+                  Country/Origin is missing!
+                </div>
+              )}
+            </div>
           </div>
           <div>
             <label className='required instr-label'>Instructions</label>
@@ -222,15 +301,22 @@ const AddRecipe = () => {
                     />
                   </div>
                 )}
-                <button
+                  <input
+                  type="text"
+                  value={newInstruction.text}
+                  onChange={handleInstructionTextChange}
+                  placeholder="Add instruction step"
+                />
+                {/* <button
                   type="button"
                   onClick={() => handleRemoveInstruction(index)}
                   className="remove-instruction-button"
                 >
                   ❌
-                </button>
+                </button> */}
               </div>
             ))}
+
             <div className='instr-input'>
               <input
                 type="text"
@@ -239,6 +325,12 @@ const AddRecipe = () => {
                 onChange={handleInstructionTextChange}
                 placeholder="Add instruction step with image"
               />
+              {error.includes("Instructions") && (
+              <div className="alert">
+                <img src="/images/warning.svg" alt="Warning" className="alert-icon" />
+                Instructions cannot be empty!
+              </div>
+            )}
               <br />
               <input
                 type="file"
@@ -262,7 +354,7 @@ const AddRecipe = () => {
               required
             />
           </div>
-          {error && (
+          {/* {error && (
             <div className="error-container">
               <div className="error-header"><span className="error-icon">❌</span>POST UNSUCCESSFUL!</div>
               <div className="error-text">
@@ -276,7 +368,7 @@ const AddRecipe = () => {
               <button className="edit-button" onClick={closeErrorBox} id='addRecipe-button'>
                 Edit
               </button>
-            </div>)}
+            </div>)} */}
           <div className="form-actions">
             <Link to='/home'>
               <button type="button" className='cancel' id='addRecipe-button'>Cancel</button>
