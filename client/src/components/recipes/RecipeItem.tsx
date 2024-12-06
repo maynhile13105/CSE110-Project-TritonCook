@@ -43,9 +43,6 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
   // State for modal visibility
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
-  //Get token from localStorage to check if user is logged in
-  const token = localStorage.getItem("token");
-
   const [showCommentOrReportPopup, setShowCommentOrReportPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState<string>("");
 
