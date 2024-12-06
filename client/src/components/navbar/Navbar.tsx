@@ -37,7 +37,7 @@ const Navbar = () => {
         <ul className='left'>
         <Link to='/home'><li className='logo' data-testid='logo'>
             <img src='/images/logo-round.svg'
-              alt='logo' />
+              alt='logo' className='logo-nav'/>
           </li></Link>
           <Link to='#'><li className='notif' data-testid='notif' onClick={handleNotifClick}>
             <img className='notifImage' src='/images/notif-bell.svg'
@@ -57,11 +57,11 @@ const Navbar = () => {
         </ul>
         <ul className='right'>
         {userProfile?.isGuest ? (
-          <Link to="/" data-testid="login">
-            <button className="login-button">
+          <Link to="/" data-testid="login" style={{textDecoration:"none"}}>
+            <button className="login-button" style={{display:"flex", flexDirection:"column"}}>
               <img src='/images/login-icon.svg' className='login-icon'/>
-              Log in
-              </button>
+              <span style={{fontSize:"25px"}}>Log in</span>
+            </button>
           </Link>
         ) : (
           <Logout data-testid="logout" />
@@ -69,7 +69,7 @@ const Navbar = () => {
           <Link to={`/profile/${userProfile.name}`} data-testid='profile'>
             {userProfile?.picture? 
             (<img className='profile' src={avatar} alt="user-avatar"/>) 
-            :(<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" />)}
+            :(<img src="/images/profile.svg" alt="defaultprofile" style={{width:"100px"}} />)}
           </Link>
         </ul>
       </main>
