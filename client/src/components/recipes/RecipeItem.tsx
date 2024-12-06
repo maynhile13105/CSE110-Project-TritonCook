@@ -223,7 +223,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
       <div className="post-name">{currentRecipe.title}</div>
       <br />
       <div className="post-est-ingr">
-        Estimate: {currentRecipe.estimate} minutes
+        Estimate: {currentRecipe.estimate}
         <br />
         Ingredients: {currentRecipe.ingredients}
         <br />
