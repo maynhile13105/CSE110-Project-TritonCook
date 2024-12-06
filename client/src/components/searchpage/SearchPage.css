@@ -18,7 +18,7 @@
 
 .search-bar {
   box-sizing: border-box;
-  width: 90%;
+  width: 100%;
   /* Adjusts with screen width */
   max-width: 1000px;
   height: 15vh;
@@ -138,8 +138,8 @@
 
 .info-text {
   margin-top: 2vh;
-  width: 90%;
-  max-width: 880px;
+  width: 100%;
+  max-width: 1200px;
   /* text-align: center; */
   font-family: 'Inter';
   font-size: 2.5vw;
@@ -148,6 +148,7 @@
   color: #000000;
   -webkit-text-stroke-width: .8px;
   -webkit-text-stroke-color: var(--Schemes-On-Primary, #FFF);
+  margin-left: -210px;
 }
 
 .info-text .no-worries {
@@ -230,7 +231,7 @@
   background: #FFF1C2;
   border-radius: 50px;
   border: var(--sds-size-stroke-border) solid #000;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -268,17 +269,7 @@
   color: #000000;
 }
 
-/* Apply blur only to content outside the pop-up */
 .search-page .blurred {
   filter: blur(5px);
   pointer-events: none; /* Prevent interaction with blurred elements */
 }
-
-/* .search-bar.blur {
-  filter: blur(5px);
-}
-
-.history-items.blur {
-  filter: blur(5px);
-} */
-

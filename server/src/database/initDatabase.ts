@@ -111,6 +111,17 @@ const initDatabase = async () => {
     
     );
   `)
+
+  // Create a table "search_history" if it doesn't exist
+  await db.exec(`
+    CREATE TABLE IF NOT EXISTS search_history (
+      userID TEXT NOT NULL,
+      searchInput TEXT NOT NULL,
+      time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      PRIMARY KEY (userID, searchInput),
+      FOREIGN KEY (userID) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+    );
+  `);
   
   return db;
 };

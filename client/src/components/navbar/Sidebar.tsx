@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Sidebar.css'
 import UserIcon from '../google/UserIcon';
 import { useFilterContext } from '../../context/FilterContext';
@@ -28,6 +28,13 @@ const Sidebar = () => {
 
   const ingredientsList: string[] = ingredientsData;
   const cuisineList: string[] = cuisinesData;
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state?.showDropdown) {
+      setDropdown(true); // Open dropdown if the state is set
+    }
+  }, [location.state?.showDropdown]);
 
   const toggleDropdown = () => {
     setDropdown(!dropdown);

@@ -26,7 +26,6 @@ export async function createPost(req: Request, res: Response, db: Database) {
   if (!userID) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
-
     const postID = uuidv4();
 
     const { title, ingredients, estimate, cuisine, instructions } = req.body;

@@ -1,0 +1,40 @@
+.recommendation-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: #c1c1bc;
+    cursor: pointer;
+    justify-content: space-between;
+    transition: background-color 0.3s ease;
+  }
+  
+  .recommendation-item:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .recommendation-item-content {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between icon and text */
+  }
+
+  .recommendation-item-content img {
+    width: 25px; /* Adjust the width */
+    height: 25px; /* Adjust the height */
+    filter: none; /* Remove shadow or any additional filter */
+    box-shadow: none; /* Ensure no box shadow is applied */
+    margin: 0; /* Ensure no margin is applied */
+    padding: 0; /* Ensure no padding is applied */
+  }
+
+  .recommendation-dropdown {
+    height: auto; /* Set the height for the recommendation dropdown */
+    max-height: none;
+    overflow-y: visible;
+    width: 100%; /* Ensure it takes the full width of the container */
+    border-radius: 10px; /* Optional: Rounded edges */
+  }
+  

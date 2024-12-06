@@ -6,12 +6,14 @@ import { Recipe } from "../../types/types";
 import { useLocation } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 import { useFilterContext } from "../../context/FilterContext";
+import { fetchNumberOfLikes } from "../../utils/like-utils";
 
 const RecipeList = () => {
     const {newsfeedRecipes, setNewsfeedRecipes} = useContext(AppContext);
     const { appliedFilters } = useFilterContext();
     //const {favoriteRecipes} = useContext(AppContext);
     //const {likedRecipes} = useContext(AppContext);
+    const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
 
     const location = useLocation();
     
@@ -49,6 +51,21 @@ const RecipeList = () => {
    //console.log("Fav recipes in Item List", favoriteRecipes);
    //console.log("Liked recipes in Item List", likedRecipes);
     
+  useEffect(() => {
+    const applyFiltersAndSorting = async () => {
+      // Filter recipes based on applied filters
+      const filtered = filterRecipes(newsfeedRecipes);
+
+      // If sortByLikes is true, sort the filtered recipes by likes
+      if (location.state?.sortByLikes) {
+        const sorted = await sortRecipesByLikes(filtered);
+        setFilteredRecipes(sorted);
+      } else {
+        setFilteredRecipes(filtered); // Only apply filtering
+      }
+    };
+    applyFiltersAndSorting();
+  }, [newsfeedRecipes, appliedFilters, location.state?.sortByLikes]);
 
   const filterRecipes = (recipes: Recipe[]): Recipe[] => {
     return recipes.filter((recipe) => {
@@ -80,7 +97,16 @@ const RecipeList = () => {
     });
   };
 
-  const filteredRecipes = filterRecipes(newsfeedRecipes);
+  const sortRecipesByLikes = async (recipes: Recipe[]): Promise<Recipe[]> => {
+    const recipesWithLikes = await Promise.all(
+      recipes.map(async (recipe) => {
+        const likes = await fetchNumberOfLikes(recipe.id); // Fetch likes dynamically
+        return { ...recipe, likes }; // Add likes to each recipe
+      })
+    );
+
+    return recipesWithLikes.sort((a, b) => b.likes - a.likes); // Sort by likes in descending order
+  };
 
   return (
     <div className="recipes-container-list">

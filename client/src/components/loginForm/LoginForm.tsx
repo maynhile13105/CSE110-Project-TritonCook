@@ -40,7 +40,6 @@ const LoginForm = () => {
       }
 
       const data = await response.json();
-
       // Save the token to local storage or context
       localStorage.setItem("token", data.token);
 

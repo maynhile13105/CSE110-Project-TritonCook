@@ -1,0 +1,13 @@
+.results-container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    padding: 0 6%; /* Add some horizontal padding */
+    gap: 20px; /* Add space between posts */
+  }
+  
+  .post-item {
+    width: 100%; /* Ensure each post takes full width */
+    max-width: 700px; /* Optional: Limit maximum width for better readability */
+  }
+  
