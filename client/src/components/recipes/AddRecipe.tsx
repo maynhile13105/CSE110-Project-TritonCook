@@ -9,6 +9,7 @@ const AddRecipe = () => {
 
   const [error, setError] = useState<string | string[]>("");
   const [newInstruction, setNewInstruction] = useState<Instruction>({ text: '', image: null });
+  const [resultPreview, setResultPreview] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     ingredients: '',
@@ -189,7 +190,11 @@ const AddRecipe = () => {
         ...formData,
         [name]: files[0], // Store the selected file
       });
+      if(name === 'result_img') {
+        setResultPreview(URL.createObjectURL(files[0]));
+      }
     }
+
   }
 
   // Handle changes for the instruction text input
@@ -355,13 +360,25 @@ const AddRecipe = () => {
 
           <div className="form-group">
             <label className='required' id='resultImage-label'>Final results image</label>
-            <input
-              type="file"
-              name="result_img"
-              id = "resultImage-inpt"
-              onChange={handleFileChange}
-              required
-            />
+            <div style={{display: "flex", flexDirection:"row"}}>
+              <input
+                type="file"
+                name="result_img"
+                id = "resultImage-inpt"
+                onChange={handleFileChange}
+                required
+              />
+              {resultPreview && (
+                <div className="result-preview">
+                  <img
+                    src={resultPreview}
+                    alt="Avatar Preview"
+                    className="result-preview-img"
+                  />
+                </div>
+              )}
+            </div>
+              
           </div>
 
           <div className="form-actions">
