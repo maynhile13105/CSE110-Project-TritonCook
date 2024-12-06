@@ -1,7 +1,6 @@
 .post-box {
-  width: auto;
-  max-width: 70%;
-  aspect-ratio: 1 / 1; /* Ensures the height equals the width */
+  width: 80%;
+  aspect-ratio: 1 /1;
   margin-left: auto;
   margin-right: auto;
   border-radius: 20px;
@@ -12,7 +11,7 @@
 .post-name {
   color: #000;
   font-family: Inter;
-  font-size: 30px;
+  font-size: 50px;
   font-style: normal;
   font-weight: bold;
   line-height: normal;
@@ -21,7 +20,7 @@
 .post-est-ingr {
   color: #000;
   font-family: Inter;
-  font-size: 20px;
+  font-size: 30px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -30,25 +29,25 @@
 .post-see-details {
   color: #000;
   font-family: Inter;
-  font-size: 20px;
+  font-size: 30px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  margin-right: 10px;
   text-align: right;
   padding-bottom: 10px;
 
 }
 
 .post-img {
-  background-color: black;
   width: auto;
   max-width: 80%;
-  min-width: 250px;
+  min-width: 70%;
   aspect-ratio: 1 / 1; /* Ensures the height equals the width */
   align-items: center;
   object-fit: fill;
   border-radius: 20px;
-  margin-left: 10%;
+  margin-left: 15%;
 }
 
 .user-inf {
@@ -68,7 +67,7 @@
 
 .recipe-owner {
   text-decoration: none;
-  font-size: 25px;
+  font-size: 30px;
   color: black;
 }
 

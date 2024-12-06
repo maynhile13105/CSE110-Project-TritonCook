@@ -290,6 +290,7 @@ const FullViewRecipe = () => {
             <img
               src={isFavorite ? "/images/Heart.svg" : "/images/unfavorite.svg"}
               alt={isFavorite ? "heart image" : "uncolored heart image"}
+              style={{width : "90px"}}
             />
           </button>
         </div>
@@ -362,6 +363,7 @@ const FullViewRecipe = () => {
           </div>
           <div className="fullpost-comment-button" role="button" onClick={() => handlePopup("Comments will be available soon!")}>
             <img src="/Comment.svg" alt="Comment" style={{width : "80px"}}/>
+
           </div>
 
           <button className={userProfile.name === recipeOwner.name ? 'visible' : "hidden"} 
@@ -383,7 +385,7 @@ const FullViewRecipe = () => {
               <img 
                 src="/Report.svg" 
                 alt="Report"
-                style={{width: "70px"}}
+                style={{width: "80px"}}
               />
             </button>
         </div>
