@@ -34,21 +34,6 @@
   color: white;
 }
 
-.create-account-button{
-  padding: 5px;
-  width: 90%;
-  font-size: 30px;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  background-color: #1a73e8;
-  border: 2px solid #00aeff;
-  text-align: center;
-  margin: 15px;
-  margin-left: 20px;
-  color: white;
-}
-
 .sign-in-button:hover,
 .guest-account-button:hover,
 .create-account-button:hover {
@@ -111,7 +96,6 @@
   margin-right: 5%;
 }
 
-.create-account-button,
 .guest-account-button,
 .sign-in-button
 .google-button {
@@ -126,4 +110,28 @@
   border: 2px solid #00aeff;
   text-align: center;
   color: white;
+}
+
+.create-account-button,
+.guest-account-button {
+  display: block; /* Makes the link behave like a block-level element */
+  padding: 10px;
+  width: 90%;
+  font-size: 30px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: #1a73e8;
+  border: 2px solid #00aeff;
+  text-align: center;
+  color: white;
+  margin: 15px auto;
+  text-decoration: none; /* Ensures it looks like a button, not a link */
+}
+
+.create-account-button:hover {
+  background-color: #b0e0e2;
+  border: 2px solid #1a73e8;
+  font-weight: bold;
+  color: black;
 }
