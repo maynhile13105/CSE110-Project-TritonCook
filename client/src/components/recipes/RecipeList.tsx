@@ -86,7 +86,7 @@ const RecipeList = () => {
     <div className="recipes-container-list">
       {filteredRecipes.length > 0 ? (
         filteredRecipes.map((recipe) => (
-          <div className="post-item" key={recipe.id}>
+          <div key={recipe.id}>
             <RecipeItem currentRecipe={recipe} />
           </div>
         ))
