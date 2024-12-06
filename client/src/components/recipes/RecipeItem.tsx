@@ -226,6 +226,8 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
         Estimate: {currentRecipe.estimate} minutes
         <br />
         Ingredients: {currentRecipe.ingredients}
+        <br />
+        Cuisine: {currentRecipe.cuisine}
       </div>
 
       <div className="post-see-details">
@@ -244,20 +246,18 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
               style={{width : "40px"}}
             />
           </button>
-          <a style={{fontSize: "20px"}}>{numberOfLikes}</a>
+          <a style={{fontSize: "25px"}}>{numberOfLikes}</a>
         </div>
         
-        <img src="/Comment.svg" alt="Comment" onClick={() => handlePopup("Comments will be available soon!")}/>
+        <div className="comment-button" role="button" onClick={() => handlePopup("Comments will be available soon!")}>
+          <img src="/Comment.svg" alt="Comment" style={{width : "40px"}}/>
+        </div>
 
         <button className={userProfile.name === recipeOwner.name ? 'visible' : "hidden"} 
           id="delete-button" 
           onClick={() => handleDeleteClick(currentRecipe)}
         >
-          <img 
-            src={"/images/trashcan-icon.svg"}
-            alt="Delete Image"
-            style={{width: "30px"}}
-          />
+          <img src={"/images/trashcan-icon.svg"} alt="Delete Image" style={{width: "35px"}} />
         </button>
 
           <button 
@@ -265,11 +265,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
             id="report-button" 
             onClick={() => handlePopup("Reports will be available soon!")}
           >
-            <img 
-              src="/Report.svg" 
-              alt="Report"
-              style={{width: "30px"}}
-            />
+            <img src="/Report.svg" alt="Report" style={{width: "40px"}} />
           </button>
       </div>
 

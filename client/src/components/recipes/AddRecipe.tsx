@@ -208,7 +208,7 @@ const AddRecipe = () => {
   return (
     <div className='outer'>
       <div className='formContainer'>
-        <form onSubmit={handleSubmit} noValidate>
+        <form onSubmit={handleSubmit} noValidate className='addRecipe-form'>
           <div className="form-group">
             <label className='required'>Title</label>
             <div>
@@ -354,7 +354,7 @@ const AddRecipe = () => {
               required
             />
           </div>
-          {/* {error && (
+          {error && (
             <div className="error-container">
               <div className="error-header"><span className="error-icon">❌</span>POST UNSUCCESSFUL!</div>
               <div className="error-text">
@@ -368,7 +368,7 @@ const AddRecipe = () => {
               <button className="edit-button" onClick={closeErrorBox} id='addRecipe-button'>
                 Edit
               </button>
-            </div>)} */}
+            </div>)}
           <div className="form-actions">
             <Link to='/home'>
               <button type="button" className='cancel' id='addRecipe-button'>Cancel</button>
