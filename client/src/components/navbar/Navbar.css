@@ -2,7 +2,7 @@ main{
   position: sticky; 
   top: 0;
   z-index: 1000;
-  height: 94px;
+  height: 150px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,14 +22,14 @@ ul.left{
   display: flex;
   list-style-type: none;
   padding-left: 20px;
-  gap: 30px;
+  gap: 25px;
   align-items: center;
 }
 
 ul.middle{
   display: flex;
   list-style-type: none;
-  gap: 110px;
+  gap: 80px;
   align-items: center;
 }
 
@@ -37,7 +37,7 @@ ul.right{
   display: flex;
   list-style-type: none;
   padding-right: 20px;
-  gap: 30px;
+  gap: 25px;
   align-items: center;
 }
 
@@ -46,8 +46,10 @@ img.notifImage{
   margin-left: -10px;
 }
 
-img.postImage{
-  width: 50px;
+img.postImage, 
+.home-icon,
+.search-icon-nav{
+  width: 100px;
 }
 
 .notif{
@@ -69,16 +71,12 @@ img.postImage{
 .notif:hover, .post:hover, .home:hover, .search:hover, .logout:hover{
   background-color: #FFF1C2;
 }
-
 .profile{
-  width: 70px;
-  height: 70px;
+  width: 125px;
+  height: 125px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #000000;
-}
-#no-image{
-  background-color: ;
 }
 
 .notif-popup {

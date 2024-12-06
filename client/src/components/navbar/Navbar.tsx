@@ -49,16 +49,19 @@ const Navbar = () => {
             <img className='postImage' src='/images/addPost.svg' alt='post' />
           </li></Link>
           <Link to='/home'><li className='home' data-testid='home'>
-            <img src='/images/home.svg' alt='home' />
+            <img src='/images/home.svg' alt='home' className='home-icon'/>
           </li></Link>
           <Link to='/home/search'><li className='search' data-testid='search'>
-            <img src='/images/search.svg' alt='search'/>
+            <img src='/images/search.svg' alt='search' className='search-icon-nav'/>
           </li></Link>
         </ul>
         <ul className='right'>
         {userProfile?.isGuest ? (
           <Link to="/" data-testid="login">
-            <button className="login-button">Log in</button>
+            <button className="login-button">
+              <img src='/images/login-icon.svg' className='login-icon'/>
+              Log in
+              </button>
           </Link>
         ) : (
           <Logout data-testid="logout" />

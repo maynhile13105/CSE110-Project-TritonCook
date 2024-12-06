@@ -5,7 +5,7 @@
   margin: 10px;
   display: flex;
   flex-direction: column;
-  font-size: 35px;
+  font-size: 40px;
   margin-left: 10px
 }
 
@@ -13,7 +13,7 @@
 .loginForm input {
   border: none;
   border-radius: 10px;
-  font-size: 35px;
+  font-size: 40px;
   width: 95%;
   margin: 10px;
   background-color: rgb(236, 236, 236);
@@ -21,9 +21,9 @@
 
 .sign-in-button,
 #buttonDiv{  
-  padding: 5px;
+  padding: 10px;
   width: 95%;
-  font-size: 30px;
+  font-size: 40px;
   border-radius: 15px;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -31,6 +31,43 @@
   border: 2px solid #00aeff;
   text-align: center;
   margin: 15px;
+  color: white;
+}
+
+.create-account-button {
+  display: block; /* Makes the link behave like a block-level element */
+  padding: 10px;
+  width: 90%;
+  font-size: 40px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: #1a73e8;
+  border: 2px solid #00aeff;
+  text-align: center;
+  color: white;
+  margin: 20px;
+  text-decoration: none; /* Ensures it looks like a button, not a link */
+}
+
+.create-account-button:hover {
+  background-color: #b0e0e2;
+  border: 2px solid #1a73e8;
+  font-weight: bold;
+  color: black;
+}
+
+.guest-account-button{
+  padding: 5px;
+  width: 91%;
+  font-size: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  background-color: #1a73e8;
+  border: 2px solid #00aeff;
+  text-align: center;
+  margin: 15px 20px 15px -15px;
   color: white;
 }
 
@@ -50,21 +87,6 @@
   margin-bottom: 20px; /* Adds spacing below the guest section */
 }
 
-.guest-account-button{
-  margin-bottom: 20px;
-  padding: 5px;
-  width: 90%;
-  font-size: 30px;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  background-color: #1a73e8;
-  border: 2px solid #00aeff;
-  text-align: center;
-  margin: 15px;
-  margin-left: 15px;
-  color: white;
-}
 
 .create-account-link, .guest-account-link {
   text-decoration: none;
@@ -75,7 +97,7 @@
   display: flex;
   align-items: center;
   text-align: center;
-  font-size:30px;
+  font-size:35px;
 }
 
 .or-divider::before,
@@ -96,42 +118,3 @@
   margin-right: 5%;
 }
 
-.guest-account-button,
-.sign-in-button
-.google-button {
-  margin: 15px auto;
-  padding: 10px;
-  width: 90%;
-  font-size: 30px;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  background-color: #1a73e8;
-  border: 2px solid #00aeff;
-  text-align: center;
-  color: white;
-}
-
-.create-account-button,
-.guest-account-button {
-  display: block; /* Makes the link behave like a block-level element */
-  padding: 10px;
-  width: 90%;
-  font-size: 30px;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  background-color: #1a73e8;
-  border: 2px solid #00aeff;
-  text-align: center;
-  color: white;
-  margin: 15px auto;
-  text-decoration: none; /* Ensures it looks like a button, not a link */
-}
-
-.create-account-button:hover {
-  background-color: #b0e0e2;
-  border: 2px solid #1a73e8;
-  font-weight: bold;
-  color: black;
-}
