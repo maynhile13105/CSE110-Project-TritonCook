@@ -12,7 +12,7 @@ const LoginForm = () => {
   const [loginError, setLoginError] = useState("");
   const [loading, setLoading] = useState(false);
   const { token, setToken } = useContext(AppContext);
-  const {setUserProfile} = useContext(AppContext);
+  const { setUserProfile } = useContext(AppContext);
   const navigate = useNavigate();
 
   const handleLogin = async (e: { preventDefault: () => void }) => {
@@ -40,7 +40,6 @@ const LoginForm = () => {
       }
 
       const data = await response.json();
-      
       // Save the token to local storage or context
       localStorage.setItem("token", data.token);
 
@@ -124,26 +123,23 @@ const LoginForm = () => {
       </div>
 
       <div className="CreateAccount">
-        <div className="create-account-button">
-          <Link to="/create-account" className="create-account-link">
-            <span>Create New Account</span>
-          </Link>
-        </div>
+        <Link to="/create-account" className="create-account-link create-account-button">
+          <span>Create New Account</span>
+        </Link>
       </div>
 
       <div style={{ marginLeft: "10px", padding: "10px", fontSize: "35px" }}>
         Another way to login?
       </div>
       <div className="google-button">
-      <LoginButton />
+        <LoginButton />
       </div>
       <div className="or-divider">
         Or
       </div>
 
       <div className="guest">
-        <div className="guest-account-button">
-        <Link to="/home" className="guest-account-link" onClick={() => {
+        <Link to="/home" className="guest-account-link guest-account-button" onClick={() => {
           setUserProfile({
             id: "",
             name: "",
@@ -153,9 +149,8 @@ const LoginForm = () => {
           });
           navigate("/home");
         }}>
-      <span>Continue As Guest</span>
-          </Link>
-        </div>
+          <span>Continue As Guest</span>
+        </Link>
       </div>
     </div>
   );

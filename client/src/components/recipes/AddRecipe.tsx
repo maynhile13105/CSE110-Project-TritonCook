@@ -9,6 +9,7 @@ const AddRecipe = () => {
 
   const [error, setError] = useState<string | string[]>("");
   const [newInstruction, setNewInstruction] = useState<Instruction>({ text: '', image: null });
+  const [resultPreview, setResultPreview] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     ingredients: '',
@@ -162,6 +163,11 @@ const AddRecipe = () => {
       });
       // Reset the newInstruction state
       setNewInstruction({ text: '', image: null });
+      // Reset the file input value
+      const fileInput = document.getElementById("instructionImage") as HTMLInputElement;
+      if (fileInput) {
+        fileInput.value = ""; // Clear the file input
+      }  
     }
   };
 
@@ -184,7 +190,11 @@ const AddRecipe = () => {
         ...formData,
         [name]: files[0], // Store the selected file
       });
+      if(name === 'result_img') {
+        setResultPreview(URL.createObjectURL(files[0]));
+      }
     }
+
   }
 
   // Handle changes for the instruction text input
@@ -208,10 +218,10 @@ const AddRecipe = () => {
   return (
     <div className='outer'>
       <div className='formContainer'>
-        <form onSubmit={handleSubmit} noValidate>
+        <form onSubmit={handleSubmit} noValidate className='addRecipe-form'>
           <div className="form-group">
             <label className='required'>Title</label>
-            <div>
+            <div className='input-and-alert'>
               <input
                 type="text"
                 name='title'
@@ -230,7 +240,7 @@ const AddRecipe = () => {
           </div>
           <div className="form-group">
             <label className='required'>Ingredients</label>
-            <div>
+            <div className='input-and-alert'>
               <input
                 value={formData.ingredients}
                 name="ingredients"
@@ -245,22 +255,30 @@ const AddRecipe = () => {
                 </div>
               )}
               {/* Green hint below the input */}
-              <div style={{ color: 'green', fontSize: '14px', marginTop: '5px' }}>
+              <div className='tips'>
                 Tips: Use "," for separating multiple ingredients.
               </div>
             </div>
           </div>
           <div className="form-group">
             <label className='required'>Estimated Time</label>
-            <div>
-            <input
-              value={formData.time}
-              name="time"
-              onChange={handleChange}
-              placeholder='Amount'
-              required
-            />
-            <p className='time-unit'>minutes</p>
+            <div className='input-and-alert'>
+              <div className='time-input-and-unit'>
+                <input
+                  value={formData.time}
+                  name="time"
+                  onChange={handleChange}
+                  placeholder='Amount'
+                  required
+                  id='time-input'
+                  type="number"
+                />
+                <div className='time-unit'>minutes</div>
+              </div> 
+              {/* Green hint below the input */}
+              <div className='tips'>
+                Tips: Enter a number.
+              </div>
             {isTimeEmpty && (
               <div className="alert">
                 <img src="/images/warning.svg" alt="Warning" className="alert-icon" />
@@ -271,7 +289,7 @@ const AddRecipe = () => {
           </div>
           <div className="form-group">
             <label className='required'>Cuisine</label>
-            <div>
+            <div className='input-and-alert'>
               <input
                 value={formData.cuisine}
                 name="cuisine"
@@ -291,22 +309,18 @@ const AddRecipe = () => {
             <label className='required instr-label'>Instructions</label>
             {formData.instructions.map((instruction, index) => (
               <div key={index} className="instr-list">
-                <span>Step {index + 1}: {instruction.text}</span>
-                {instruction.image && (
-                  <div>
-                    <img
-                      src={URL.createObjectURL(instruction.image)}
-                      alt={`Instruction ${index + 1}`}
-                      style={{ width: '80px', height: '80px', objectFit: 'cover' }}
-                    />
-                  </div>
-                )}
-                  <input
-                  type="text"
-                  value={newInstruction.text}
-                  onChange={handleInstructionTextChange}
-                  placeholder="Add instruction step"
-                />
+                <div className='instr-img'>
+                  <div className='inst'>Step {index + 1}: {instruction.text}</div>
+                  {instruction.image && (
+                    <div>
+                      <img
+                        src={URL.createObjectURL(instruction.image)}
+                        alt={`Instruction ${index + 1}`}
+                        style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+                      />
+                    </div>
+                  )}
+                </div>
                 <button
                   type="button"
                   onClick={() => handleRemoveInstruction(index)}
@@ -346,29 +360,27 @@ const AddRecipe = () => {
 
           <div className="form-group">
             <label className='required' id='resultImage-label'>Final results image</label>
-            <input
-              type="file"
-              name="result_img"
-              id = "resultImage-inpt"
-              onChange={handleFileChange}
-              required
-            />
+            <div style={{display: "flex", flexDirection:"row"}}>
+              <input
+                type="file"
+                name="result_img"
+                id = "resultImage-inpt"
+                onChange={handleFileChange}
+                required
+              />
+              {resultPreview && (
+                <div className="result-preview">
+                  <img
+                    src={resultPreview}
+                    alt="Avatar Preview"
+                    className="result-preview-img"
+                  />
+                </div>
+              )}
+            </div>
+              
           </div>
-          {/* {error && (
-            <div className="error-container">
-              <div className="error-header"><span className="error-icon">❌</span>POST UNSUCCESSFUL!</div>
-              <div className="error-text">
-                The following fields are missing:
-                {Array.isArray(error) ? (
-                  error.map((msg, index) => <p key={index}>{msg}</p>)
-                ) : (
-                  <p>{error}</p>
-                )}
-              </div>
-              <button className="edit-button" onClick={closeErrorBox} id='addRecipe-button'>
-                Edit
-              </button>
-            </div>)} */}
+
           <div className="form-actions">
             <Link to='/home'>
               <button type="button" className='cancel' id='addRecipe-button'>Cancel</button>

@@ -25,8 +25,11 @@ const Logout = () => {
 
   return (
     <li className="logout">
-      <Link to="/" onClick={handleLogout}>
-        <img src="/images/logout.svg" alt="logout" />
+      <Link to="/" onClick={handleLogout} style={{textDecoration:"none"}}>
+        <button className="login-button" style={{display:"flex", flexDirection:"column"}} >
+          <img src="/images/logout.svg" alt="logout" style={{width: '100px'}}/>
+          <span style={{fontSize:"20px"}}>Log out</span>
+        </button>
       </Link>
     </li>
   );

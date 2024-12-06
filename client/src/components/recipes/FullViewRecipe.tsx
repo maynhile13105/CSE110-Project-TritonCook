@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Profile, Recipe, recipeInstruction } from "../../types/types";
-import './RecipeItem.css';
+import './FullViewRecipe.css';
 import { Link, useParams } from "react-router-dom";
 import { addFavoriteRecipe, deleteFavoriteRecipe } from "../../utils/favorite-utils";
 import { AppContext, initialState } from "../../context/AppContext";
@@ -275,149 +275,156 @@ const FullViewRecipe = () => {
  
 
   return (
-    <div className="post-box">
-      <div className="user-inf">
-        <div className="close">
-          {avatar? 
-            (<img className="avatar-on-recipe" src={avatar} alt="owner-avatar" />)
-            :
-            (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile"  id="default-avatar-on-recipe" />)
-          }
-          <Link to={`/profile/${recipeOwner.name}`} className="recipe-owner">{recipeOwner.name}</Link>
+    <div className="fullViewRecipe-container" >
+      <div className="full-post-box" >
+        <div className="owner-inf">
+          <div className="close">
+            {avatar? 
+              (<img className="owner-avatar" src={avatar} alt="owner-avatar" />)
+              :
+              (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile"  id="default-owner-avatar" />)
+            }
+            <Link to={`/profile/${recipeOwner.name}`} className="owner">{recipeOwner.name}</Link>
+          </div>
+          <button className="fullpost-fav-button" onClick={handleFavoriteClick}>
+            <img
+              src={isFavorite ? "/images/Heart.svg" : "/images/unfavorite.svg"}
+              alt={isFavorite ? "heart image" : "uncolored heart image"}
+              style={{width : "90px"}}
+            />
+          </button>
         </div>
-        <button className="fav-button" onClick={handleFavoriteClick}>
-          <img
-            src={isFavorite ? "/images/Heart.svg" : "/images/unfavorite.svg"}
-            alt="Button Image"
-          />
-        </button>
-      </div>
-      <br />
-      <div className="post-name">{recipeInfo.title}</div>
-      <br />
-      <div className="post-est-ingr">
-        Estimate: {recipeInfo.estimate} minutes
         <br />
-        Ingredients: {recipeInfo.ingredients}
-      </div>
-      <div>
-        <div className="post-instructions">Instructions</div>
-        <div className="instruction-step">
-          <div className="instruction-content">
+        <div className="fullpost-name">{recipeInfo.title}</div>
+        <br />
+        <div className="fullpost-info">
+          Estimate: {recipeInfo.estimate} minutes
+          <br />
+          Ingredients: {recipeInfo.ingredients}
+          <br />
+          Cuisine: {recipeInfo.cuisine}
+        </div>
+        <div>
+          <div className="fullpost-instructions-label" >Instructions:</div>
+          <div className="instruction-step">
             <button onClick={goToPreviousStep} disabled={currentStep === 0} className="side-button right-button">
               &lt;
             </button>
-            {currentStep < recipeInstructions.length && recipeInstructions[currentStep] ? (
-              <div className="img-and-ins">
-                <div className="description">
-                  <p>Step {currentStep + 1}: {recipeInstructions[currentStep]?.description || 'No description available'}</p>
+            <div className="instruction-content" >
+              {currentStep < recipeInstructions.length && recipeInstructions[currentStep] ? (
+                <div className="img-and-ins">
+                  <div className="description">
+                    <p>Step {currentStep + 1}: {recipeInstructions[currentStep]?.description || 'No description available'}</p>
+                  </div>
+
+                  <img
+                    src={recipeInstructions[currentStep]?.img?.startsWith("/uploads/recipes/instructions")
+                      ? `${API_BASE_URL}${recipeInstructions[currentStep].img}`
+                      : '/images/no-image.jpg'}
+                    className="fullpost-img"
+                    alt={`Step ${currentStep + 1}`}
+                  />
                 </div>
+              ) : (
+                <div className="img-and-result">
+                  <div className="description">
+                    <p>Result</p>
+                  </div>
 
-                <img
-                  src={recipeInstructions[currentStep]?.img?.startsWith("/uploads/recipes/instructions")
-                    ? `${API_BASE_URL}${recipeInstructions[currentStep].img}`
-                    : '/images/no-picture.jpg'}
-                  className="post-img"
-                  alt={`Step ${currentStep + 1}`}
-                />
-              </div>
-            ) : (
-              <div className="img-and-ins">
-                <div className="description">
-                  <p>Result</p>
+                  <img
+                    src={recipeInfo.result_img?.startsWith("/uploads/recipes/results")
+                      ? `${API_BASE_URL}${recipeInfo.result_img}`
+                      : '/images/no-picture.jpg'}
+                    className="fullpost-img"
+                    alt={`Result Image`}
+                  />
                 </div>
-
-                <img
-                  src={recipeInfo.result_img?.startsWith("/uploads/recipes/results")
-                    ? `${API_BASE_URL}${recipeInfo.result_img}`
-                    : '/images/no-picture.jpg'}
-                  className="post-img"
-                  alt={`Result Image`}
-                />
-              </div>
-            )}
-
-
+              )}
+            </div>
+            
             <button onClick={goToNextStep} disabled={currentStep === recipeInstructions.length}
-              className="side-button right-button">
-              &gt;
-            </button>
+                className="side-button right-button">
+                &gt;
+              </button>
           </div>
         </div>
-      </div>
-      
-      <div className="horizontal-line"></div>
-      <div className="user-inf">
-        <div className="like-container">
-          <button className="like-button" onClick={handleLikeClick}>
-            <img
-              src={isLiked ? "/images/colored-thumbs-up.svg" : "/images/uncolored-thumbs-up.svg"}
-              alt={isLiked ? "Like button Image" : "Unlike button image"}
-              style={{width : "40px"}}
-            />
-          </button>
-          <a style={{fontSize: "20px"}}>{numberOfLikes}</a>
-        </div>
         
-        <img src="/Comment.svg" alt="Comment" onClick={() => handlePopup("Comments will be available soon!")}/>
+        <div className="horizontal-line"></div>
+        <div className="user-inf">
+          <div className="like-container">
+            <button className="fullpost-like-button" onClick={handleLikeClick}>
+              <img
+                src={isLiked ? "/images/colored-thumbs-up.svg" : "/images/uncolored-thumbs-up.svg"}
+                alt={isLiked ? "Like button Image" : "Unlike button image"}
+                style={{width : "80px"}}
+              />
+            </button>
+            <a style={{fontSize: "35px"}}>{numberOfLikes}</a>
+          </div>
+          <div className="fullpost-comment-button" role="button" onClick={() => handlePopup("Comments will be available soon!")}>
+            <img src="/Comment.svg" alt="Comment" style={{width : "80px"}}/>
 
-        <button className={userProfile.name === recipeOwner.name ? 'visible' : "hidden"} 
-          id="delete-button" 
-          onClick={() => handleDeleteClick(recipeInfo)}
-        >
-          <img 
-            src={"/images/trashcan-icon.svg"}
-            alt="Delete Image"
-            style={{width: "30px"}}
-          />
-        </button>
+          </div>
 
-          <button 
-            className={userProfile.name === recipeOwner.name ? 'hidden' : "visible"} 
-            id="report-button" 
-            onClick={() => handlePopup("Reports will be available soon!")}
+          <button className={userProfile.name === recipeOwner.name ? 'visible' : "hidden"} 
+            id="fullpost-delete-button" 
+            onClick={() => handleDeleteClick(recipeInfo)}
           >
             <img 
-              src="/Report.svg" 
-              alt="Report"
-              style={{width: "30px"}}
+              src={"/images/trashcan-icon.svg"}
+              alt="Delete Image"
+              style={{width: "80px"}}
             />
           </button>
-      </div>
 
-        {showCommentOrReportPopup && (
-          <div className="notif-popup">
-            {popupMessage}
+            <button 
+              className={userProfile.name === recipeOwner.name ? 'hidden' : "visible"} 
+              id="fullpost-report-button" 
+              onClick={() => handlePopup("Reports will be available soon!")}
+            >
+              <img 
+                src="/Report.svg" 
+                alt="Report"
+                style={{width: "80px"}}
+              />
+            </button>
+        </div>
+
+          {showCommentOrReportPopup && (
+            <div className="notif-popup">
+              {popupMessage}
+            </div>
+          )}
+
+
+        {/* Modal for not logged in */}
+        {isModalVisible && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h2>Login Required</h2>
+              <p>You must log in to use this feature.</p>
+              <button onClick={() => setIsModalVisible(false)}>Close</button>
+              <Link to="/">
+                <button>Sign in</button>
+              </Link>
+            </div>
           </div>
         )}
 
-
-      {/* Modal for not logged in */}
-      {isModalVisible && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2>Login Required</h2>
-            <p>You must log in to use this feature.</p>
-            <button onClick={() => setIsModalVisible(false)}>Close</button>
-            <Link to="/">
-              <button>Sign in</button>
-            </Link>
+        {/* Delete Confirmation Modal */}
+        {isDeleteModalVisible && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h2>Are you sure you want to delete this recipe?</h2>
+              <p>This action cannot be undone.</p>
+              <button onClick={handleDeleteCancel}>Cancel</button>
+              <button onClick={handleDeleteConfirmation}>Yes, Delete</button>
+            </div>
           </div>
-        </div>
-      )}
-
-      {/* Delete Confirmation Modal */}
-      {isDeleteModalVisible && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2>Are you sure you want to delete this recipe?</h2>
-            <p>This action cannot be undone.</p>
-            <button onClick={handleDeleteCancel}>Cancel</button>
-            <button onClick={handleDeleteConfirmation}>Yes, Delete</button>
-          </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
+    
   );
 };
 

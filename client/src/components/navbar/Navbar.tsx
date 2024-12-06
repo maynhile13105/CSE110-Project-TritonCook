@@ -37,7 +37,7 @@ const Navbar = () => {
         <ul className='left'>
         <Link to='/home'><li className='logo' data-testid='logo'>
             <img src='/images/logo-round.svg'
-              alt='logo' />
+              alt='logo' className='logo-nav'/>
           </li></Link>
           <Link to='#'><li className='notif' data-testid='notif' onClick={handleNotifClick}>
             <img className='notifImage' src='/images/notif-bell.svg'
@@ -49,16 +49,19 @@ const Navbar = () => {
             <img className='postImage' src='/images/addPost.svg' alt='post' />
           </li></Link>
           <Link to='/home'><li className='home' data-testid='home'>
-            <img src='/images/home.svg' alt='home' />
+            <img src='/images/home.svg' alt='home' className='home-icon'/>
           </li></Link>
           <Link to='/home/search'><li className='search' data-testid='search'>
-            <img src='/images/search.svg' alt='search'/>
+            <img src='/images/search.svg' alt='search' className='search-icon-nav'/>
           </li></Link>
         </ul>
         <ul className='right'>
         {userProfile?.isGuest ? (
-          <Link to="/" data-testid="login">
-            <button className="login-button">Log in</button>
+          <Link to="/" data-testid="login" style={{textDecoration:"none"}}>
+            <button className="login-button" style={{display:"flex", flexDirection:"column"}}>
+              <img src='/images/login-icon.svg' className='login-icon'/>
+              <span style={{fontSize:"25px"}}>Log in</span>
+            </button>
           </Link>
         ) : (
           <Logout data-testid="logout" />
@@ -66,7 +69,7 @@ const Navbar = () => {
           <Link to={`/profile/${userProfile.name}`} data-testid='profile'>
             {userProfile?.picture? 
             (<img className='profile' src={avatar} alt="user-avatar"/>) 
-            :(<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" />)}
+            :(<img src="/images/profile.svg" alt="defaultprofile" style={{width:"100px"}} />)}
           </Link>
         </ul>
       </main>

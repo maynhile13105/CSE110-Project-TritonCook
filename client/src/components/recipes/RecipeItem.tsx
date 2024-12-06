@@ -215,7 +215,8 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
         <button className="fav-button" onClick={handleFavoriteClick}>
           <img
             src={isFavorite ? "/images/Heart.svg" : "/images/unfavorite.svg"}
-            alt="Button Image"
+            alt={isFavorite ? "favorite image" : "unfavorite image"}
+            style={{width : "80px"}}
           />
         </button>
       </div>
@@ -226,6 +227,8 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
         Estimate: {currentRecipe.estimate} minutes
         <br />
         Ingredients: {currentRecipe.ingredients}
+        <br />
+        Cuisine: {currentRecipe.cuisine}
       </div>
 
       <div className="post-see-details">
@@ -241,23 +244,21 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
             <img
               src={isLiked ? "/images/colored-thumbs-up.svg" : "/images/uncolored-thumbs-up.svg"}
               alt={isLiked ? "Like button Image" : "Unlike button image"}
-              style={{width : "40px"}}
+              style={{width : "60px"}}
             />
           </button>
-          <a style={{fontSize: "20px"}}>{numberOfLikes}</a>
+          <a style={{fontSize: "25px"}}>{numberOfLikes}</a>
         </div>
         
-        <img src="/Comment.svg" alt="Comment" onClick={() => handlePopup("Comments will be available soon!")}/>
+        <div className="comment-button" role="button" onClick={() => handlePopup("Comments will be available soon!")}>
+          <img src="/Comment.svg" alt="Comment" style={{width : "60px"}}/>
+        </div>
 
         <button className={userProfile.name === recipeOwner.name ? 'visible' : "hidden"} 
           id="delete-button" 
           onClick={() => handleDeleteClick(currentRecipe)}
         >
-          <img 
-            src={"/images/trashcan-icon.svg"}
-            alt="Delete Image"
-            style={{width: "30px"}}
-          />
+          <img src={"/images/trashcan-icon.svg"} alt="Delete Image" style={{width: "60px"}} />
         </button>
 
           <button 
@@ -265,11 +266,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
             id="report-button" 
             onClick={() => handlePopup("Reports will be available soon!")}
           >
-            <img 
-              src="/Report.svg" 
-              alt="Report"
-              style={{width: "30px"}}
-            />
+            <img src="/Report.svg" alt="Report" style={{width: "60px"}} />
           </button>
       </div>
 

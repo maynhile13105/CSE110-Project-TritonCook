@@ -1,7 +1,12 @@
 #googleButton {
   display: inline-block center;
-  width: 95%;
+  width: 92%;
+  font-size: 30px;
   white-space: nowrap;
+  padding: 5px;
+  border-radius: 15px;
+  margin: 15px;
+  transition: background-color 0.3s;
+  cursor: pointer;
   margin-left: 2%;
-  border-radius: 100px;
 }

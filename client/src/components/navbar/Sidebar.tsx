@@ -147,7 +147,7 @@ const Sidebar = () => {
               (<img className='profile' src={avatar} alt="user-avatar"/>)
               :
               (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" />)}
-              <span>Profile</span>
+              <span style={{fontSize:"30px"}}>Profile</span>
             </div>
           </div>
         </Link>
