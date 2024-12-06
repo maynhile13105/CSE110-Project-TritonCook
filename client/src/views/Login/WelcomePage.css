@@ -36,9 +36,10 @@
   margin-top: 50px;
   padding-bottom: 40px;
   background-color: #FFF1C2;
+  align-items: center;
 }
 
-.login-button {
+.loginButton {
   font-size: 50px;
   background-color: #B0E0E2;
   border: 1px solid #7385ac;
@@ -47,7 +48,7 @@
   color: rgb(22, 22, 161);
 }
 
-.login-button:hover {
+.loginButton:hover {
   color: aliceblue;
   background-color: rgb(10, 10, 143);
   font-weight: bold;

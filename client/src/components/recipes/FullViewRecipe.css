@@ -1,6 +1,6 @@
 .full-post-box {
-  width: fit-content;
-  height: auto;
+  width: 60%;
+  height: 50%;
   margin-left: auto;
   margin-right: auto;
   border-radius: 20px;
@@ -30,8 +30,9 @@
 
 .fullpost-img {
   background-color: black;
-  width: 100%;
-  height: 100%;
+  width: auto;
+  max-width: 600px;
+  aspect-ratio: 1 /1;
   align-items: center;
   object-fit: fill;
   border-radius: 20px;
@@ -195,12 +196,10 @@
   flex-direction: row;
   text-align: center;
   font-size: 30px;
-  align-items: center;
-    
+  align-items: center;    
 }
 .instruction-content{
   width: 80%;
-  aspect-ratio: 1 / 1; /* Ensures height equals width */
 }
 
 .fullpost-instructions-label{

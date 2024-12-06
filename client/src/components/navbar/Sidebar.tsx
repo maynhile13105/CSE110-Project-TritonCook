@@ -141,16 +141,30 @@ const Sidebar = () => {
     <div>
       <div className='sidebar-container' role='button'>
         <div className='mainbuttons-container'>
-        <Link to={`/profile/${userProfile.name}`} data-testid='profileButton'>
-          <div className='profilebutton' data-testid='UserIcon'>
-            <div className="profile-content">{userProfile?.picture? 
-              (<img className='profile' src={avatar} alt="user-avatar"/>)
-              :
-              (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" />)}
-              <span style={{fontSize:"30px"}}>Profile</span>
+        {userProfile?.isGuest ? (
+          <Link to="/home/guest-profile" data-testid='profile'>
+            <div className='profilebutton' data-testid='UserIcon'>
+              <div className="profile-content">
+                <img src="/images/profile.svg" alt="defaultprofile" style={{width:"100px"}} />
+                <span style={{fontSize:"30px"}}>Profile</span>
+              </div>
+            </div>  
+          </Link>
+        ) : ( 
+          <Link to={`/profile/${userProfile.name}`} data-testid='profileButton'>
+            <div className='profilebutton' data-testid='UserIcon'>
+              <div className="profile-content">{userProfile?.picture? 
+                (<img className='profile' src={avatar} alt="user-avatar"/>)
+                :
+                (<img src="/images/profile.svg" alt="defaultprofile" className="defaultprofile" />)}
+                <span style={{fontSize:"30px"}}>Profile</span>
+              </div>
             </div>
-          </div>
-        </Link>
+          </Link>
+        )}
+
+
+        
         <Link to="/home/favorite"><div className='favoritebutton' data-testid='FavoriteButton'><img id="saved-icon" src='/images/favorite.svg' alt='favoriteIcon'/>Favorites</div></Link>
         <Link to = "/home/friends"><div className='friendsbutton' onClick={handleFriendsClick}><img id="friends-icon" src='/images/friends.svg' alt='friendsIcon'/>Friends</div></Link>
         <Link to="#"><div className='filterbutton' onClick={toggleDropdown} data-testid="filter-button"><img id="filter-icon" src='/images/filter.svg' alt='filterIcon'/>Filter</div></Link>

@@ -87,7 +87,10 @@ const CreateAccountForm = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-
+          {/* Green hint below the input */}
+          <div className='tips'>
+            ! Requirement: Email must be in the format of "xxx@ucsd.edu".
+          </div>
         <div>
           <label>Password</label>
         </div>
@@ -102,9 +105,13 @@ const CreateAccountForm = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+          {/* Green hint below the input */}
+          <div className='tips'>
+            ! Requirement: Password must have at least 8 characters.
+          </div>        
 
         <div>
-          <label>Confirm Password</label>
+          <label>Confirmed Password</label>
         </div>
         <div className="confirmed-pass-input">
           <input
@@ -117,6 +124,10 @@ const CreateAccountForm = () => {
             onChange={(e) => setConfirmedPass(e.target.value)}
           />
         </div>
+          {/* Green hint below the input */}
+          <div className='tips'>
+            ! Requirement: Confirmed Password must be exactly the same as Password.
+          </div>
         <div className="upload-avatar">
           <label className='avatar-label'>Profile Avatar</label>
           <input

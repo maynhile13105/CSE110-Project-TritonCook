@@ -66,11 +66,17 @@ const Navbar = () => {
         ) : (
           <Logout data-testid="logout" />
         )}
+        {userProfile?.isGuest ? (
+          <Link to="/home/guest-profile" data-testid='profile'>
+            <img src="/images/profile.svg" alt="defaultprofile" style={{width:"100px"}} />
+          </Link>
+        ) : ( 
           <Link to={`/profile/${userProfile.name}`} data-testid='profile'>
             {userProfile?.picture? 
             (<img className='profile' src={avatar} alt="user-avatar"/>) 
             :(<img src="/images/profile.svg" alt="defaultprofile" style={{width:"100px"}} />)}
           </Link>
+        )}
         </ul>
       </main>
 

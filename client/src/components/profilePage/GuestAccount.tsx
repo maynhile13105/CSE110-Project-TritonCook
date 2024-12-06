@@ -11,16 +11,16 @@ const GuestAccount = () => {
             Please login to see your account information!
           </div>
         </div>
+
         <div className="button-container">
             {/* Link to LoginForm */}
-            <Link to="/" className="button-link">
-                <button className="button">Sign in</button>
+            <Link to="/" className="button-link-guest">
+                <button className="button-guest">Sign in</button>
             </Link>
             {/* Link to CreateAccountForm */}
-            <Link to="/create-account" className="button-link">
-                <button className="button">Register</button>
+            <Link to="/create-account" className="button-link-guest">
+                <button className="button-guest">Register</button>
             </Link>
-
         </div>
       </div>
     </div>

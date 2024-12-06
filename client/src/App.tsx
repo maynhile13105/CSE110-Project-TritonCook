@@ -16,6 +16,7 @@ import UserInfoPage from "./components/profilePage/UserInfoPage";
 import FullViewRecipe from "./components/recipes/FullViewRecipe";
 import FriendsPage from "./components/friendsPage/FriendsPage";
 import ResultsPage from "./components/results/ResultsPage";
+import GuestAccount from "./components/profilePage/GuestAccount";
 
 
 function App() {
@@ -35,7 +36,9 @@ function App() {
             <Route path="friends" element={<FriendsPage />} />
             <Route path="recipe/:recipeID" element={<FullViewRecipe />} />
             <Route path="results" element={<ResultsPage />} />
+            <Route path="guest-profile" element={<GuestAccount />} />
         </Route >
+
           <Route path="/profile/:username" element={<UserProfilePage />}>
             <Route index element={<UserPostedRecipesList />} />
             <Route path = "information" element={<UserInfoPage />}></Route>

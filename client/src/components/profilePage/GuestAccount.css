@@ -3,14 +3,13 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     height: 100vh;
   }
   
   /* Pop-up window styling */
   .popup-window {
     width: 688px;
-    height: 237px;
+    height: 500px;
     border-radius: 20px;
     background: #F7FFE2;
     display: flex;
@@ -22,43 +21,56 @@
   /* Message block inside the pop-up */
   .message-block {
     display: flex;
-    width: 520px;
-    height: 65px;
+    width: fit;
+    aspect-ratio: 2.5/1;
     min-width: 240px;
     /* padding: var(--sds-size-space-300) var(--sds-size-space-400); */
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     border-radius: 15px;
-    border: 1px solid black;
-    background: white;
+    margin-top: -100px;
+
   }
   
   /* Text inside the message block */
   .message-text {
-    width: 538px;
+    width: fit-content;
     height: 41px;
     color: black;
-    font-size: 22px;
+    font-size: 50px;
     font-weight: 800;
     text-align: center;
+
   }
   
   /* Button container for positioning */
   .button-container {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     gap: 50px;
     padding-top: 15px;
+    width: 100%;
   }
   
   /* Styles for Sign In button */
-  .button {
+  .button-link-guest {
     padding: 4px 6px;
-    background-color: black;
     /* color: white; */
-    font-size: 15px;
+    font-size: 40px;
     border-radius: 15px;
   }
 
+  .button-guest{
+    font-size: 40px;
+    padding: 10px;
+    border-radius: 20px;
+    background: #B0E0E2;
+  }
+
+  .button-guest:hover{
+    font-weight: bold;
+    background: #17f7ff;
+  }
   
