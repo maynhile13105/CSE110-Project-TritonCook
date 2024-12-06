@@ -1,65 +1,74 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./FriendsPage.css";
+import { Profile } from "../../types/types";
 
 const FriendsPage = () => {
-    const friends = [
-      { id: 1, username: "UserName1" },
-      { id: 2, username: "UserName2" },
-      { id: 3, username: "UserName3" },
-    ];
-  
-    const followers = [
-      { id: 4, username: "UserName5" },
-      { id: 5, username: "UserName6" },
-      { id: 6, username: "UserName7" },
-    ];
-  
-    const following = [
-      { id: 7, username: "UserName5" },
-      { id: 8, username: "UserName6" },
-      { id: 9, username: "UserName7" },
-    ];
+  const [friends, setFriends] = useState<Profile[]>([]);
+  const [followers, setFollowers] = useState<Profile[]>([]);
+  const [followings, setFollowings] = useState<Profile[]>([]);
+
   
     return (
       <div className="user-list-container">
         <div id="section">
           <div className="section-title">Friends</div>
-          <div className="list">
-            {friends.map((friend) => (
-              <li key={friend.id} className="list-item">
-                <img src="/images/profile.svg"/>
-                <span className="username">{friend.username}</span>
-              </li>
-            ))}
-          </div>
-          <p className="see-more">... See more</p>
+          {friends.length > 0 ?
+            (<div className="list">
+              ({friends.map((friend) => (
+                <li key={friend.id} className="list-item">
+                  <img src="/images/profile.svg"/>
+                  <span className="username">{friend.name}</span>
+                </li>
+              ))})
+              <p className="see-more">... See more</p>
+            </div>
+            ):(
+              <div style={{fontSize:"30px"}}>
+                No friends list to display
+              </div>
+              )
+            }
         </div>
   
         <div id="section">
           <div className="section-title">Followers</div>
-          <div className="list">
-            {followers.map((follower) => (
-              <li key={follower.id} className="list-item">
-                <img src="/images/profile.svg"/>
-                <span className="username">{follower.username}</span>
-              </li>
-            ))}
-          </div>
-          <p className="see-more">... See more</p>
+          {followers.length > 0 ?
+            (<div className="list">
+              ({followers.map((follower) => (
+                <li key={follower.id} className="list-item">
+                  <img src="/images/profile.svg"/>
+                  <span className="username">{follower.name}</span>
+                </li>
+              ))})
+              <p className="see-more">... See more</p>
+            </div>
+            ):(
+              <div style={{fontSize:"30px"}}>
+                No followers list to display
+              </div>
+              )
+            }
         </div>
   
         <div id="section">
-          <div className="section-title">Following</div>
-          <div className="list">
-            {following.map((following) => (
-              <li key={following.id} className="list-item">
-                <img src="/images/profile.svg"/>
-                <span className="username">{following.username}</span>
-              </li>
-            ))}
-          </div>
-          <p className="see-more">... See more</p>
+          <div className="section-title">Followings</div>
+          {followings.length > 0 ?
+            (<div className="list">
+              ({followings.map((following) => (
+                <li key={following.id} className="list-item">
+                  <img src="/images/profile.svg"/>
+                  <span className="username">{following.name}</span>
+                </li>
+              ))})
+              <p className="see-more">... See more</p>
+            </div>
+            ):(
+              <div style={{fontSize:"30px"}}>
+                No followings list to display
+              </div>
+              )
+            }
         </div>
       </div>
     );

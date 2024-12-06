@@ -91,7 +91,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
 
   //Handle Favorite Button Click
   const handleFavoriteClick = () => {
-    if (!token) {
+    if (userProfile?.isGuest) {
       // Show the popup if the user is not logged in
       setIsModalVisible(true);
       return;
@@ -139,7 +139,7 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
   };
 
   const handleLikeClick = () => {
-    if (!token) {
+    if (userProfile?.isGuest) {
       // Show the popup if the user is not logged in
       setIsModalVisible(true);
       return;
@@ -286,6 +286,9 @@ const RecipeItem: React.FC<RecipeItemProps> = ({ currentRecipe }) => {
             <button onClick={() => setIsModalVisible(false)}>Close</button>
             <Link to="/">
               <button>Sign in</button>
+            </Link>
+            <Link to="/create-account">
+              <button>Register</button>
             </Link>
           </div>
         </div>
