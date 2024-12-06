@@ -26,6 +26,7 @@ export async function createPost(req: Request, res: Response, db: Database) {
   if (!userID) return res.status(401).json({ error: 'Unauthorized' });
 
   try {
+
     const postID = uuidv4();
 
     const { title, ingredients, estimate, cuisine, instructions } = req.body;
@@ -124,6 +125,8 @@ export async function createPost(req: Request, res: Response, db: Database) {
 
     res.status(201).json({ postID, message: "Recipe successfully added." });
   } catch (error) {
+    // Rollback the transaction in case of any error
+    await db.run("ROLLBACK");
     console.error("Error adding recipe:", error);
     res.status(500).json({ error: "An error occurred while adding the recipe." });
   }

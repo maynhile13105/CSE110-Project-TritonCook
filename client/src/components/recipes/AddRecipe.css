@@ -15,22 +15,38 @@
     font-weight: 400;
 }
 .form-group{
-    justify-content: space-between;
     width: 95%;
     display: flex;
     align-items: center;
     gap: 15px;
     margin-bottom: 10px;
-    height: 100px;
+    height: 150px;
+    padding: 20px
 }
-
-.form-group input, .instr-input input {
+.input-and-alert{
+    width: 100%;
+    padding: 20px;
+    height: 150px;
+}
+.form-group input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 10px;
-    width: 80%;
+    width: 85%;
     height: 60px;
-    font-size: 28px;
+    font-size: 30px;
+    flex: 1; /* Make the input take up the remaining space */
+    align-items: center;
+    margin-top: 45px;
+}
+
+.instr-input input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 85%;
+    height: 60px;
+    font-size: 30px;
     flex: 1; /* Make the input take up the remaining space */
     align-items: center;
 }
@@ -66,10 +82,19 @@
 }
 
 .time-unit {
-    font-size: 20px; /* Adjust to your preferred size */
+    font-size: 30px; /* Adjust to your preferred size */
     font-weight: 600;
-    margin-top: 0;
-  }
+    margin-left: 10px;
+    margin-right: 15%;
+}
+
+.time-input-and-unit{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
 
 .form-actions {
     display: flex;
@@ -99,7 +124,7 @@
   color: red;
   cursor: pointer;
   right: 20px;
-  font-size: 18px;
+  font-size: 30px;
 }
 
 .remove-instruction-button:hover {
@@ -111,55 +136,25 @@
     background-color: #D9D9D9;
 }
 
-.error-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px;
-    background-color: #ffffff;
-    border: 4px solid #ff4c4c;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    border-radius: 20px;
-    z-index: 1000;
-    max-width: 60%;
-    max-height: 80%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.error-text {
-    margin: 10px 0;
-    font-size: 30px;
-    color: #333333;
-}
-
-.error-header {
-    font-size: 60px;
-    color: #ff4c4c;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    font-weight: bold;
-}
-
-.error-icon {
-    font-size: 32px;
-}
+.alert-icon{
+font-size: 50px;}
 
 .instr-list {
     align-items: center;
     gap: 15px;
     margin-left: 15%;
+    margin-right: 10%;
     margin-bottom: 20px;
-    height: 100px;
+    height: fit-content;
     display: flex;
     border-bottom: 1px solid #ccc; /* Optional: Add a separator for clarity */
     justify-content: space-between; /* Push content and button apart */
-    width: 75%
+    width: 70%;
+    padding: 20px 0px 20px 55px;
+}
+
+.instr-img span{
+    font-size: 30px;
 }
 
 .instr-input {
@@ -174,4 +169,16 @@
 #resultImage-inpt{
     border: none;
     padding-top: 35px;
+}
+
+.tips{
+    color: green;
+    font-size: 30px;
+    margin: 5px 
+}
+
+.alert{
+    color: red;
+    margin-top: 10px;
+    font-size: 30px;
 }
