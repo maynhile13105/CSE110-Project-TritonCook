@@ -117,7 +117,7 @@ test('renders account creation page', () => {
   const passwordInputField = screen.getByPlaceholderText("Enter Password");
   expect(passwordInputField).toBeInTheDocument();
 
-  const confirmPassword = screen.getByText("Confirm Password");
+  const confirmPassword = screen.getByText("Confirmed Password");
   expect(confirmPassword).toBeInTheDocument();
   const confirmPasswordInputField = screen.getByPlaceholderText("Enter Confirm Password");
   expect(confirmPasswordInputField).toBeInTheDocument();

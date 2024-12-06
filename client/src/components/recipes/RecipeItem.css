@@ -1,6 +1,6 @@
 .post-box {
-  width: 80%;
-  aspect-ratio: 1 /1;
+  width: 700px;
+  height: 1100px;
   margin-left: auto;
   margin-right: auto;
   border-radius: 20px;
@@ -40,14 +40,16 @@
 }
 
 .post-img {
-  width: auto;
+  width: 80%;
   max-width: 80%;
   min-width: 70%;
   aspect-ratio: 1 / 1; /* Ensures the height equals the width */
   align-items: center;
+  justify-content: center;
   object-fit: fill;
   border-radius: 20px;
-  margin-left: 15%;
+  margin-left: 50px;
+  margin-bottom: 30px;
 }
 
 .user-inf {
