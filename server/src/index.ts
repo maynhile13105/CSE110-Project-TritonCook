@@ -9,6 +9,7 @@ import { sampleRecipes, sampleUsers } from "./tests/utils/dummyList";
 import { createUserInformationEndpoints } from "./endpoints/userInfo-endpoint";
 import { createLikeEndpoints } from "./endpoints/like-endpoint";
 import { createPostEndpoints } from "./endpoints/post-endpoints";
+import { createHistoryEndpoints } from "./endpoints/history-endpoints";
 import path from 'path';
 
 
@@ -83,6 +84,7 @@ if (require.main === module) {
   createUserInformationEndpoints(app, db);
   createLikeEndpoints(app, db);
   createPostEndpoints(app, db);
+  createHistoryEndpoints(app, db);
 })();
 
 export default app;
