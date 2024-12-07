@@ -5,7 +5,6 @@ import { createHash } from 'crypto';
 import { v4 as uuid } from 'uuid';
 const jwt = require('jsonwebtoken');
 import openDatabase from "../database/openDatabase";
-import initDatabase from "../database/initDatabase";
 
 let server: Server;
 let db: Database;
@@ -17,10 +16,15 @@ beforeAll(async () => {
   if (!JWT_SECRET) {
     throw new Error("JWT_SECRET is not defined. Please set it in the environment.");
   }
-  
+
   db = await openDatabase();
-  await initDatabase();
   server = await app.listen(port);
+
+  // Wait for server startup for constancy on slower devices
+  function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  await delay(1000);
 });
 
 afterAll(async () => {
@@ -31,7 +35,7 @@ afterAll(async () => {
     DELETE FROM login WHERE username IN ('testUser1', 'testUser2');
   `);
 
-  db.close();
+  await db.close();
   server.close();
 });
 

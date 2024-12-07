@@ -2,8 +2,7 @@ main{
   position: sticky; 
   top: 0;
   z-index: 1000;
-  width: 100vw;
-  height: 94px;
+  height: 150px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -23,14 +22,14 @@ ul.left{
   display: flex;
   list-style-type: none;
   padding-left: 20px;
-  gap: 30px;
+  gap: 25px;
   align-items: center;
 }
 
 ul.middle{
   display: flex;
   list-style-type: none;
-  gap: 110px;
+  gap: 80px;
   align-items: center;
 }
 
@@ -38,17 +37,30 @@ ul.right{
   display: flex;
   list-style-type: none;
   padding-right: 20px;
-  gap: 30px;
+  gap: 10px;
   align-items: center;
 }
 
 img.notifImage{
   margin-top: 5px;
-  margin-left: -10px;
+  margin-left: -100px;
+  width: 100px;
+}
+
+.logo-nav{
+  width: 250px;
 }
 
 img.postImage{
-  width: 50px;
+  width: 90px;
+}
+.login-icon {
+  width: 80px;
+}
+
+.home-icon,
+.search-icon-nav{
+  width: 100px;
 }
 
 .notif{
@@ -69,4 +81,59 @@ img.postImage{
 
 .notif:hover, .post:hover, .home:hover, .search:hover, .logout:hover{
   background-color: #FFF1C2;
+}
+.profile{
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #000000;
+}
+
+.notif-popup {
+  position: fixed;
+  top: 50px;
+  left: 310px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  z-index: 1000;
+  animation: fadein 0.3s ease-in-out;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-button {
+  font-size: 24px;
+  font-weight: bold;
+  color: #000;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  width: 100px;
+  height: 95px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.login-button:hover {
+  background-color: #fff1c2;
+  color: #000;
 }

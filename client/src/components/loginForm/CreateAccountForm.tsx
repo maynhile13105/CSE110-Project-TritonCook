@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./CreateAccountForm.css";
 import { useNavigate } from "react-router-dom";
 const CreateAccountForm = () => {
@@ -6,6 +6,8 @@ const CreateAccountForm = () => {
   const [password, setPassword] = useState("");
   const [confirmedPass, setConfirmedPass] = useState("");
   const [email, setEmail] = useState("");
+  const [avatar, setAvatar] = useState<File | null>(null);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleCreateAccount = async (e: { preventDefault: () => void; }) => {
@@ -20,14 +22,18 @@ const CreateAccountForm = () => {
         throw new Error("Not valid UCSD email")
       }
 
+      const formData = new FormData();
+      formData.append("username", username);
+      formData.append("email", email);
+      formData.append("password", password);
+
+      if (avatar) {
+        formData.append("avatar", avatar); // Add the avatar file
+      }
+
       const response = await fetch('http://localhost:8080/api/createAccount', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-        }),
+        body: formData,
       });
 
       if (!response.ok) {
@@ -40,6 +46,15 @@ const CreateAccountForm = () => {
       console.error("Creating account failed.", err);
     }
   };
+
+    // Handle file input change
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+      if (file) {
+        setAvatar(file);
+        setAvatarPreview(URL.createObjectURL(file)); // Create a preview
+      }
+    };
 
   return (
     <div className="create-account-box">
@@ -72,7 +87,10 @@ const CreateAccountForm = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-
+          {/* Green hint below the input */}
+          <div className='tips'>
+            ! Requirement: Email must be in the format of "xxx@ucsd.edu".
+          </div>
         <div>
           <label>Password</label>
         </div>
@@ -87,9 +105,13 @@ const CreateAccountForm = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+          {/* Green hint below the input */}
+          <div className='tips'>
+            ! Requirement: Password must have at least 8 characters.
+          </div>        
 
         <div>
-          <label>Confirm Password</label>
+          <label>Confirmed Password</label>
         </div>
         <div className="confirmed-pass-input">
           <input
@@ -101,6 +123,29 @@ const CreateAccountForm = () => {
             value={confirmedPass}
             onChange={(e) => setConfirmedPass(e.target.value)}
           />
+        </div>
+          {/* Green hint below the input */}
+          <div className='tips'>
+            ! Requirement: Confirmed Password must be exactly the same as Password.
+          </div>
+        <div className="upload-avatar">
+          <label className='avatar-label'>Profile Avatar</label>
+          <input
+            type="file"
+            name="image"
+            id = "avatar-inpt"
+            onChange={handleFileChange}
+            required
+          />
+          {avatarPreview && (
+            <div className="avatar-preview">
+              <img
+                src={avatarPreview}
+                alt="Avatar Preview"
+                className="avatar-preview-img"
+              />
+            </div>
+          )}
         </div>
 
         <div>

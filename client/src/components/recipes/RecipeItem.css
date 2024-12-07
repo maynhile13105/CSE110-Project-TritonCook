@@ -1,69 +1,213 @@
 .post-box {
-    width: auto;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 20px;
-    background: #F7FFE2;
-    padding: 30px;
-    margin-bottom: 20px;
+  width: 700px;
+  height: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 20px;
+  background: #F7FFE2;
+  padding: 30px;
 }
 
 .post-name {
-    color: #000;
-    font-family: Inter;
-    font-size: 30px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+  color: #000;
+  font-family: Inter;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: bold;
+  line-height: normal;
 }
 
 .post-est-ingr {
-    color: #000;
-    font-family: Inter;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+  color: #000;
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }
 
 .post-see-details {
-    color: #000;
-    font-family: Inter;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    text-align: right;
-    padding-bottom: 10px;
+  color: #000;
+  font-family: Inter;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-right: 10px;
+  text-align: right;
+  padding-bottom: 10px;
 
 }
 
 .post-img {
-    background-color: black;
-    width: 540px;
-    height: 300px;
-    align-items: center;
-    object-fit: fill;
-    border-radius: 20px;
+  width: 80%;
+  max-width: 80%;
+  min-width: 70%;
+  aspect-ratio: 1 / 1; /* Ensures the height equals the width */
+  align-items: center;
+  justify-content: center;
+  object-fit: fill;
+  border-radius: 20px;
+  margin-left: 50px;
+  margin-bottom: 30px;
 }
 
 .user-inf {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: Inter;
-    font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Inter;
+  font-size: 16px;
 }
 
 .close {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.recipe-owner {
+  text-decoration: none;
+  font-size: 25px;
+  color: black;
+}
+.fav-button, .like-button, #delete-button, #report-button{
+    outline: none;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    cursor: pointer;
 }
 
+.like-button {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.recipe-owner {
+  text-decoration: none;
+  font-size: 30px;
+  color: black;
+}
+
+.fav-button,
+.like-button,
+.comment-button,
+#delete-button,
+#report-button {
+  outline: none;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.fav-button:hover,
+.like-button:hover,
+#delete-button:hover,
+.comment-button:hover,
+#report-button:hover {
+  background-color: rgb(100, 189, 237);
+}
+
+
 .horizontal-line {
-    border-top: 1px solid #030000;
-    margin: 20px 0;     
+  border-top: 1px solid #030000;
+  margin: 20px 0;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  font-size: 35px;
+}
+
+.modal-content {
+  background-color: #F7FFE2;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+  margin-bottom: 10px;
+}
+
+.modal-content button {
+  margin: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 35px;
+  background-color: #00aeff;
+
+}
+
+.modal-content button:hover {
+  background-color: #1a73e8;
+  border: 2px solid #00aeff;
+  color: white;
+}
+
+.like-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.visible {
+  display: block;
+  transition: opacity 0.3 ease;
+  opacity: 1;
+}
+
+.hidden {
+  display: none;
+}
+
+.avatar-on-recipe {
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  border: 1px solid black;
+}
+
+#default-avatar-on-recipe {
+  width: 110px;
+  height: 110px;
+}
+
+.recipe-notif-popup {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  animation: fadein 0.3s ease-in-out;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,6 +1,12 @@
 #googleButton {
-  margin-left: 25px;
-  margin-right: 25px;
-  padding-bottom: 15px;
-  font-size: 35px;
+  display: inline-block center;
+  width: 92%;
+  font-size: 30px;
+  white-space: nowrap;
+  padding: 5px;
+  border-radius: 15px;
+  margin: 15px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  margin-left: 2%;
 }

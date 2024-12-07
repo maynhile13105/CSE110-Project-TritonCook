@@ -1,0 +1,189 @@
+.outer {
+    margin-top: 2%;
+}
+
+.formContainer {
+    padding-top: 50px;
+    background-color: #F7FFE2;
+    max-width: 60%;
+    max-height: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 400;
+}
+.form-group{
+    width: 95%;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    height: 150px;
+    padding: 20px
+}
+.input-and-alert{
+    width: 100%;
+    padding: 20px;
+    height: 150px;
+}
+.form-group input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 85%;
+    height: 60px;
+    font-size: 30px;
+    flex: 1; /* Make the input take up the remaining space */
+    align-items: center;
+    margin-top: 45px;
+}
+
+.instr-input input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 85%;
+    height: 60px;
+    font-size: 30px;
+    flex: 1; /* Make the input take up the remaining space */
+    align-items: center;
+}
+
+.form-group label, .instr-label {
+    width: fit-content;
+    font-weight: bold;
+    text-align: right;
+    display: block;
+    min-width: 250px;
+
+}
+
+.form-group label.required::after, .instr-label::after {
+    content: " *";
+    color: red;
+    font-size: 28px;
+}
+
+
+#instructionImage{
+    margin-top: 10px;
+    border: none;
+}
+
+.addRecipe-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.time-unit {
+    font-size: 30px; /* Adjust to your preferred size */
+    font-weight: 600;
+    margin-left: 10px;
+    margin-right: 15%;
+}
+
+.time-input-and-unit{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.form-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 75%;
+    margin-left: 10%;
+    margin-right: 30%;
+    margin-bottom: 2%;
+}
+
+#addRecipe-button {
+    padding: 20px 50px;
+    background: #B0E0E2;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 30px;
+    font-weight: bold;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+
+.remove-instruction-button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  right: 20px;
+  font-size: 30px;
+}
+
+.remove-instruction-button:hover {
+  color: darkred;
+}
+
+
+.cancel {
+    background-color: #D9D9D9;
+}
+
+.alert-icon{
+font-size: 50px;}
+
+.instr-list {
+    align-items: center;
+    gap: 15px;
+    margin-left: 15%;
+    margin-right: 10%;
+    margin-bottom: 20px;
+    height: fit-content;
+    display: flex;
+    border-bottom: 1px solid #ccc; /* Optional: Add a separator for clarity */
+    justify-content: space-between; /* Push content and button apart */
+    width: 70%;
+    padding: 20px 0px 20px 55px;
+}
+
+.instr-img span{
+    font-size: 30px;
+}
+
+.instr-input {
+    margin-top: 20px;
+    margin-left: 260px;
+}
+
+#resultImage-label{
+    width: 250px;
+}
+
+#resultImage-inpt{
+    border: none;
+    padding-top: 35px;
+}
+
+.tips{
+    color: green;
+    font-size: 30px;
+    margin: 5px 
+}
+
+.alert{
+    color: red;
+    margin-top: 10px;
+    font-size: 30px;
+}
+
+.result-preview-img{
+    width: 200px;
+    height: 200px;
+}

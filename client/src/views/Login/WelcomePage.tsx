@@ -17,9 +17,9 @@ export const WelcomePage = () => {
           Congratulations! <br />
           Your account has been created successfully!
         </p>
-        <div>
-          <Link to="/">
-            <button type="button" className="login-button">Login</button>
+        <div className="login-button-container" >
+          <Link to="/" className="login-button-link">
+            <button type="button" className="loginButton">Login</button>
           </Link>
         </div>
       </div>
