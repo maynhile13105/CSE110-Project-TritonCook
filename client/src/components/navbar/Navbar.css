@@ -92,8 +92,8 @@ img.postImage{
 
 .notif-popup {
   position: fixed;
-  top: 30px;
-  left: 200px;
+  top: 50px;
+  left: 310px;
   background-color: #fff;
   color: #000;
   border: 1px solid #ccc;
