@@ -1,3 +1,3 @@
 [build]
-  command = "npm run build"
-  publish = "dist" # or "build" depending on your framework
+  command = "cd client && npm install && npm run build"
+  publish = "client/build"
